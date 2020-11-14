@@ -1,2 +1,2 @@
 # [WIP] Teal 🐦
-The Teal Programming Language
+A Tiny C Compiler
