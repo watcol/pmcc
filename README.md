@@ -1,2 +1,2 @@
 # [WIP] Teal 🐦
-A Tiny C Compiler
+The Fake C Language
