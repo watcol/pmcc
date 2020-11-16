@@ -3,7 +3,7 @@
 
 #include<stddef.h>
 
-// TODO: implement
+// util.c
 void read_stdin(char* buf, size_t count);
 
 #endif
