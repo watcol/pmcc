@@ -7,8 +7,8 @@ main.o: src/main.c
 util.o: src/util.c
 	$(COMPILE.c) $^
 
-test: teal
-	./test.sh
+test: teal test/zero.tl
+	./test.sh test/zero.tl 0
 
 clean:
 	$(RM) *.o
