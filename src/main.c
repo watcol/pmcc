@@ -9,6 +9,6 @@ int main() {
   read_stdin(buf, MAX_INPUT);
 
   // debug: Print the buffer.
-  printf("%s", buf);
+  fprintf(stderr, "%s", buf);
   return 0;
 }
