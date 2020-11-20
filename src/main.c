@@ -10,5 +10,13 @@ int main() {
 
   // debug: Print the buffer.
   fprintf(stderr, "%s", buf);
+
+  // Write assembly.
+  puts(".intel_syntax noprefix");
+  puts(".globl main");
+  puts("main:");
+  puts("  mov rax, 0");
+  puts("  ret");
+
   return 0;
 }
