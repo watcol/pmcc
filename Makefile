@@ -1,4 +1,4 @@
-teal: main.o util.o
+teal: main.o util.o lex.o
 	$(LINK.c) -o $@ $^
 
 main.o: src/main.c
@@ -6,6 +6,10 @@ main.o: src/main.c
 
 util.o: src/util.c
 	$(COMPILE.c) $^
+
+lex.o: src/lex.c
+	$(COMPILE.c) $^
+
 
 test: teal test/zero.tl test/number.tl test/addsub.tl
 	./test.sh test/zero.tl 0

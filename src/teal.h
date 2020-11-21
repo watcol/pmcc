@@ -6,4 +6,6 @@
 // util.c
 void read_stdin(char *buf, size_t count);
 
+// lex.c
+
 #endif
