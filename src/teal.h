@@ -11,4 +11,6 @@ void read_stdin(char *buf, size_t count);
 #define LEX_SYMBOL 1
 #define LEX_NUM 2
 
+void buf2tokens(char *buf, int *tokens, char **start, char **end, size_t count);
+
 #endif
