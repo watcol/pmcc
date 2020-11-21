@@ -10,6 +10,7 @@ util.o: src/util.c
 test: teal test/zero.tl
 	./test.sh test/zero.tl 0
 	./test.sh test/number.tl 42
+	./test.sh test/addsub.tl 42
 
 fmt: src/main.c src/teal.h src/util.c
 	clang-format -i $^
