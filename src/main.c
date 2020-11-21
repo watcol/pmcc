@@ -25,6 +25,24 @@ int main() {
 
   // Read a number.
   printf("  mov rax, %ld\n", strtol(buf, &buf, 10));
+
+  // Addition and subtraction.
+  while(*buf) {
+    if (*buf == '+') {
+      buf++;
+      printf("  add rax, %ld\n", strtol(buf, &buf, 10));
+    } else if (*buf == '-') {
+      buf++;
+      printf("  sub rax, %ld\n", strtol(buf, &buf, 10));
+    } else if (*buf == '\n' || *buf == ' ') {
+      // Skip token.
+      buf++;
+    } else {
+      fprintf(stderr, "Unexpected token: '%c'\n", *buf);
+      return 1;
+    }
+  }
+
   puts("  ret");
 
   return 0;
