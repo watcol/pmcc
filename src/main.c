@@ -6,14 +6,17 @@
 
 int main() {
   // Read STDIN.
-  char buf[MAX_INPUT + 1] = "";
-  read_stdin(buf, MAX_INPUT);
+  char buf2[MAX_INPUT + 1] = "";
+  read_stdin(buf2, MAX_INPUT);
 
   // debug: Print the buffer.
   // fprintf(stderr, "%s", buf);
 
+  // Convert char[] to char*
+  char *buf = buf2;
+
   // Read a number.
-  long n = strtol(buf, NULL, 10);
+  long n = strtol(buf, &buf, 10);
 
   // debug: Print a receved number.
   // fprintf(stderr, "%d\n", n);
