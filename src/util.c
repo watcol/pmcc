@@ -1,9 +1,8 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include"teal.h"
+#include "teal.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-
-void read_stdin(char* buf, size_t count) {
+void read_stdin(char *buf, size_t count) {
   size_t rc = fread(buf, 1, count, stdin);
   buf[rc] = '\0';
 
