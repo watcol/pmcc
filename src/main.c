@@ -15,9 +15,6 @@ int main() {
   // Convert char[] to char*
   char *buf = buf2;
 
-  // Read a number.
-  long n = strtol(buf, &buf, 10);
-
   // debug: Print a receved number.
   // fprintf(stderr, "%d\n", n);
 
@@ -25,7 +22,9 @@ int main() {
   puts(".intel_syntax noprefix");
   puts(".globl main");
   puts("main:");
-  printf("  mov rax, %ld\n", n);
+
+  // Read a number.
+  printf("  mov rax, %ld\n", strtol(buf, &buf, 10));
   puts("  ret");
 
   return 0;
