@@ -13,7 +13,7 @@ int main() {
   // fprintf(stderr, "%s", buf);
 
   // Read a number.
-  int n = strtol(buf, NULL, 10);
+  long n = strtol(buf, NULL, 10);
 
   // debug: Print a receved number.
   // fprintf(stderr, "%d\n", n);
@@ -22,7 +22,7 @@ int main() {
   puts(".intel_syntax noprefix");
   puts(".globl main");
   puts("main:");
-  printf("  mov rax, %d\n", n);
+  printf("  mov rax, %ld\n", n);
   puts("  ret");
 
   return 0;
