@@ -10,12 +10,12 @@ int main() {
   read_stdin(buf, MAX_INPUT);
 
   // debug: Print the buffer.
-  fprintf(stderr, "%s", buf);
+  //fprintf(stderr, "%s", buf);
 
   // Read a number.
   int n = strtol(buf, NULL, 10);
   // debug: Print a receved number.
-  fprintf(stderr, "%d\n", n);
+  //fprintf(stderr, "%d\n", n);
 
   // Write assembly.
   puts(".intel_syntax noprefix");
