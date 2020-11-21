@@ -11,7 +11,7 @@ test: teal test/zero.tl
 	./test.sh test/zero.tl 0
 	./test.sh test/number.tl 42
 
-format: src/main.c src/teal.h src/util.c
+fmt: src/main.c src/teal.h src/util.c
 	clang-format -i $^
 
 clean:
