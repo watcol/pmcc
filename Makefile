@@ -9,6 +9,7 @@ util.o: src/util.c
 
 test: teal test/zero.tl
 	./test.sh test/zero.tl 0
+	./test.sh test/number.tl 42
 
 clean:
 	$(RM) *.o
