@@ -7,5 +7,8 @@
 void read_stdin(char *buf, size_t count);
 
 // lex.c
+#define LEX_EOF 0
+#define LEX_SYMBOL 1
+#define LEX_NUM 2
 
 #endif
