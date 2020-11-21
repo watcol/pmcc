@@ -7,7 +7,7 @@ main.o: src/main.c
 util.o: src/util.c
 	$(COMPILE.c) $^
 
-test: teal test/zero.tl
+test: teal test/zero.tl test/number.tl test/addsub.tl
 	./test.sh test/zero.tl 0
 	./test.sh test/number.tl 42
 	./test.sh test/addsub.tl 42
