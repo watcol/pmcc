@@ -1,6 +1,5 @@
 #include"teal.h"
 #include<stdio.h>
-#include<stdlib.h>
 
 char* buf;
 
@@ -26,9 +25,9 @@ void space() {
   }
 }
 
-_Noreturn void panic() {
+void panic() {
   fprintf(stderr, "Unexpected token.");
-  exit(1);
+  sys_exit(1);
 }
 
 int num() {
@@ -46,6 +45,7 @@ int exp_num() {
     return strtoi(buf, &buf);
   } else {
     panic();
+    return -1;
   }
 }
 

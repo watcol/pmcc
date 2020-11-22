@@ -1,6 +1,5 @@
 #include "teal.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 void read_stdin(char *buf, int count) {
   int rc = fread(buf, 1, count, stdin);
@@ -8,6 +7,6 @@ void read_stdin(char *buf, int count) {
 
   if (getc(stdin) != EOF) {
     fprintf(stderr, "The source is too long.");
-    exit(1);
+    sys_exit(1);
   }
 }

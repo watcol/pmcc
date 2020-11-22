@@ -51,3 +51,7 @@ int strtoi(char* buf, char** ret) {
   *ret = buf;
   return i;
 }
+
+void sys_exit(int code) {
+  syscall(60, code);
+}
