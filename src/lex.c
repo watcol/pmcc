@@ -1,10 +1,13 @@
 #include"teal.h"
-#include<stdio.h>
 
 char* buf;
 
 void init_lexer(char *buf2) {
   buf = buf2;
+}
+
+void put_len(int len) {
+  write(buf-len, len);
 }
 
 int comment() {
@@ -26,26 +29,28 @@ void space() {
 }
 
 void panic() {
-  fprintf(stderr, "Unexpected token.");
+  eputs("Unexpected token.");
   sys_exit(1);
 }
 
 int num() {
   space();
   if(is_digit(*buf)) {
-    return strtoi(buf, &buf);
+    int len = digitlen(buf);
+    buf+=len;
+    return len;
   } else {
     return -1;
   }
 }
 
 int exp_num() {
-  space();
-  if(is_digit(*buf)) {
-    return strtoi(buf, &buf);
-  } else {
+  int len = num();
+  if(len == -1) {
     panic();
     return -1;
+  } else {
+    return len;
   }
 }
 

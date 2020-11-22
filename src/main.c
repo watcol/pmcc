@@ -1,5 +1,4 @@
 #include "teal.h"
-#include <stdio.h>
 
 #define MAX_INPUT 50000
 
@@ -25,15 +24,21 @@ int main() {
   puts("main:");
 
   // Read a number.
-  printf("  mov rax, %d\n", exp_num());
+  put("  mov rax, ");
+  put_len(exp_num());
+  putc('\n');
 
   // Addition and subtraction.
   while (!eof()) {
     int o = exp_op();
     if (o == OP_ADD) {
-      printf("  add rax, %d\n", exp_num());
+      put("  add rax, ");
+      put_len(exp_num());
+      putc('\n');
     } else {
-      printf("  sub rax, %d\n", exp_num());
+      put("  sub rax, ");
+      put_len(exp_num());
+      putc('\n');
     }
   }
 

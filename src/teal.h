@@ -9,6 +9,7 @@ void read_stdin(char *buf, int count);
 #define OP_SUB 1
 
 void init_lexer(char *buf);
+void put_len(int len);
 void space();
 int num();
 int exp_num();
@@ -26,6 +27,7 @@ int is_space(char c);
 int is_digit(char c);
 int strtoi(char* buf, char** ret);
 int length(char* buf);
+int digitlen(char* buf);
 void sys_exit(int code);
 int read(void *buf, int count);
 int ended();
@@ -35,7 +37,7 @@ int putc(char c);
 int eputc(char c);
 int put(char *s);
 int eput(char *s);
-int puts_(char *s);
+int puts(char *s);
 int eputs(char *s);
 
 // sys.s

@@ -65,6 +65,14 @@ int length(char* buf) {
   return len;
 }
 
+int digitlen(char* buf) {
+  int len = 0;
+  while(is_digit(*(buf++))) {
+    len++;
+  }
+  return len;
+}
+
 void sys_exit(int code) {
   syscall(60, code);
 }
@@ -105,7 +113,7 @@ int eput(char *s) {
   return ewrite(s, len);
 }
 
-int puts_(char *s) {
+int puts(char *s) {
   put(s);
   putc('\n');
   return 0;
