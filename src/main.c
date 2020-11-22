@@ -25,7 +25,7 @@ int main() {
 
   // Read a number.
   put("  mov rax, ");
-  put_len(exp_num());
+  putlen(exp_num());
   putc('\n');
 
   // Addition and subtraction.
@@ -33,11 +33,11 @@ int main() {
     int o = exp_op();
     if (o == OP_ADD) {
       put("  add rax, ");
-      put_len(exp_num());
+      putlen(exp_num());
       putc('\n');
     } else {
       put("  sub rax, ");
-      put_len(exp_num());
+      putlen(exp_num());
       putc('\n');
     }
   }

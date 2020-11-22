@@ -6,7 +6,7 @@ void init_lexer(char *buf2) {
   buf = buf2;
 }
 
-void put_len(int len) {
+void putlen(int len) {
   write(buf-len, len);
 }
 

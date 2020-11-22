@@ -9,7 +9,7 @@ void read_stdin(char *buf, int count);
 #define OP_SUB 1
 
 void init_lexer(char *buf);
-void put_len(int len);
+void putlen(int len);
 void space();
 int num();
 int exp_num();
