@@ -7,7 +7,7 @@ void read_stdin(char *buf, int count) {
   buf[rc] = '\0';
 
   if (getc(stdin) != EOF) {
-    printf("The source is too long.");
+    fprintf(stderr, "The source is too long.");
     exit(1);
   }
 }
