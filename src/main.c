@@ -8,10 +8,7 @@ int main() {
   read_stdin(buf, MAX_INPUT);
 
   // debug: Print the buffer.
-  // fprintf(stderr, "%s", buf);
-
-  // debug: Print a receved number.
-  // fprintf(stderr, "%d\n", n);
+  // eput(buf);
 
   init_lexer(buf);
 
