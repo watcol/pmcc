@@ -4,14 +4,11 @@
 
 int main() {
   // Read STDIN.
-  char buf2[MAX_INPUT + 1];
-  read_stdin(buf2, MAX_INPUT);
+  char buf[MAX_INPUT + 1];
+  read_stdin(buf, MAX_INPUT);
 
   // debug: Print the buffer.
   // fprintf(stderr, "%s", buf);
-
-  // Convert char[] to char*
-  char *buf = buf2;
 
   // debug: Print a receved number.
   // fprintf(stderr, "%d\n", n);
