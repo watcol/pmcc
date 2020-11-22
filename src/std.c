@@ -104,3 +104,15 @@ int eput(char *s) {
   int len = length(s);
   return ewrite(s, len);
 }
+
+int puts_(char *s) {
+  put(s);
+  putc('\n');
+  return 0;
+}
+
+int eputs(char *s) {
+  eput(s);
+  eputc('\n');
+  return 0;
+}

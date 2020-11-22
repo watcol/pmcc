@@ -35,6 +35,8 @@ int putc(char c);
 int eputc(char c);
 int put(char *s);
 int eput(char *s);
+int puts_(char *s);
+int eputs(char *s);
 
 // sys.s
 int syscall(int num, ...);
