@@ -10,8 +10,20 @@ void init_lexer(char *buf2) {
   buf = buf2;
 }
 
+int comment() {
+  if(!(*buf == '/' && *(buf+1) == '/')) {
+    return 0;
+  }
+
+  while(*buf != '\n') {
+    buf++;
+  }
+
+  return 1;
+}
+
 void space() {
-  while(isspace(*buf)) {
+  while(isspace(*buf) || comment()) {
     buf++;
   }
 }
