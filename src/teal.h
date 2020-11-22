@@ -19,4 +19,7 @@ int exp_op();
 int this_op(int o);
 void exp_this_op(int o);
 
+// std.c
+int is_space(char c);
+
 #endif

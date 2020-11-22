@@ -22,7 +22,7 @@ int comment() {
 }
 
 void space() {
-  while(isspace(*buf) || comment()) {
+  while(is_space(*buf) || comment()) {
     buf++;
   }
 }
