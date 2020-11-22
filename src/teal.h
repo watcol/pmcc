@@ -30,14 +30,14 @@ int digitlen(char *buf);
 void sys_exit(int code);
 int read(void *buf, int count);
 int ended();
-int write(void *buf, int count);
-int ewrite(void *buf, int count);
-int putc(char c);
-int eputc(char c);
-int put(char *s);
-int eput(char *s);
-int puts(char *s);
-int eputs(char *s);
+void write(void *buf, int count);
+void ewrite(void *buf, int count);
+void putc(char c);
+void eputc(char c);
+void put(char *s);
+void eput(char *s);
+void puts(char *s);
+void eputs(char *s);
 
 // sys.s
 int syscall(int num, ...);

@@ -43,42 +43,40 @@ int ended() {
   return read(NULL, 1) == 0;
 }
 
-int write(void *buf, int count) {
-  return syscall(1, STDOUT, buf, count);
+void write(void *buf, int count) {
+  syscall(1, STDOUT, buf, count);
 }
 
-int ewrite(void *buf, int count) {
-  return syscall(1, STDERR, buf, count);
+void ewrite(void *buf, int count) {
+  syscall(1, STDERR, buf, count);
 }
 
-int putc(char c) {
+void putc(char c) {
   char buf[] = {c};
-  return write(buf, 1);
+  write(buf, 1);
 }
 
-int eputc(char c) {
+void eputc(char c) {
   char buf[] = {c};
-  return ewrite(buf, 1);
+  ewrite(buf, 1);
 }
 
-int put(char *s) {
+void put(char *s) {
   int len = length(s);
-  return write(s, len);
+  write(s, len);
 }
 
-int eput(char *s) {
+void eput(char *s) {
   int len = length(s);
-  return ewrite(s, len);
+  ewrite(s, len);
 }
 
-int puts(char *s) {
+void puts(char *s) {
   put(s);
   putc('\n');
-  return 0;
 }
 
-int eputs(char *s) {
+void eputs(char *s) {
   eput(s);
   eputc('\n');
-  return 0;
 }
