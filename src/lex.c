@@ -85,7 +85,12 @@ int exp_op() {
 }
 
 int this_op(int o) {
-  return op() == o;
+  int b = op() == o;
+  if (!b) {
+    buf--;
+  }
+
+  return b;
 }
 
 void exp_this_op(int o) {
