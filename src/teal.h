@@ -28,6 +28,8 @@ int strtoi(char* buf, char** ret);
 void sys_exit(int code);
 int read(void *buf, int count);
 int ended();
+int write(void *buf, int count);
+int ewrite(void *buf, int count);
 
 // sys.s
 int syscall(int num, ...);

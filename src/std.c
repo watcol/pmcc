@@ -67,3 +67,11 @@ int read(void *buf, int count) {
 int ended() {
   return read(NULL, 1) == 0;
 }
+
+int write(void *buf, int count) {
+  return syscall(1, STDOUT, buf, count);
+}
+
+int ewrite(void *buf, int count) {
+  return syscall(1, STDERR, buf, count);
+}
