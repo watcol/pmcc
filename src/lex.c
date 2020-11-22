@@ -65,18 +65,18 @@ int op() {
   space();
   if(*buf == '+') {
     buf++;
-    return LEX_ADD;
+    return OP_ADD;
   } else if (*buf == '-') {
     buf++;
-    return LEX_SUB;
+    return OP_SUB;
   } else {
-    return LEX_EOF;
+    return -1;
   }
 }
 
 int exp_op() {
   int o = op();
-  if(o == LEX_EOF) {
+  if(o == -1) {
     panic();
   }
 

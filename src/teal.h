@@ -7,10 +7,8 @@
 void read_stdin(char *buf, size_t count);
 
 // lex.c
-#define LEX_EOF 0
-#define LEX_NUM 1
-#define LEX_ADD 2
-#define LEX_SUB 3
+#define OP_ADD 0
+#define OP_SUB 1
 
 void init_lexer(char *buf);
 void space();

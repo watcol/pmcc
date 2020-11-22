@@ -30,7 +30,7 @@ int main() {
   // Addition and subtraction.
   while (!eof()) {
     int o = exp_op();
-    if (o == LEX_ADD) {
+    if (o == OP_ADD) {
       printf("  add rax, %d\n", exp_num());
     } else {
       printf("  sub rax, %d\n", exp_num());
