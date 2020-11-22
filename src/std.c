@@ -55,3 +55,7 @@ int strtoi(char* buf, char** ret) {
 void sys_exit(int code) {
   syscall(60, code);
 }
+
+int read(int fd, void *buf, int count) {
+  return syscall(0, fd, buf, count);
+}

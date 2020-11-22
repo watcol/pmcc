@@ -24,6 +24,7 @@ int is_space(char c);
 int is_digit(char c);
 int strtoi(char* buf, char** ret);
 void sys_exit(int code);
+int read(int fd, void *buf, int count);
 
 // sys.s
 int syscall(int num, ...);
