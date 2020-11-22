@@ -31,6 +31,8 @@ int read(void *buf, int count);
 int ended();
 int write(void *buf, int count);
 int ewrite(void *buf, int count);
+int putc(char c);
+int eputc(char c);
 
 // sys.s
 int syscall(int num, ...);

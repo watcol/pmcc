@@ -84,3 +84,13 @@ int write(void *buf, int count) {
 int ewrite(void *buf, int count) {
   return syscall(1, STDERR, buf, count);
 }
+
+int putc(char c) {
+  char buf[] = {c};
+  return write(buf, 1);
+}
+
+int eputc(char c) {
+  char buf[] = {c};
+  return ewrite(buf, 1);
+}
