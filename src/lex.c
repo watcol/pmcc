@@ -28,6 +28,11 @@ void space() {
   }
 }
 
+_Noreturn void panic() {
+  fprintf(stderr, "Unexpected token.");
+  exit(1);
+}
+
 int num() {
   space();
   if(isdigit(*buf)) {
@@ -42,8 +47,7 @@ int exp_num() {
   if(isdigit(*buf)) {
     return strtol(buf, &buf, 10);
   } else {
-    fprintf(stderr, "Unexpected token.");
-    exit(1);
+    panic();
   }
 }
 
@@ -54,8 +58,7 @@ int eof() {
 
 void exp_eof() {
   if(!eof()) {
-    fprintf(stderr, "Unexpected token.");
-    exit(1);
+    panic();
   }
 }
 
@@ -75,8 +78,7 @@ int op() {
 int exp_op() {
   int o = op();
   if(o == LEX_EOF) {
-    fprintf(stderr, "Unexpected token.");
-    exit(1);
+    panic();
   }
 
   return o;
@@ -88,7 +90,6 @@ int this_op(int o) {
 
 void exp_this_op(int o) {
   if(!this_op(o)) {
-    fprintf(stderr, "Unexpected token.");
-    exit(1);
+    panic();
   }
 }
