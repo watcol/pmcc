@@ -4,7 +4,13 @@
 #include<stdlib.h>
 #include<ctype.h>
 
-void buf2tokens(char *buf, int *tokens, char **start, size_t *len, size_t count) {
+#define MAX_TOKEN 1000
+
+int tokens[MAX_TOKEN];
+char *start[MAX_TOKEN];
+size_t len[MAX_TOKEN];
+
+void init_lexer(char *buf) {
   int c = 0;
 
   while(*buf) {
@@ -31,7 +37,7 @@ void buf2tokens(char *buf, int *tokens, char **start, size_t *len, size_t count)
     }
 
     c++;
-    if (c == count) {
+    if (c == MAX_TOKEN) {
       fprintf(stderr, "Too many tokens");
       exit(1);
     }
@@ -42,9 +48,15 @@ void buf2tokens(char *buf, int *tokens, char **start, size_t *len, size_t count)
   len[c] = 0;
 }
 
-char* copy_range(char* start, size_t len) {
-  char *ret = malloc(len+1);
-  memcpy(ret, start, len);
-  ret[len] = '\0';
+int token(int c) {
+  return tokens[c];
+}
+
+char* value(int c) {
+  char* s = start[c];
+  size_t l = len[c];
+  char *ret = malloc(l+1);
+  memcpy(ret, s, l);
+  ret[l] = '\0';
   return ret;
 }
