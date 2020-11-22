@@ -1,9 +1,7 @@
 #include "teal.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 #define MAX_INPUT 50000
-#define MAX_TOKEN 1000
 
 int main() {
   // Read STDIN.
@@ -30,12 +28,12 @@ int main() {
   printf("  mov rax, %d\n", exp_num());
 
   // Addition and subtraction.
-  while(!eof()) {
+  while (!eof()) {
     int o = exp_op();
-    if(o == LEX_ADD) {
+    if (o == LEX_ADD) {
       printf("  add rax, %d\n", exp_num());
     } else {
-    printf("  sub rax, %d\n", exp_num());
+      printf("  sub rax, %d\n", exp_num());
     }
   }
 
