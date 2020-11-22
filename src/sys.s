@@ -9,3 +9,4 @@ syscall:
   mov r10, r8
   mov  r8, r9
   syscall
+  ret
