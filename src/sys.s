@@ -10,3 +10,10 @@ syscall:
   mov  r8, r9
   syscall
   ret
+
+.globl _start
+_start:
+  call main
+  mov rdi, rax
+  mov rax, 60
+  syscall

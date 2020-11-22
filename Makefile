@@ -1,7 +1,7 @@
 CC = tcc
 
 teal: main.o util.o lex.o std.o sys.o
-	$(LINK.c) -o $@ $^
+	ld -o $@ $^
 
 main.o: src/main.c
 	$(COMPILE.c) $^

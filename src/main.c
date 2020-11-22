@@ -4,7 +4,7 @@
 
 int main() {
   // Read STDIN.
-  char buf2[MAX_INPUT + 1] = "";
+  char buf2[MAX_INPUT + 1];
   read_stdin(buf2, MAX_INPUT);
 
   // debug: Print the buffer.
