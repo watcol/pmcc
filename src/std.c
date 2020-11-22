@@ -65,5 +65,5 @@ int read(void *buf, int count) {
 }
 
 int ended() {
-  return read(0, 1) == 0;
+  return read(NULL, 1) == 0;
 }

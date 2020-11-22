@@ -20,6 +20,8 @@ int this_op(int o);
 void exp_this_op(int o);
 
 // std.c
+#define NULL 0
+
 int is_space(char c);
 int is_digit(char c);
 int strtoi(char* buf, char** ret);
