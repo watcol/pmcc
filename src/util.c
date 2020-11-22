@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 void read_stdin(char *buf, int count) {
-  int rc = read(0, buf, count);
+  int rc = read(buf, count);
   buf[rc] = '\0';
 
   if (!ended(0)) {

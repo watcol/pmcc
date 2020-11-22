@@ -1,5 +1,9 @@
 #include"teal.h"
 
+#define STDIN 0
+#define STDOUT 1
+#define STDERR 2
+
 int is_space(char c) {
   return c == ' '  || c == '\t' ||
          c == '\n' || c == '\v' ||
@@ -56,10 +60,10 @@ void sys_exit(int code) {
   syscall(60, code);
 }
 
-int read(int fd, void *buf, int count) {
-  return syscall(0, fd, buf, count);
+int read(void *buf, int count) {
+  return syscall(0, STDIN, buf, count);
 }
 
-int ended(int fd) {
-  return read(0, 0, 1) == 0;
+int ended() {
+  return read(0, 1) == 0;
 }
