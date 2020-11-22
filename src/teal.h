@@ -25,9 +25,8 @@ void exp_this_op(int o);
 
 int is_space(char c);
 int is_digit(char c);
-int strtoi(char* buf, char** ret);
-int length(char* buf);
-int digitlen(char* buf);
+int length(char *buf);
+int digitlen(char *buf);
 void sys_exit(int code);
 int read(void *buf, int count);
 int ended();
