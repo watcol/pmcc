@@ -59,3 +59,7 @@ void sys_exit(int code) {
 int read(int fd, void *buf, int count) {
   return syscall(0, fd, buf, count);
 }
+
+int ended(int fd) {
+  return read(0, 0, 1) == 0;
+}

@@ -25,6 +25,7 @@ int is_digit(char c);
 int strtoi(char* buf, char** ret);
 void sys_exit(int code);
 int read(int fd, void *buf, int count);
+int ended(int fd);
 
 // sys.s
 int syscall(int num, ...);
