@@ -12,5 +12,6 @@ void read_stdin(char *buf, size_t count);
 #define LEX_NUM 2
 
 void buf2tokens(char *buf, int *tokens, char **start, char **end, size_t count);
+char *copy_range(char *start, char *end);
 
 #endif

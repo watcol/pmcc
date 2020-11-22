@@ -1,4 +1,5 @@
 #include"teal.h"
+#include<string.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<ctype.h>
@@ -35,4 +36,16 @@ void buf2tokens(char *buf, int *tokens, char **start, char **end, size_t count) 
       exit(1);
     }
   }
+
+  tokens[c] = LEX_EOF;
+  start[c] = buf;
+  end[c] = buf;
+}
+
+char* copy_range(char* start, char* end) {
+  size_t len = end - start;
+  char *ret = malloc(len+1);
+  memcpy(ret, start, len);
+  ret[len] = '\0';
+  return ret;
 }
