@@ -56,6 +56,15 @@ int strtoi(char* buf, char** ret) {
   return i;
 }
 
+int length(char* buf) {
+  int len = 0;
+  while(*(buf++)) {
+    len++;
+  }
+
+  return len;
+}
+
 void sys_exit(int code) {
   syscall(60, code);
 }
