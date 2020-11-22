@@ -34,20 +34,19 @@ int main() {
 
   // Addition and subtraction.
   for(int i = 1; token(i) != LEX_EOF; i++) {
-    if (token(i) != LEX_SYMBOL) {
+    int sym = token(i);
+    if (sym != LEX_ADD && sym != LEX_SUB) {
       fprintf(stderr, "The token after a number should be a symbol.");
     }
 
-    char* sym = value(i);
     i++;
-
     if (token(i) != LEX_NUM) {
       fprintf(stderr, "The token after a symbol should be a number.");
     }
 
-    if(*sym == '+') {
+    if(sym == LEX_ADD) {
       printf("  add rax, %ld\n", strtol(value(i), NULL, 10));
-    } else if(*sym == '-') {
+    } else {
       printf("  sub rax, %ld\n", strtol(value(i), NULL, 10));
     }
   }

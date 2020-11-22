@@ -19,7 +19,11 @@ void init_lexer(char *buf) {
       buf++;
       c--;
     } else if (*buf == '+' || *buf == '-') {
-      tokens[c] = LEX_SYMBOL;
+      if (*buf == '+') {
+        tokens[c] = LEX_ADD;
+      } else {
+        tokens[c] = LEX_SUB;
+      }
       start[c] = buf;
       buf++;
       len[c] = 1;
