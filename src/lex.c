@@ -1,7 +1,6 @@
 #include"teal.h"
 #include<stdio.h>
 #include<stdlib.h>
-#include<ctype.h>
 
 char* buf;
 
@@ -34,7 +33,7 @@ _Noreturn void panic() {
 
 int num() {
   space();
-  if(isdigit(*buf)) {
+  if(is_digit(*buf)) {
     return strtol(buf, &buf, 10);
   } else {
     return -1;
@@ -43,7 +42,7 @@ int num() {
 
 int exp_num() {
   space();
-  if(isdigit(*buf)) {
+  if(is_digit(*buf)) {
     return strtol(buf, &buf, 10);
   } else {
     panic();
