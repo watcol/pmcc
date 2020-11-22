@@ -94,3 +94,13 @@ int eputc(char c) {
   char buf[] = {c};
   return ewrite(buf, 1);
 }
+
+int put(char *s) {
+  int len = length(s);
+  return write(s, len);
+}
+
+int eput(char *s) {
+  int len = length(s);
+  return ewrite(s, len);
+}

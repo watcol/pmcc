@@ -33,6 +33,8 @@ int write(void *buf, int count);
 int ewrite(void *buf, int count);
 int putc(char c);
 int eputc(char c);
+int put(char *s);
+int eput(char *s);
 
 // sys.s
 int syscall(int num, ...);
