@@ -34,7 +34,7 @@ _Noreturn void panic() {
 int num() {
   space();
   if(is_digit(*buf)) {
-    return strtol(buf, &buf, 10);
+    return strtoi(buf, &buf);
   } else {
     return -1;
   }
@@ -43,7 +43,7 @@ int num() {
 int exp_num() {
   space();
   if(is_digit(*buf)) {
-    return strtol(buf, &buf, 10);
+    return strtoi(buf, &buf);
   } else {
     panic();
   }

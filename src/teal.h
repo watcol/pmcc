@@ -22,5 +22,6 @@ void exp_this_op(int o);
 // std.c
 int is_space(char c);
 int is_digit(char c);
+int strtoi(char* buf, char** ret);
 
 #endif
