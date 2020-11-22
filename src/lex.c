@@ -4,63 +4,79 @@
 #include<stdlib.h>
 #include<ctype.h>
 
-#define MAX_TOKEN 1000
+char* buf;
 
-int tokens[MAX_TOKEN];
-char *start[MAX_TOKEN];
-size_t len[MAX_TOKEN];
+void init_lexer(char *buf2) {
+  buf = buf2;
+}
 
-void init_lexer(char *buf) {
-  int c = 0;
+void space() {
+  while(isspace(*buf)) {
+    buf++;
+  }
+}
 
-  while(*buf) {
-    if (isspace(*buf)) {
-      // Skip spaces.
-      buf++;
-      c--;
-    } else if (*buf == '+' || *buf == '-') {
-      if (*buf == '+') {
-        tokens[c] = LEX_ADD;
-      } else {
-        tokens[c] = LEX_SUB;
-      }
-      start[c] = buf;
-      buf++;
-      len[c] = 1;
-    } else if (isdigit(*buf)) {
-      tokens[c] = LEX_NUM;
-      start[c] = buf;
-      buf++;
-      while(isdigit(*buf)) {
-        buf++;
-      }
-      len[c] = buf - start[c];
-    } else {
-      fprintf(stderr, "Unexpected token: '%c'", *buf);
-      exit(1);
-    }
+int num() {
+  space();
+  if(isdigit(*buf)) {
+    return strtol(buf, &buf, 10);
+  } else {
+    return -1;
+  }
+}
 
-    c++;
-    if (c == MAX_TOKEN) {
-      fprintf(stderr, "Too many tokens");
-      exit(1);
-    }
+int exp_num() {
+  space();
+  if(isdigit(*buf)) {
+    return strtol(buf, &buf, 10);
+  } else {
+    fprintf(stderr, "Unexpected token.");
+    exit(1);
+  }
+}
+
+int eof() {
+  space();
+  return !*buf;
+}
+
+void exp_eof() {
+  if(!eof()) {
+    fprintf(stderr, "Unexpected token.");
+    exit(1);
+  }
+}
+
+int op() {
+  space();
+  if(*buf == '+') {
+    buf++;
+    return LEX_ADD;
+  } else if (*buf == '-') {
+    buf++;
+    return LEX_SUB;
+  } else {
+    return LEX_EOF;
+  }
+}
+
+int exp_op() {
+  int o = op();
+  if(o == LEX_EOF) {
+    fprintf(stderr, "Unexpected token.");
+    exit(1);
   }
 
-  tokens[c] = LEX_EOF;
-  start[c] = buf;
-  len[c] = 0;
+  return o;
 }
 
-int token(int c) {
-  return tokens[c];
+int this_op(int o) {
+  return op() == o;
 }
 
-char* value(int c) {
-  char* s = start[c];
-  size_t l = len[c];
-  char *ret = malloc(l+1);
-  memcpy(ret, s, l);
-  ret[l] = '\0';
-  return ret;
+void exp_this_op(int o) {
+  if(!this_op(o)) {
+    fprintf(stderr, "Unexpected token.");
+    exit(1);
+  }
 }

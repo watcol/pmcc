@@ -27,27 +27,15 @@ int main() {
   puts("main:");
 
   // Read a number.
-  if (token(0) != LEX_NUM) {
-    fprintf(stderr, "The first token should be a number.");
-  }
-  printf("  mov rax, %ld\n", strtol(value(0), NULL, 10));
+  printf("  mov rax, %d\n", exp_num());
 
   // Addition and subtraction.
-  for(int i = 1; token(i) != LEX_EOF; i++) {
-    int sym = token(i);
-    if (sym != LEX_ADD && sym != LEX_SUB) {
-      fprintf(stderr, "The token after a number should be a symbol.");
-    }
-
-    i++;
-    if (token(i) != LEX_NUM) {
-      fprintf(stderr, "The token after a symbol should be a number.");
-    }
-
-    if(sym == LEX_ADD) {
-      printf("  add rax, %ld\n", strtol(value(i), NULL, 10));
+  while(!eof()) {
+    int o = exp_op();
+    if(o == LEX_ADD) {
+      printf("  add rax, %d\n", exp_num());
     } else {
-      printf("  sub rax, %ld\n", strtol(value(i), NULL, 10));
+    printf("  sub rax, %d\n", exp_num());
     }
   }
 
