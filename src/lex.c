@@ -4,7 +4,7 @@
 #include<stdlib.h>
 #include<ctype.h>
 
-void buf2tokens(char *buf, int *tokens, char **start, char **end, size_t count) {
+void buf2tokens(char *buf, int *tokens, char **start, size_t *len, size_t count) {
   int c = 0;
 
   while(*buf) {
@@ -16,7 +16,7 @@ void buf2tokens(char *buf, int *tokens, char **start, char **end, size_t count) 
       tokens[c] = LEX_SYMBOL;
       start[c] = buf;
       buf++;
-      end[c] = buf;
+      len[c] = 1;
     } else if (isdigit(*buf)) {
       tokens[c] = LEX_NUM;
       start[c] = buf;
@@ -24,7 +24,7 @@ void buf2tokens(char *buf, int *tokens, char **start, char **end, size_t count) 
       while(isdigit(*buf)) {
         buf++;
       }
-      end[c] = buf;
+      len[c] = buf - start[c];
     } else {
       fprintf(stderr, "Unexpected token: '%c'", *buf);
       exit(1);
@@ -39,11 +39,10 @@ void buf2tokens(char *buf, int *tokens, char **start, char **end, size_t count) 
 
   tokens[c] = LEX_EOF;
   start[c] = buf;
-  end[c] = buf;
+  len[c] = 0;
 }
 
-char* copy_range(char* start, char* end) {
-  size_t len = end - start;
+char* copy_range(char* start, size_t len) {
   char *ret = malloc(len+1);
   memcpy(ret, start, len);
   ret[len] = '\0';

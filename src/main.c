@@ -21,9 +21,9 @@ int main() {
 
   int tokens[MAX_TOKEN];
   char* start[MAX_TOKEN];
-  char* end[MAX_TOKEN];
+  size_t len[MAX_TOKEN];
 
-  buf2tokens(buf, tokens, start, end, MAX_TOKEN);
+  buf2tokens(buf, tokens, start, len, MAX_TOKEN);
 
   // Write assembly.
   puts(".intel_syntax noprefix");
@@ -34,7 +34,7 @@ int main() {
   if (tokens[0] != LEX_NUM) {
     fprintf(stderr, "The first token should be a number.");
   }
-  printf("  mov rax, %ld\n", strtol(copy_range(start[0], end[0]), NULL, 10));
+  printf("  mov rax, %ld\n", strtol(copy_range(start[0], len[0]), NULL, 10));
 
   // Addition and subtraction.
   for(int i = 1; tokens[i] != LEX_EOF; i++) {
@@ -42,7 +42,7 @@ int main() {
       fprintf(stderr, "The token after a number should be a symbol.");
     }
 
-    char* sym = copy_range(start[i], end[i]);
+    char* sym = copy_range(start[i], len[i]);
     i++;
 
     if (tokens[i] != LEX_NUM) {
@@ -50,9 +50,9 @@ int main() {
     }
 
     if(*sym == '+') {
-      printf("  add rax, %ld\n", strtol(copy_range(start[i], end[i]), NULL, 10));
+      printf("  add rax, %ld\n", strtol(copy_range(start[i], len[i]), NULL, 10));
     } else if(*sym == '-') {
-      printf("  sub rax, %ld\n", strtol(copy_range(start[i], end[i]), NULL, 10));
+      printf("  sub rax, %ld\n", strtol(copy_range(start[i], len[i]), NULL, 10));
     }
   }
 
