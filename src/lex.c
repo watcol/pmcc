@@ -31,7 +31,7 @@ void buf2tokens(char *buf, int *tokens, char **start, char **end, size_t count) 
     }
 
     c++;
-    if (c >= count) {
+    if (c == count) {
       fprintf(stderr, "Too many tokens");
       exit(1);
     }
