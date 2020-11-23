@@ -50,11 +50,10 @@ char this_ch(char c) {
 }
 
 char exp_this_ch(char c) {
-  char c1 = this_ch(c);
-  if(!c1) {
+  if(!this_ch(c)) {
     panic();
   }
-  return c1;
+  return c;
 }
 
 int num() {
