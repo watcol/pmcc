@@ -35,6 +35,7 @@ void panic() {
 }
 
 char ch() {
+  space();
   char c = *buf;
   buf++;
   return c;
