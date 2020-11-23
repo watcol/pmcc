@@ -10,6 +10,9 @@
 void init_lexer(char *buf);
 void putlen(int len);
 void space();
+char ch();
+char this_ch(char c);
+char exp_this_ch(char c);
 int num();
 int exp_num();
 int eof();

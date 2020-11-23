@@ -34,6 +34,29 @@ void panic() {
   sys_exit(1);
 }
 
+char ch() {
+  char c = *buf;
+  buf++;
+  return c;
+}
+
+char this_ch(char c) {
+  if(ch() == c) {
+    return c;
+  } else {
+    buf--;
+    return 0;
+  }
+}
+
+char exp_this_ch(char c) {
+  char c1 = this_ch(c);
+  if(!c1) {
+    panic();
+  }
+  return c1;
+}
+
 int num() {
   space();
   if(is_digit(*buf)) {
