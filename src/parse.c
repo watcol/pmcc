@@ -6,12 +6,23 @@ int count0 = 2;
 int group1[] = {OP_MUL, OP_DIV};
 int count1 = 2;
 
+void expr();
+
+void expr_fact() {
+  if(this_ch('(')) {
+    expr();
+    exp_this_ch(')');
+  } else {
+    inst1("push", exp_num());
+  }
+}
+
 void expr1() {
-  inst1("push", exp_num());
+  expr_fact();
 
   int o;
   while((o = these_op(group1, count1))) {
-    inst1("push", exp_num());
+    expr_fact();
     inst1("pop", REG_RDI);
     inst1("pop", REG_RAX);
 
