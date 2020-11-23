@@ -2,10 +2,10 @@
 #define _TEAL_H_
 
 // lex.c
-#define OP_ADD 0
-#define OP_SUB 1
-#define OP_MUL 2
-#define OP_DIV 3
+#define OP_ADD 1
+#define OP_SUB 2
+#define OP_MUL 3
+#define OP_DIV 4
 
 void init_lexer(char *buf);
 void putlen(int len);

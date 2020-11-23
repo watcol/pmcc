@@ -78,13 +78,13 @@ int op() {
     return OP_DIV;
   } else {
     buf--;
-    return -1;
+    return 0;
   }
 }
 
 int exp_op() {
   int o = op();
-  if(o == -1) {
+  if(!o) {
     panic();
   }
 
