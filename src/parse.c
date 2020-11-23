@@ -1,14 +1,14 @@
 #include"teal.h"
 
-int group0[] = {OP_ADD, OP_SUB};
-int count0 = 2;
+int group_add[] = {OP_ADD, OP_SUB};
+int count_add = 2;
 
-int group1[] = {OP_MUL, OP_DIV};
-int count1 = 2;
+int group_mul[] = {OP_MUL, OP_DIV};
+int count_mul = 2;
 
 void expr();
 
-void expr_fact() {
+void expr_factor() {
   if(this_ch('(')) {
     expr();
     exp_this_ch(')');
@@ -17,9 +17,9 @@ void expr_fact() {
   }
 }
 
-void expr0() {
-  int o = these_op(group0, count0);
-  expr_fact();
+void expr_unary() {
+  int o = these_op(group_add, count_add);
+  expr_factor();
   if(o == OP_SUB) {
     inst1("pop", REG_RAX);
     inst2v("imul", REG_RAX, "-1");
@@ -27,12 +27,12 @@ void expr0() {
   }
 }
 
-void expr1() {
-  expr0();
+void expr_mul() {
+  expr_unary();
 
   int o;
-  while((o = these_op(group1, count1))) {
-    expr0();
+  while((o = these_op(group_mul, count_mul))) {
+    expr_unary();
     inst1("pop", REG_RDI);
     inst1("pop", REG_RAX);
 
@@ -50,12 +50,12 @@ void expr1() {
   }
 }
 
-void expr() {
-  expr1();
+void expr_add() {
+  expr_mul();
 
   int o;
-  while((o = these_op(group0, count0))) {
-    expr1();
+  while((o = these_op(group_add, count_add))) {
+    expr_mul();
     inst1("pop", REG_RDI);
     inst1("pop", REG_RAX);
 
@@ -72,6 +72,9 @@ void expr() {
   }
 }
 
+void expr() {
+  expr_add();
+}
 
 void parse(char* buf) {
   init_lexer(buf);
