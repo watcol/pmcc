@@ -21,6 +21,10 @@ void exp_this_op(int o);
 void parse(char* buf);
 
 // gen.c
+#define REG_RAX (-1)
+#define REG_RDI (-2)
+
+void putval(int i);
 void init_code();
 void func(char* name);
 void ret();
