@@ -1,10 +1,13 @@
 #include"teal.h"
 
+int group0[] = {OP_ADD, OP_SUB};
+int count0 = 2;
+
 void expr() {
   inst1("push", exp_num());
 
   int o;
-  while((o = op())) {
+  while((o = these_op(group0, count0))) {
     inst1("push", exp_num());
     inst1("pop", REG_RDI);
     inst1("pop", REG_RAX);

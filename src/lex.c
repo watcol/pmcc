@@ -106,6 +106,7 @@ int these_op(int* os, int c) {
     if(this_op(os[i])) {
       return os[i];
     }
+    i++;
   }
 
   return 0;
