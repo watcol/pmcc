@@ -1,20 +1,14 @@
 #include"teal.h"
 
 void expr() {
-  put("mov rax, ");
-  putlen(exp_num());
-  putc('\n');
+  inst2("mov", REG_RAX, exp_num());
 
   while(!eof()) {
     int o = exp_op();
     if(o == OP_ADD) {
-      put("  add rax, ");
-      putlen(exp_num());
-      putc('\n');
+      inst2("add", REG_RAX, exp_num());
     } else {
-      put("sub rax, ");
-      putlen(exp_num());
-      putc('\n');
+      inst2("sub", REG_RAX, exp_num());
     }
   }
 }
@@ -27,5 +21,5 @@ void parse(char* buf) {
 
   expr();
 
-  ret();
+  inst("ret");
 }
