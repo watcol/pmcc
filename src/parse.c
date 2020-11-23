@@ -22,7 +22,7 @@ void expr0() {
   expr_fact();
   if(o == OP_SUB) {
     inst1("pop", REG_RAX);
-    inst2v("sub", "0", REG_RAX);
+    inst2v("imul", REG_RAX, "-1");
     inst1("push", REG_RAX);
   }
 }
