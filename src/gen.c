@@ -28,7 +28,7 @@ void inst(char* in) {
   putc('\n');
 }
 
-void inst1(char* in, int val) {
+void instr(char* in, int val) {
   put("  ");
   put(in);
   putc(' ');
@@ -36,7 +36,7 @@ void inst1(char* in, int val) {
   putc('\n');
 }
 
-void inst1v(char* in, char* val) {
+void instv(char* in, char* val) {
   put("  ");
   put(in);
   putc(' ');
@@ -44,7 +44,7 @@ void inst1v(char* in, char* val) {
   putc('\n');
 }
 
-void inst2(char* in, int dst, int src) {
+void instrr(char* in, int dst, int src) {
   put("  ");
   put(in);
   putc(' ');
@@ -54,7 +54,7 @@ void inst2(char* in, int dst, int src) {
   putc('\n');
 }
 
-void inst2v(char* in, int dst, char* src) {
+void instrv(char* in, int dst, char* src) {
   put("  ");
   put(in);
   putc(' ');

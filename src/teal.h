@@ -34,10 +34,10 @@ void parse(char* buf);
 void init_code();
 void func(char* name);
 void inst(char* in);
-void inst1(char* in, int val);
-void inst1v(char* in, char* val);
-void inst2(char* in, int dst, int src);
-void inst2v(char* in, int dst, char* src);
+void instr(char* in, int val);
+void instv(char* in, char* val);
+void instrr(char* in, int dst, int src);
+void instrv(char* in, int dst, char* src);
 
 // std.c
 #define NULL 0
