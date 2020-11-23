@@ -36,6 +36,14 @@ void inst1(char* in, int val) {
   putc('\n');
 }
 
+void inst1v(char* in, char* val) {
+  put("  ");
+  put(in);
+  putc(' ');
+  put(val);
+  putc('\n');
+}
+
 void inst2(char* in, int dst, int src) {
   put("  ");
   put(in);

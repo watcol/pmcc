@@ -35,6 +35,7 @@ void init_code();
 void func(char* name);
 void inst(char* in);
 void inst1(char* in, int val);
+void inst1v(char* in, char* val);
 void inst2(char* in, int dst, int src);
 
 // std.c
