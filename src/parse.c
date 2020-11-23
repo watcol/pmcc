@@ -9,6 +9,9 @@ int count_mul = 2;
 int group_cmp[] = {OP_L, OP_LE, OP_ME, OP_M};
 int count_cmp = 4;
 
+int group_eq[] = {OP_E, OP_NE};
+int count_eq = 2;
+
 void expr();
 
 void expr_factor() {
@@ -93,7 +96,7 @@ void expr_cmp() {
     } else if(o == OP_ME) {
       instrr("cmp", REG_RDI, REG_RAX);
       instr("setle", REG_AL);
-    } else if(o == OP_LE) {
+    } else if(o == OP_M) {
       instrr("cmp", REG_RDI, REG_RAX);
       instr("setl", REG_AL);
     }
@@ -103,8 +106,29 @@ void expr_cmp() {
   }
 }
 
-void expr() {
+void expr_eq() {
   expr_cmp();
+
+  int o;
+  while((o = these_op(group_eq, count_eq))) {
+    expr_cmp();
+    instr("pop", REG_RDI);
+    instr("pop", REG_RAX);
+    instrr("cmp", REG_RAX, REG_RDI);
+
+    if(o == OP_E) {
+      instr("sete", REG_AL);
+    } else if(o == OP_NE) {
+      instr("setne", REG_AL);
+    }
+
+    instrr("movzb", REG_RAX, REG_AL);
+    instr("push", REG_RAX);
+  }
+}
+
+void expr() {
+  expr_eq();
 }
 
 void parse(char* buf) {

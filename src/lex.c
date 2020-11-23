@@ -1,9 +1,11 @@
 #include"teal.h"
 
 char* buf;
+int tmp;
 
 void init_lexer(char *buf2) {
   buf = buf2;
+  tmp = 0;
 }
 
 void putlen(int len) {
@@ -38,6 +40,7 @@ char ch() {
   space();
   char c = *buf;
   buf++;
+  tmp = 1;
   return c;
 }
 
@@ -45,7 +48,7 @@ char this_ch(char c) {
   if(ch() == c) {
     return c;
   } else {
-    buf--;
+    buf-=tmp;
     return 0;
   }
 }
@@ -91,6 +94,7 @@ int op() {
   space();
   char c = *buf;
   buf++;
+  tmp = 1;
   if(c == '+') {
     return OP_ADD;
   } else if (c == '-') {
@@ -102,22 +106,27 @@ int op() {
   } else if (c == '=') {
     if (*buf == '=') {
       buf++;
+      tmp = 2;
       return OP_E;
     } else {
       buf--;
+      tmp = 0;
       return 0;
     }
   } else if(c == '!') {
     if(*buf == '=') {
       buf++;
+      tmp = 2;
       return OP_NE;
     } else {
       buf--;
+      tmp = 0;
       return 0;
     }
   } else if(c == '<') {
     if (*buf == '=') {
       buf++;
+      tmp = 2;
       return OP_LE;
     } else {
       return OP_L;
@@ -125,12 +134,14 @@ int op() {
   } else if(c == '>') {
     if (*buf == '=') {
       buf++;
+      tmp = 2;
       return OP_ME;
     } else {
       return OP_M;
     }
   } else {
     buf--;
+    tmp = 0;
     return 0;
   }
 }
@@ -145,11 +156,8 @@ int exp_op() {
 }
 
 int this_op(int o) {
-  int o2 = op();
-  if(!o2) {
-    return 0;
-  } else if (o2 != o) {
-    buf--;
+  if(op() != o) {
+    buf-=tmp;
     return 0;
   } else {
     return o;
