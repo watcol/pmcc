@@ -16,9 +16,10 @@ void expr1() {
     inst1("pop", REG_RAX);
 
     if(o == OP_MUL) {
-      inst2("mul", REG_RAX, REG_RDI);
+      inst2("imul", REG_RAX, REG_RDI);
     } else if (o == OP_DIV) {
-      inst2("div", REG_RAX, REG_RDI);
+      inst("cqo");
+      inst1("idiv", REG_RDI);
     } else {
       eputs("Unknown operator");
       sys_exit(1);

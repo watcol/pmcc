@@ -24,10 +24,11 @@ util.o: src/util.c
 sys.o: src/sys.s
 	as -o $@ $^
 
-test: teal test/zero.tl test/number.tl test/addsub.tl
+test: teal test/zero.tl test/number.tl test/addsub.tl test/muldiv.tl
 	./test.sh test/zero.tl 0
 	./test.sh test/number.tl 42
 	./test.sh test/addsub.tl 42
+	./test.sh test/muldiv.tl 42
 
 fmt: src/main.c src/teal.h src/util.c
 	clang-format -i $^
