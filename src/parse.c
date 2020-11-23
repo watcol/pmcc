@@ -22,8 +22,6 @@ void expr() {
   }
 }
 
-
-
 void parse(char* buf) {
   init_lexer(buf);
 

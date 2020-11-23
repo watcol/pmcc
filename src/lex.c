@@ -100,8 +100,30 @@ int this_op(int o) {
   return b;
 }
 
-void exp_this_op(int o) {
+int these_op(int* os, int c) {
+  int i = 0;
+  while(i < c) {
+    if(this_op(os[i])) {
+      return os[i];
+    }
+  }
+
+  return 0;
+}
+
+int exp_this_op(int o) {
   if(!this_op(o)) {
     panic();
   }
+
+  return o;
+}
+
+int exp_these_op(int* os, int c) {
+  int o = these_op(os, c);
+  if(!o) {
+    panic();
+  }
+
+  return o;
 }

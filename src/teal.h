@@ -17,7 +17,9 @@ void exp_eof();
 int op();
 int exp_op();
 int this_op(int o);
-void exp_this_op(int o);
+int these_op(int* os, int c);
+int exp_this_op(int o);
+int exp_these_op(int* os, int c);
 
 // parse.c
 void parse(char* buf);
