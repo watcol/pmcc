@@ -20,6 +20,11 @@ void exp_this_op(int o);
 // parse.c
 void parse(char* buf);
 
+// gen.c
+void init_code();
+void func(char* name);
+void ret();
+
 // std.c
 #define NULL 0
 
