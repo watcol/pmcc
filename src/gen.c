@@ -5,6 +5,18 @@ void putval(int i) {
     put("rax");
   } else if (i == REG_RDI) {
     put("rdi");
+  } else if (i == REG_RSI) {
+    put("rsi");
+  } else if (i == REG_RDX) {
+    put("rdx");
+  } else if (i == REG_RCX) {
+    put("rcx");
+  } else if (i == REG_R8) {
+    put("r8");
+  } else if (i == REG_R9) {
+    put("r9");
+  } else if (i == REG_AL) {
+    put("al");
   } else {
     putlen(i);
   }

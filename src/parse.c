@@ -6,6 +6,9 @@ int count_add = 2;
 int group_mul[] = {OP_MUL, OP_DIV};
 int count_mul = 2;
 
+int group_relation[] = {OP_L, OP_LE, OP_ME, OP_M};
+int count_relation = 4;
+
 void expr();
 
 void expr_factor() {
@@ -72,8 +75,36 @@ void expr_add() {
   }
 }
 
-void expr() {
+void expr_relation() {
   expr_add();
+
+  int o;
+  while((o = these_op(group_relation, count_relation))) {
+    expr_add();
+    instr("pop", REG_RDI);
+    instr("pop", REG_RAX);
+
+    if(o == OP_L) {
+      instrr("cmp", REG_RAX, REG_RDI);
+      instr("setl", REG_AL);
+    } else if(o == OP_LE) {
+      instrr("cmp", REG_RAX, REG_RDI);
+      instr("setle", REG_AL);
+    } else if(o == OP_ME) {
+      instrr("cmp", REG_RDI, REG_RAX);
+      instr("setle", REG_AL);
+    } else if(o == OP_LE) {
+      instrr("cmp", REG_RDI, REG_RAX);
+      instr("setl", REG_AL);
+    }
+
+    instrr("movzb", REG_RAX, REG_AL);
+    instr("push", REG_RAX);
+  }
+}
+
+void expr() {
+  expr_relation();
 }
 
 void parse(char* buf) {

@@ -36,6 +36,12 @@ void parse(char* buf);
 // gen.c
 #define REG_RAX (-1)
 #define REG_RDI (-2)
+#define REG_RSI (-3)
+#define REG_RDX (-4)
+#define REG_RCX (-5)
+#define REG_R8  (-6)
+#define REG_R9  (-7)
+#define REG_AL  (-8)
 
 void init_code();
 void func(char* name);
