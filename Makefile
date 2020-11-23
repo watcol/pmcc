@@ -1,6 +1,6 @@
 CC = tcc
 
-teal: main.o util.o lex.o std.o sys.o
+teal: main.o util.o lex.o parse.o std.o sys.o
 	ld -o $@ $^
 
 main.o: src/main.c
@@ -10,6 +10,9 @@ util.o: src/util.c
 	$(COMPILE.c) $^
 
 lex.o: src/lex.c
+	$(COMPILE.c) $^
+
+parse.o: src/parse.c
 	$(COMPILE.c) $^
 
 std.o: src/std.c
