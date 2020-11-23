@@ -53,3 +53,13 @@ void inst2(char* in, int dst, int src) {
   putval(src);
   putc('\n');
 }
+
+void inst2v(char* in, char* dst, int src) {
+  put("  ");
+  put(in);
+  putc(' ');
+  put(dst);
+  put(", ");
+  putval(src);
+  putc('\n');
+}

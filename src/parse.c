@@ -17,12 +17,22 @@ void expr_fact() {
   }
 }
 
-void expr1() {
+void expr0() {
+  int o = these_op(group0, count0);
   expr_fact();
+  if(o == OP_SUB) {
+    inst1("pop", REG_RAX);
+    inst2v("sub", "0", REG_RAX);
+    inst1("push", REG_RAX);
+  }
+}
+
+void expr1() {
+  expr0();
 
   int o;
   while((o = these_op(group1, count1))) {
-    expr_fact();
+    expr0();
     inst1("pop", REG_RDI);
     inst1("pop", REG_RAX);
 
