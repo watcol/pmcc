@@ -7,7 +7,8 @@ void init_lexer(char *buf2) {
 }
 
 void putlen(int len) {
-  write(buf-len, len);
+  write(buf, len);
+  buf+=len;
 }
 
 int comment() {
@@ -36,9 +37,7 @@ void panic() {
 int num() {
   space();
   if(is_digit(*buf)) {
-    int len = digitlen(buf);
-    buf+=len;
-    return len;
+    return digitlen(buf);
   } else {
     return -1;
   }
@@ -67,13 +66,18 @@ void exp_eof() {
 
 int op() {
   space();
-  if(*buf == '+') {
-    buf++;
+  char c = *buf;
+  buf++;
+  if(c == '+') {
     return OP_ADD;
-  } else if (*buf == '-') {
-    buf++;
+  } else if (c == '-') {
     return OP_SUB;
+  } else if (c == '*') {
+    return OP_MUL;
+  } else if (c == '/') {
+    return OP_DIV;
   } else {
+    buf--;
     return -1;
   }
 }
