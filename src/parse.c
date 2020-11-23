@@ -22,11 +22,10 @@ void expr() {
 void parse(char* buf) {
   init_lexer(buf);
 
-  puts(".intel_syntax noprefix");
-  puts(".globl main");
-  puts("main:");
+  init_code();
+  func("main");
 
   expr();
 
-  puts("  ret");
+  ret();
 }
