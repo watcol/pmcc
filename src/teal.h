@@ -6,6 +6,12 @@
 #define OP_SUB 2
 #define OP_MUL 3
 #define OP_DIV 4
+#define OP_L   5
+#define OP_LE  6
+#define OP_ME  7
+#define OP_M   8
+#define OP_E   9
+#define OP_NE 10
 
 void init_lexer(char *buf);
 void putlen(int len);

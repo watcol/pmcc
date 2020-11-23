@@ -99,6 +99,36 @@ int op() {
     return OP_MUL;
   } else if (c == '/') {
     return OP_DIV;
+  } else if (c == '=') {
+    if (*buf == '=') {
+      buf++;
+      return OP_E;
+    } else {
+      buf--;
+      return 0;
+    }
+  } else if(c == '!') {
+    if(*buf == '=') {
+      buf++;
+      return OP_NE;
+    } else {
+      buf--;
+      return 0;
+    }
+  } else if(c == '<') {
+    if (*buf == '=') {
+      buf++;
+      return OP_LE;
+    } else {
+      return OP_L;
+    }
+  } else if(c == '>') {
+    if (*buf == '=') {
+      buf++;
+      return OP_ME;
+    } else {
+      return OP_M;
+    }
   } else {
     buf--;
     return 0;
