@@ -11,7 +11,7 @@ void expr() {
 
     if(o == OP_ADD) {
       inst2("add", REG_RAX, REG_RDI);
-    } else {
+    } else if (o == OP_SUB) {
       inst2("sub", REG_RAX, REG_RDI);
     }
 
