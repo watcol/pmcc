@@ -45,7 +45,3 @@ void inst2(char* in, int dst, int src) {
   putval(src);
   putc('\n');
 }
-
-void ret() {
-  puts("  ret");
-}

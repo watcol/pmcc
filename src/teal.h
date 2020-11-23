@@ -24,14 +24,11 @@ void parse(char* buf);
 #define REG_RAX (-1)
 #define REG_RDI (-2)
 
-void putval(int i);
 void init_code();
 void func(char* name);
 void inst(char* in);
 void inst1(char* in, int val);
 void inst2(char* in, int dst, int src);
-void inst(char* in);
-void ret();
 
 // std.c
 #define NULL 0
