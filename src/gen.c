@@ -22,6 +22,30 @@ void func(char* name) {
   puts(":");
 }
 
+void inst(char* in) {
+  put("  ");
+  put(in);
+  putc('\n');
+}
+
+void inst1(char* in, int val) {
+  put("  ");
+  put(in);
+  putc(' ');
+  putval(val);
+  putc('\n');
+}
+
+void inst2(char* in, int dst, int src) {
+  put("  ");
+  put(in);
+  putc(' ');
+  putval(dst);
+  put(", ");
+  putval(src);
+  putc('\n');
+}
+
 void ret() {
   puts("  ret");
 }
