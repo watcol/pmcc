@@ -10,33 +10,6 @@ int main() {
   // debug: Print the buffer.
   // eput(buf);
 
-  init_lexer(buf);
-
-  // Write assembly.
-  puts(".intel_syntax noprefix");
-  puts(".globl main");
-  puts("main:");
-
-  // Read a number.
-  put("  mov rax, ");
-  putlen(exp_num());
-  putc('\n');
-
-  // Addition and subtraction.
-  while (!eof()) {
-    int o = exp_op();
-    if (o == OP_ADD) {
-      put("  add rax, ");
-      putlen(exp_num());
-      putc('\n');
-    } else {
-      put("  sub rax, ");
-      putlen(exp_num());
-      putc('\n');
-    }
-  }
-
-  puts("  ret");
-
+  parse(buf);
   return 0;
 }
