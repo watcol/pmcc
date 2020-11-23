@@ -114,12 +114,15 @@ int exp_op() {
 }
 
 int this_op(int o) {
-  int b = op() == o;
-  if (!b) {
+  int o2 = op();
+  if(!o2) {
+    return 0;
+  } else if (o2 != o) {
     buf--;
+    return 0;
+  } else {
+    return o;
   }
-
-  return b;
 }
 
 int these_op(int* os, int c) {
