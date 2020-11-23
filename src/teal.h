@@ -4,6 +4,8 @@
 // lex.c
 #define OP_ADD 0
 #define OP_SUB 1
+#define OP_MUL 2
+#define OP_DIV 3
 
 void init_lexer(char *buf);
 void putlen(int len);
