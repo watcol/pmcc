@@ -8,9 +8,10 @@ void init_lexer(char *buf2) {
   tmp = 0;
 }
 
-void putlen(int len) {
-  write(buf, len);
-  buf+=len;
+void lex_put() {
+  write(buf, tmp);
+  buf+=tmp;
+  tmp = 0;
 }
 
 int comment() {
@@ -63,19 +64,19 @@ char exp_this_ch(char c) {
 int num() {
   space();
   if(is_digit(*buf)) {
-    return digitlen(buf);
+    tmp = digitlen(buf);
+    return REG_LEX;
   } else {
-    return -1;
+    return REG_UNKNOWN;
   }
 }
 
 int exp_num() {
-  int len = num();
-  if(len == -1) {
+  if(!num()) {
     panic();
-    return -1;
+    return REG_UNKNOWN;
   } else {
-    return len;
+    return REG_LEX;
   }
 }
 
@@ -111,7 +112,7 @@ int op() {
     } else {
       buf--;
       tmp = 0;
-      return 0;
+      return OP_UNKNOWN;
     }
   } else if(c == '!') {
     if(*buf == '=') {
@@ -121,7 +122,7 @@ int op() {
     } else {
       buf--;
       tmp = 0;
-      return 0;
+      return OP_UNKNOWN;
     }
   } else if(c == '<') {
     if (*buf == '=') {
@@ -142,7 +143,7 @@ int op() {
   } else {
     buf--;
     tmp = 0;
-    return 0;
+    return OP_UNKNOWN;
   }
 }
 

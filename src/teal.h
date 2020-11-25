@@ -2,6 +2,7 @@
 #define _TEAL_H_
 
 // lex.c
+#define OP_UNKNOWN 0
 #define OP_ADD 1
 #define OP_SUB 2
 #define OP_MUL 3
@@ -14,7 +15,7 @@
 #define OP_NE 10
 
 void init_lexer(char *buf);
-void putlen(int len);
+void lex_put();
 void space();
 char ch();
 char this_ch(char c);
@@ -34,14 +35,16 @@ int exp_these_op(int* os, int c);
 void parse(char* buf);
 
 // gen.c
-#define REG_RAX (-1)
-#define REG_RDI (-2)
-#define REG_RSI (-3)
-#define REG_RDX (-4)
-#define REG_RCX (-5)
-#define REG_R8  (-6)
-#define REG_R9  (-7)
-#define REG_AL  (-8)
+#define REG_UNKNOWN 0
+#define REG_LEX 1
+#define REG_RAX 2
+#define REG_RDI 3
+#define REG_RSI 4
+#define REG_RDX 5
+#define REG_RCX 6
+#define REG_R8  7
+#define REG_R9  8
+#define REG_AL  9
 
 void init_code();
 void func(char* name);

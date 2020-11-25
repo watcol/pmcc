@@ -1,7 +1,9 @@
 #include"teal.h"
 
 void putval(int i) {
-  if (i == REG_RAX) {
+  if (i == REG_LEX) {
+    lex_put();
+  } else if (i == REG_RAX) {
     put("rax");
   } else if (i == REG_RDI) {
     put("rdi");
@@ -18,7 +20,8 @@ void putval(int i) {
   } else if (i == REG_AL) {
     put("al");
   } else {
-    putlen(i);
+    eputs("Unknown register type.");
+    sys_exit(1);
   }
 }
 
