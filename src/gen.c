@@ -1,23 +1,23 @@
 #include"teal.h"
 
 void putval(int i) {
-  if (i == REG_LEX) {
+  if (i == VAL_LEX) {
     lex_put();
-  } else if (i == REG_RAX) {
+  } else if (i == VAL_RAX) {
     put("rax");
-  } else if (i == REG_RDI) {
+  } else if (i == VAL_RDI) {
     put("rdi");
-  } else if (i == REG_RSI) {
+  } else if (i == VAL_RSI) {
     put("rsi");
-  } else if (i == REG_RDX) {
+  } else if (i == VAL_RDX) {
     put("rdx");
-  } else if (i == REG_RCX) {
+  } else if (i == VAL_RCX) {
     put("rcx");
-  } else if (i == REG_R8) {
+  } else if (i == VAL_R8) {
     put("r8");
-  } else if (i == REG_R9) {
+  } else if (i == VAL_R9) {
     put("r9");
-  } else if (i == REG_AL) {
+  } else if (i == VAL_AL) {
     put("al");
   } else {
     eputs("Unknown register type.");
@@ -43,7 +43,7 @@ void inst(char* in) {
   putc('\n');
 }
 
-void instr(char* in, int val) {
+void instv(char* in, int val) {
   put("  ");
   put(in);
   putc(' ');
@@ -51,7 +51,7 @@ void instr(char* in, int val) {
   putc('\n');
 }
 
-void instv(char* in, char* val) {
+void insts(char* in, char* val) {
   put("  ");
   put(in);
   putc(' ');
@@ -59,7 +59,7 @@ void instv(char* in, char* val) {
   putc('\n');
 }
 
-void instrr(char* in, int dst, int src) {
+void instvv(char* in, int dst, int src) {
   put("  ");
   put(in);
   putc(' ');
@@ -69,7 +69,7 @@ void instrr(char* in, int dst, int src) {
   putc('\n');
 }
 
-void instrv(char* in, int dst, char* src) {
+void instvs(char* in, int dst, char* src) {
   put("  ");
   put(in);
   putc(' ');

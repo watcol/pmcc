@@ -19,7 +19,7 @@ void expr_factor() {
     expr();
     exp_this_ch(')');
   } else {
-    instr("push", exp_num());
+    instv("push", exp_num());
   }
 }
 
@@ -27,9 +27,9 @@ void expr_unary() {
   int o = these_op(group_add, count_add);
   expr_factor();
   if(o == OP_SUB) {
-    instr("pop", REG_RAX);
-    instrv("imul", REG_RAX, "-1");
-    instr("push", REG_RAX);
+    instv("pop", VAL_RAX);
+    instvs("imul", VAL_RAX, "-1");
+    instv("push", VAL_RAX);
   }
 }
 
@@ -39,20 +39,20 @@ void expr_mul() {
   int o;
   while((o = these_op(group_mul, count_mul))) {
     expr_unary();
-    instr("pop", REG_RDI);
-    instr("pop", REG_RAX);
+    instv("pop", VAL_RDI);
+    instv("pop", VAL_RAX);
 
     if(o == OP_MUL) {
-      instrr("imul", REG_RAX, REG_RDI);
+      instvv("imul", VAL_RAX, VAL_RDI);
     } else if (o == OP_DIV) {
       inst("cqo");
-      instr("idiv", REG_RDI);
+      instv("idiv", VAL_RDI);
     } else {
       eputs("Unknown operator");
       sys_exit(1);
     }
 
-    instr("push", REG_RAX);
+    instv("push", VAL_RAX);
   }
 }
 
@@ -62,19 +62,19 @@ void expr_add() {
   int o;
   while((o = these_op(group_add, count_add))) {
     expr_mul();
-    instr("pop", REG_RDI);
-    instr("pop", REG_RAX);
+    instv("pop", VAL_RDI);
+    instv("pop", VAL_RAX);
 
     if(o == OP_ADD) {
-      instrr("add", REG_RAX, REG_RDI);
+      instvv("add", VAL_RAX, VAL_RDI);
     } else if (o == OP_SUB) {
-      instrr("sub", REG_RAX, REG_RDI);
+      instvv("sub", VAL_RAX, VAL_RDI);
     } else {
       eputs("Unknown operator");
       sys_exit(1);
     }
 
-    instr("push", REG_RAX);
+    instv("push", VAL_RAX);
   }
 }
 
@@ -84,25 +84,25 @@ void expr_cmp() {
   int o;
   while((o = these_op(group_cmp, count_cmp))) {
     expr_add();
-    instr("pop", REG_RDI);
-    instr("pop", REG_RAX);
+    instv("pop", VAL_RDI);
+    instv("pop", VAL_RAX);
 
     if(o == OP_L) {
-      instrr("cmp", REG_RAX, REG_RDI);
-      instr("setl", REG_AL);
+      instvv("cmp", VAL_RAX, VAL_RDI);
+      instv("setl", VAL_AL);
     } else if(o == OP_LE) {
-      instrr("cmp", REG_RAX, REG_RDI);
-      instr("setle", REG_AL);
+      instvv("cmp", VAL_RAX, VAL_RDI);
+      instv("setle", VAL_AL);
     } else if(o == OP_ME) {
-      instrr("cmp", REG_RDI, REG_RAX);
-      instr("setle", REG_AL);
+      instvv("cmp", VAL_RDI, VAL_RAX);
+      instv("setle", VAL_AL);
     } else if(o == OP_M) {
-      instrr("cmp", REG_RDI, REG_RAX);
-      instr("setl", REG_AL);
+      instvv("cmp", VAL_RDI, VAL_RAX);
+      instv("setl", VAL_AL);
     }
 
-    instrr("movzb", REG_RAX, REG_AL);
-    instr("push", REG_RAX);
+    instvv("movzb", VAL_RAX, VAL_AL);
+    instv("push", VAL_RAX);
   }
 }
 
@@ -112,18 +112,18 @@ void expr_eq() {
   int o;
   while((o = these_op(group_eq, count_eq))) {
     expr_cmp();
-    instr("pop", REG_RDI);
-    instr("pop", REG_RAX);
-    instrr("cmp", REG_RAX, REG_RDI);
+    instv("pop", VAL_RDI);
+    instv("pop", VAL_RAX);
+    instvv("cmp", VAL_RAX, VAL_RDI);
 
     if(o == OP_E) {
-      instr("sete", REG_AL);
+      instv("sete", VAL_AL);
     } else if(o == OP_NE) {
-      instr("setne", REG_AL);
+      instv("setne", VAL_AL);
     }
 
-    instrr("movzb", REG_RAX, REG_AL);
-    instr("push", REG_RAX);
+    instvv("movzb", VAL_RAX, VAL_AL);
+    instv("push", VAL_RAX);
   }
 }
 
@@ -139,6 +139,6 @@ void parse(char* buf) {
 
   expr();
 
-  instr("pop", REG_RAX);
+  instv("pop", VAL_RAX);
   inst("ret");
 }

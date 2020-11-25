@@ -65,19 +65,18 @@ int num() {
   space();
   if(is_digit(*buf)) {
     tmp = digitlen(buf);
-    return REG_LEX;
+    return VAL_LEX;
   } else {
-    return REG_UNKNOWN;
+    return VAL_UNKNOWN;
   }
 }
 
 int exp_num() {
-  if(!num()) {
+  int i = num();
+  if(!i) {
     panic();
-    return REG_UNKNOWN;
-  } else {
-    return REG_LEX;
   }
+  return i;
 }
 
 int eof() {

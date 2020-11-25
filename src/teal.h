@@ -35,24 +35,24 @@ int exp_these_op(int* os, int c);
 void parse(char* buf);
 
 // gen.c
-#define REG_UNKNOWN 0
-#define REG_LEX 1
-#define REG_RAX 2
-#define REG_RDI 3
-#define REG_RSI 4
-#define REG_RDX 5
-#define REG_RCX 6
-#define REG_R8  7
-#define REG_R9  8
-#define REG_AL  9
+#define VAL_UNKNOWN 0
+#define VAL_LEX 1
+#define VAL_RAX 2
+#define VAL_RDI 3
+#define VAL_RSI 4
+#define VAL_RDX 5
+#define VAL_RCX 6
+#define VAL_R8  7
+#define VAL_R9  8
+#define VAL_AL  9
 
 void init_code();
 void func(char* name);
 void inst(char* in);
-void instr(char* in, int val);
-void instv(char* in, char* val);
-void instrr(char* in, int dst, int src);
-void instrv(char* in, int dst, char* src);
+void instv(char* in, int val);
+void insts(char* in, char* val);
+void instvv(char* in, int dst, int src);
+void instvs(char* in, int dst, char* src);
 
 // util.c
 #define NULL 0
