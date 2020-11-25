@@ -16,15 +16,15 @@
 
 void init_lexer(char *buf);
 void lex_put();
-void space();
-char ch();
+void skip_space();
+char lex_ch();
 char this_ch(char c);
 char exp_this_ch(char c);
-int num();
+int lex_num();
 int exp_num();
-int eof();
+int at_eof();
 void exp_eof();
-int op();
+int lex_op();
 int exp_op();
 int this_op(int o);
 int these_op(int* os, int c);

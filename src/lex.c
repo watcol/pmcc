@@ -26,7 +26,7 @@ int comment() {
   return 1;
 }
 
-void space() {
+void skip_space() {
   while(is_space(*buf) || comment()) {
     buf++;
   }
@@ -37,8 +37,8 @@ void panic() {
   sys_exit(1);
 }
 
-char ch() {
-  space();
+char lex_ch() {
+  skip_space();
   char c = *buf;
   buf++;
   tmp = 1;
@@ -46,7 +46,7 @@ char ch() {
 }
 
 char this_ch(char c) {
-  if(ch() == c) {
+  if(lex_ch() == c) {
     return c;
   } else {
     buf-=tmp;
@@ -61,8 +61,8 @@ char exp_this_ch(char c) {
   return c;
 }
 
-int num() {
-  space();
+int lex_num() {
+  skip_space();
   if(is_digit(*buf)) {
     tmp = digitlen(buf);
     return VAL_LEX;
@@ -72,26 +72,26 @@ int num() {
 }
 
 int exp_num() {
-  int i = num();
+  int i = lex_num();
   if(!i) {
     panic();
   }
   return i;
 }
 
-int eof() {
-  space();
+int at_eof() {
+  skip_space();
   return !*buf;
 }
 
 void exp_eof() {
-  if(!eof()) {
+  if(!at_eof()) {
     panic();
   }
 }
 
-int op() {
-  space();
+int lex_op() {
+  skip_space();
   char c = *buf;
   buf++;
   tmp = 1;
@@ -147,7 +147,7 @@ int op() {
 }
 
 int exp_op() {
-  int o = op();
+  int o = lex_op();
   if(!o) {
     panic();
   }
@@ -156,7 +156,7 @@ int exp_op() {
 }
 
 int this_op(int o) {
-  if(op() != o) {
+  if(lex_op() != o) {
     buf-=tmp;
     return 0;
   } else {
