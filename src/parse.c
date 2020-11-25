@@ -141,4 +141,8 @@ void parse(char* buf) {
 
   instv("pop", VAL_RAX);
   inst("ret");
+
+  if(!at_eof()) {
+    eputs("WARN: Unread characters are remain.");
+  }
 }
