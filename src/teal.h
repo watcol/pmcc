@@ -58,11 +58,8 @@ int is_space(char c);
 int is_digit(char c);
 int length(char *buf);
 int digitlen(char *buf);
-void sys_exit(int code);
 int read(void *buf, int count);
 int ended();
-void write(void *buf, int count);
-void ewrite(void *buf, int count);
 void putc(char c);
 void eputc(char c);
 void put(char *s);
@@ -74,6 +71,8 @@ void eputs(char *s);
 void read_stdin(char *buf, int count);
 
 // sys.s
-int syscall(int num, ...);
+void sys_exit(int code);
+void write(void *buf, int count);
+void ewrite(void *buf, int count);
 
 #endif

@@ -1,13 +1,35 @@
 .intel_syntax noprefix
 
-.globl syscall
-syscall:
-  mov rax, rdi
-  mov rdi, rsi
-  mov rsi, rdx
-  mov rdx, rcx
-  mov r10, r8
-  mov  r8, r9
+.globl read
+read:
+  mov rdx, rsi
+  mov rsi, rdi
+  mov rdi, 0
+  mov rax, 0
+  syscall
+  ret
+
+.globl write
+write:
+  mov rdx, rsi
+  mov rsi, rdi
+  mov rdi, 1
+  mov rax, 1
+  syscall
+  ret
+
+.globl ewrite
+ewrite:
+  mov rdx, rsi
+  mov rsi, rdi
+  mov rdi, 2
+  mov rax, 1
+  syscall
+  ret
+
+.globl sys_exit
+sys_exit:
+  mov rax, 60
   syscall
   ret
 

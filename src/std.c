@@ -1,9 +1,5 @@
 #include"teal.h"
 
-#define STDIN 0
-#define STDOUT 1
-#define STDERR 2
-
 int is_space(char c) {
   return c == ' '  || c == '\t' ||
          c == '\n' || c == '\v' ||
@@ -31,24 +27,8 @@ int digitlen(char* buf) {
   return len;
 }
 
-void sys_exit(int code) {
-  syscall(60, code);
-}
-
-int read(void *buf, int count) {
-  return syscall(0, STDIN, buf, count);
-}
-
 int ended() {
   return read(NULL, 1) == 0;
-}
-
-void write(void *buf, int count) {
-  syscall(1, STDOUT, buf, count);
-}
-
-void ewrite(void *buf, int count) {
-  syscall(1, STDERR, buf, count);
 }
 
 void putc(char c) {
