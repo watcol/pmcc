@@ -1,15 +1,15 @@
 #include"teal.h"
 
-int group_add[] = {OP_ADD, OP_SUB};
+int group_add[2] = {OP_ADD, OP_SUB};
 int count_add = 2;
 
-int group_mul[] = {OP_MUL, OP_DIV};
+int group_mul[2] = {OP_MUL, OP_DIV};
 int count_mul = 2;
 
-int group_cmp[] = {OP_L, OP_LE, OP_ME, OP_M};
+int group_cmp[4] = {OP_L, OP_LE, OP_ME, OP_M};
 int count_cmp = 4;
 
-int group_eq[] = {OP_E, OP_NE};
+int group_eq[2] = {OP_E, OP_NE};
 int count_eq = 2;
 
 void expr();
