@@ -10,6 +10,15 @@ int is_digit(char c) {
   return c >= '0' && c <= '9';
 }
 
+int is_alpha(char c) {
+  return (c >= 'A' && c <= 'Z') ||
+         (c >= 'a' && c <= 'z');
+}
+
+int is_alphanum(char c) {
+  return is_digit(c) || is_alpha(c);
+}
+
 int length(char* buf) {
   int len = 0;
   while(*(buf++)) {

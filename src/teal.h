@@ -59,6 +59,8 @@ void instvs(char* in, int dst, char* src);
 
 int is_space(char c);
 int is_digit(char c);
+int is_alpha(char c);
+int is_alphanum(char c);
 int length(char *buf);
 int digitlen(char *buf);
 void read_stdin(char *buf, int count);
