@@ -20,7 +20,7 @@ void putval(int i) {
   } else if (i == VAL_AL) {
     put("al");
   } else {
-    eputs("Unknown register type.");
+    eputs("Unknown operand type.");
     sys_exit(1);
   }
 }
