@@ -63,6 +63,7 @@ int is_alpha(char c);
 int is_alphanum(char c);
 int length(char *buf);
 int digitlen(char *buf);
+int identlen(char *buf);
 void read_stdin(char *buf, int count);
 int ended();
 void putc(char c);

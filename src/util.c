@@ -36,6 +36,21 @@ int digitlen(char* buf) {
   return len;
 }
 
+int identlen(char* buf) {
+  if(!is_alpha(*buf)) {
+    return 0;
+  }
+
+  int len = 1;
+  buf++;
+  while(is_alphanum(*buf) || *buf == '_') {
+    len++;
+    buf++;
+  }
+
+  return len;
+}
+
 int ended() {
   return read(NULL, 1) == 0;
 }
