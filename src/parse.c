@@ -12,6 +12,9 @@ int count_cmp = 4;
 int group_eq[2] = {OP_E, OP_NE};
 int count_eq = 2;
 
+int group_asg[1] = {OP_ASG};
+int count_asg = 1;
+
 void exp_expr();
 
 int expr_factor() {
@@ -23,6 +26,9 @@ int expr_factor() {
     int n = lex_num();
     if(n) {
       instv("push", n);
+      return 1;
+    } else if(lex_ident()) {
+      instv("push", VAL_MEM);
       return 1;
     } else {
       return 0;
@@ -216,8 +222,32 @@ int exp_lval() {
   return l;
 }
 
+void exp_expr_asg();
+
+int expr_asg() {
+  if(!expr_eq()) {
+    return 0;
+  }
+
+  if(these_op(group_asg, count_asg)) {
+    exp_expr_asg();
+    instv("pop", VAL_RAX);
+    instvv("mov", VAL_MEM, VAL_RAX);
+    instv("push", VAL_RAX);
+  }
+
+  return 1;
+}
+
+void exp_expr_asg() {
+  if(!expr_asg()) {
+    eputs("Parse failed");
+    sys_exit(1);
+  }
+}
+
 int expr() {
-  return expr_eq();
+  return expr_asg();
 }
 
 void exp_expr() {
