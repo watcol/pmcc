@@ -299,7 +299,6 @@ void parse(char* buf) {
 
   program();
 
-  instv("pop", VAL_RAX);
   func_fin();
 
   if(!at_eof()) {

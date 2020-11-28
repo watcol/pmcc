@@ -130,6 +130,7 @@ char exp_this_ch(char c) {
 }
 
 int this_str(char* str) {
+  skip_space();
   int len = length(str);
   if (str_cmp(buf, str, len)) {
     buf+=len;
