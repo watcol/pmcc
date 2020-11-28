@@ -272,7 +272,8 @@ int stmt() {
     return 0;
   }
 
-  return this_ch(';');
+  exp_this_ch(';');
+  return 1;
 }
 
 void exp_stmt() {
