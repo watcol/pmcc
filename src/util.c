@@ -90,6 +90,12 @@ void eputs(char *s) {
 void putnum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
+
+  if(n == 0) {
+    buf[c] = '0';
+    c--;
+  }
+
   while(n != 0) {
     buf[c] = '0' + (n % 10);
     n /= 10;
@@ -103,6 +109,12 @@ void putnum(int n) {
 void eputnum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
+
+  if(n == 0) {
+    buf[c] = '0';
+    c--;
+  }
+
   while(n != 0) {
     buf[c] = '0' + (n % 10);
     n /= 10;
