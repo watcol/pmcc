@@ -2,23 +2,16 @@
 
 char* buf;
 int tmp;
-int offset;
 
 void init_lexer(char *buf2) {
   buf = buf2;
   tmp = 0;
-  offset = 0;
 }
 
 void lex_put() {
   write(buf, tmp);
   buf+=tmp;
   tmp = 0;
-}
-
-void put_offset() {
-  putnum(offset);
-  offset = 0;
 }
 
 int comment() {
@@ -89,9 +82,9 @@ int exp_num() {
 int lex_ident() {
   skip_space();
   if(is_alpha(*buf)) {
-    offset = (*buf - 'a') * 8;
+    int offset = (*buf - 'a') * 8;
     buf++;
-    return VAL_MEM;
+    return -(offset + 1);
   } else {
     return VAL_UNKNOWN;
   }

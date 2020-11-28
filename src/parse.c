@@ -27,11 +27,14 @@ int expr_factor() {
     if(n) {
       instv("push", n);
       return 1;
-    } else if(lex_ident()) {
-      instv("push", VAL_MEM);
-      return 1;
-    } else {
+    } else  {
+      int l = lex_ident();
+      if (l) {
+        instv("push", l);
+        return 1;
+      } else {
       return 0;
+      }
     }
   }
 }
@@ -225,15 +228,18 @@ int exp_lval() {
 void exp_expr_asg();
 
 int expr_asg() {
-  if(!expr_eq()) {
-    return 0;
+  int l = lval();
+  if(!l) {
+    return expr_eq();
   }
 
   if(these_op(group_asg, count_asg)) {
     exp_expr_asg();
     instv("pop", VAL_RAX);
-    instvv("mov", VAL_MEM, VAL_RAX);
+    instvv("mov", l, VAL_RAX);
     instv("push", VAL_RAX);
+  } else {
+    instv("push", l);
   }
 
   return 1;

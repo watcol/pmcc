@@ -41,15 +41,14 @@ void parse(char* buf);
 // gen.c
 #define VAL_UNKNOWN 0
 #define VAL_LEX 1
-#define VAL_MEM 2
-#define VAL_RAX 3
-#define VAL_RDI 4
-#define VAL_RSI 5
-#define VAL_RDX 6
-#define VAL_RCX 7
-#define VAL_R8  8
-#define VAL_R9  9
-#define VAL_AL  10
+#define VAL_RAX 2
+#define VAL_RDI 3
+#define VAL_RSI 4
+#define VAL_RDX 5
+#define VAL_RCX 6
+#define VAL_R8  7
+#define VAL_R9  8
+#define VAL_AL  9
 
 void init_code();
 void func(char* name);

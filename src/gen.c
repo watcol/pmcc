@@ -3,10 +3,6 @@
 void putval(int i) {
   if (i == VAL_LEX) {
     lex_put();
-  } else if (i == VAL_MEM) {
-    put("[rbp-");
-    put_offset();
-    putc(']');
   } else if (i == VAL_RAX) {
     put("rax");
   } else if (i == VAL_RDI) {
@@ -23,6 +19,10 @@ void putval(int i) {
     put("r9");
   } else if (i == VAL_AL) {
     put("al");
+  } else if (i < 0) {
+    put("[rbp-");
+    putnum(-(i+1));
+    putc(']');
   } else {
     eputs("Unknown operand type.");
     sys_exit(1);
