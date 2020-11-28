@@ -228,6 +228,7 @@ int exp_lval() {
 void exp_expr_asg();
 
 int expr_asg() {
+  mark();
   int l = lval();
   if(!l) {
     return expr_eq();
@@ -239,7 +240,8 @@ int expr_asg() {
     instvv("mov", l, VAL_RAX);
     instv("push", VAL_RAX);
   } else {
-    instv("push", l);
+    jump();
+    return expr_eq();
   }
 
   return 1;
@@ -264,11 +266,17 @@ void exp_expr() {
 }
 
 int stmt() {
+  //mark();
   if(!expr()) {
     return 0;
   }
 
-  return this_ch(';');
+  if (this_ch(';')) {
+    return 1;
+  } else {
+    //jump();
+    return 0;
+  }
 }
 
 void exp_stmt() {
