@@ -16,8 +16,9 @@
 #define OP_ASG 11
 
 void init_lexer(char *buf);
-void mark();
-void jump();
+int mark();
+void jump(int c);
+void unmark(int c);
 void lex_put();
 void put_offset();
 void skip_space();

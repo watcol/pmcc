@@ -228,19 +228,21 @@ int exp_lval() {
 void exp_expr_asg();
 
 int expr_asg() {
-  mark();
+  int m = mark();
   int l = lval();
   if(!l) {
+    unmark(m);
     return expr_eq();
   }
 
   if(these_op(group_asg, count_asg)) {
+    unmark(m);
     exp_expr_asg();
     instv("pop", VAL_RAX);
     instvv("mov", l, VAL_RAX);
     instv("push", VAL_RAX);
   } else {
-    jump();
+    jump(m);
     return expr_eq();
   }
 
@@ -266,17 +268,11 @@ void exp_expr() {
 }
 
 int stmt() {
-  //mark();
   if(!expr()) {
     return 0;
   }
 
-  if (this_ch(';')) {
-    return 1;
-  } else {
-    //jump();
-    return 0;
-  }
+  return this_ch(';');
 }
 
 void exp_stmt() {

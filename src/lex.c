@@ -1,21 +1,49 @@
 #include"teal.h"
+#define MAX_MARKER 100
 
 char* buf;
-char* marked;
+char* marker[MAX_MARKER];
 int tmp;
 
 void init_lexer(char *buf2) {
   buf = buf2;
-  marked = buf;
+
+  int c = 0;
+  while(c < MAX_MARKER) {
+    marker[c] = NULL;
+    c++;
+  }
+
   tmp = 0;
 }
 
-void mark() {
-  marked = buf;
+int mark() {
+  int c = 0;
+  while(marker[c] != NULL && c != MAX_MARKER) {
+    c++;
+  }
+
+  if(c == MAX_MARKER) {
+    eputs("Too many markers.");
+    sys_exit(1);
+  }
+
+  marker[c] = buf;
+  return c;
 }
 
-void jump() {
-  buf = marked;
+void jump(int c) {
+  if(marker[c] == NULL) {
+    eputs("Use of unavailable marker.");
+    sys_exit(1);
+  }
+
+  buf = marker[c];
+  marker[c] = NULL;
+}
+
+void unmark(int c) {
+  marker[c] = NULL;
 }
 
 void lex_put() {
