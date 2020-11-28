@@ -202,6 +202,20 @@ void exp_expr_eq() {
   }
 }
 
+int lvar() {
+  return lex_ident();
+}
+
+int exp_lvar() {
+  int l = lvar();
+  if(!l) {
+    eputs("Parse failed");
+    sys_exit(1);
+  }
+
+  return l;
+}
+
 int expr() {
   return expr_eq();
 }
