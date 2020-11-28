@@ -1,3 +1,3 @@
-a = 6;
-z = 7;
-a * z;
+foo = 6;
+bar = 7;
+foo * bar;
