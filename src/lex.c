@@ -79,6 +79,24 @@ int exp_num() {
   return i;
 }
 
+int lex_ident() {
+  skip_space();
+  if(is_alpha(*buf)) {
+    tmp = 1;
+    return VAL_LEX;
+  } else {
+    return VAL_UNKNOWN;
+  }
+}
+
+int exp_ident() {
+  int i = lex_ident();
+  if(!i) {
+    panic();
+  }
+  return i;
+}
+
 int at_eof() {
   skip_space();
   return !*buf;

@@ -22,6 +22,8 @@ char this_ch(char c);
 char exp_this_ch(char c);
 int lex_num();
 int exp_num();
+int lex_ident();
+int exp_ident();
 int at_eof();
 void exp_eof();
 int lex_op();
