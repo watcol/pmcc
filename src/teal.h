@@ -25,6 +25,8 @@ void skip_space();
 char lex_ch();
 char this_ch(char c);
 char exp_this_ch(char c);
+int this_str(char* str);
+int exp_this_str(char* str);
 int lex_num();
 int exp_num();
 int lex_ident();

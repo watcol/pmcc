@@ -129,6 +129,26 @@ char exp_this_ch(char c) {
   return c;
 }
 
+int this_str(char* str) {
+  int len = length(str);
+  if (str_cmp(buf, str, len)) {
+    buf+=len;
+    return 1;
+  }
+
+  return 0;
+}
+
+int exp_this_str(char* str) {
+  int len = this_str(str);
+  if(!len) {
+    panic();
+    return 0;
+  }
+
+  return len;
+}
+
 int lex_num() {
   skip_space();
   if(is_digit(*buf)) {
