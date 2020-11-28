@@ -1,3 +1,3 @@
 foo = 6;
 bar = 7;
-foo * bar;
+return foo * bar;
