@@ -202,12 +202,12 @@ void exp_expr_eq() {
   }
 }
 
-int lvar() {
+int lval() {
   return lex_ident();
 }
 
-int exp_lvar() {
-  int l = lvar();
+int exp_lval() {
+  int l = lval();
   if(!l) {
     eputs("Parse failed");
     sys_exit(1);
