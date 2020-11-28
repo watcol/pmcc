@@ -30,6 +30,21 @@ int length(char* buf) {
   return len;
 }
 
+int str_cmp(char* buf1, char* buf2, int len) {
+  int c = 0;
+  if (buf1 == NULL || buf2 == NULL) {
+    return 0;
+  }
+
+  while(c < len) {
+    if(buf1[c] != buf2[c]) {
+      return 0;
+    }
+    c++;
+  }
+  return 1;
+}
+
 int digitlen(char* buf) {
   int len = 0;
   while(is_digit(*(buf++))) {

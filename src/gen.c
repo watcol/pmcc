@@ -47,7 +47,7 @@ void func(char* name) {
   // Prologue
   instv("push", VAL_RBP);
   instvv("mov", VAL_RBP, VAL_RSP);
-  instvs("sub", VAL_RSP, "208"); // 26 * 8
+  instvs("sub", VAL_RSP, "240"); // 30 * 8
 }
 
 void func_fin() {

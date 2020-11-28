@@ -72,6 +72,7 @@ int is_digit(char c);
 int is_alpha(char c);
 int is_alphanum(char c);
 int length(char *buf);
+int str_cmp(char* buf1, char* buf2, int len);
 int digitlen(char *buf);
 int identlen(char *buf);
 void read_stdin(char *buf, int count);
