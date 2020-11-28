@@ -24,6 +24,7 @@ sys.o: src/sys.s
 test: teal test/arith.tl test/cmp.tl
 	./test.sh test/arith.tl 42
 	./test.sh test/cmp.tl 1
+	./test.sh test/var.tl 42
 
 fmt: src/main.c src/teal.h src/util.c
 	clang-format -i $^
