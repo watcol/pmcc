@@ -13,6 +13,7 @@
 #define OP_M   8
 #define OP_E   9
 #define OP_NE 10
+#define OP_ASG 11
 
 void init_lexer(char *buf);
 void lex_put();

@@ -128,9 +128,7 @@ int lex_op() {
       tmp = 2;
       return OP_E;
     } else {
-      buf--;
-      tmp = 0;
-      return OP_UNKNOWN;
+      return OP_ASG;
     }
   } else if(c == '!') {
     if(*buf == '=') {
