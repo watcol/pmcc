@@ -75,6 +75,8 @@ void put(char *s);
 void eput(char *s);
 void puts(char *s);
 void eputs(char *s);
+void putnum();
+void eputnum();
 
 // sys.s
 void sys_exit(int code);

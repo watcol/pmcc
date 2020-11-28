@@ -1,5 +1,7 @@
 #include "teal.h"
 
+#define MAX_INT 20
+
 int is_space(char c) {
   return c == ' '  || c == '\t' ||
          c == '\n' || c == '\v' ||
@@ -83,6 +85,31 @@ void puts(char *s) {
 void eputs(char *s) {
   eput(s);
   eputc('\n');
+}
+
+void putnum(int n) {
+  char buf[MAX_INT + 1];
+  int c = MAX_INT;
+  while(n != 0) {
+    buf[c] = '0' + (n % 10);
+    n /= 10;
+    c--;
+  }
+
+  put(&buf[c+1]);
+}
+
+
+void eputnum(int n) {
+  char buf[MAX_INT + 1];
+  int c = MAX_INT;
+  while(n != 0) {
+    buf[c] = '0' + (n % 10);
+    n /= 10;
+    c--;
+  }
+
+  eput(&buf[c+1]);
 }
 
 void read_stdin(char *buf, int count) {
