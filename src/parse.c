@@ -268,7 +268,11 @@ void exp_expr() {
 }
 
 int stmt() {
-  if(!expr()) {
+  if(this_str("return")) {
+    exp_expr();
+    instv("pop", VAL_RAX);
+    func_fin();
+  } else if(!expr()) {
     return 0;
   }
 
