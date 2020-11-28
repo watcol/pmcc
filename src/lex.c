@@ -82,8 +82,9 @@ int exp_num() {
 int lex_ident() {
   skip_space();
   if(is_alpha(*buf)) {
-    tmp = 1;
-    return VAL_LEX;
+    int offset = (*buf - 'a') * 8;
+    buf++;
+    return -offset;
   } else {
     return VAL_UNKNOWN;
   }
