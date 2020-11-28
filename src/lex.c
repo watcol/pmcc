@@ -1,11 +1,21 @@
 #include"teal.h"
 
 char* buf;
+char* marked;
 int tmp;
 
 void init_lexer(char *buf2) {
   buf = buf2;
+  marked = buf;
   tmp = 0;
+}
+
+void mark() {
+  marked = buf;
+}
+
+void jump() {
+  buf = marked;
 }
 
 void lex_put() {
