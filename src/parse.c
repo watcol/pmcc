@@ -263,13 +263,32 @@ void exp_expr() {
   }
 }
 
+int stmt() {
+  if(!expr()) {
+    return 0;
+  }
+
+  return this_ch(';');
+}
+
+void exp_stmt() {
+  if(!stmt()) {
+    eputs("Parse failed");
+    sys_exit(1);
+  }
+}
+
+void program() {
+  while(stmt()) {}
+}
+
 void parse(char* buf) {
   init_lexer(buf);
 
   init_code();
   func("main");
 
-  exp_expr();
+  program();
 
   instv("pop", VAL_RAX);
   inst("ret");
