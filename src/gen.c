@@ -17,6 +17,10 @@ void putval(int i) {
     put("r8");
   } else if (i == VAL_R9) {
     put("r9");
+  } else if (i == VAL_RSP) {
+    put("rsp");
+  } else if (i == VAL_RBP) {
+    put("rbp");
   } else if (i == VAL_AL) {
     put("al");
   } else if (i < 0) {
@@ -39,6 +43,18 @@ void func(char* name) {
 
   put(name);
   puts(":");
+
+  // Prologue
+  instv("push", VAL_RBP);
+  instvv("mov", VAL_RBP, VAL_RSP);
+  instvs("sub", VAL_RSP, "208"); // 26 * 8
+}
+
+void func_fin() {
+  // Epilogue
+  instvv("mov", VAL_RSP, VAL_RBP);
+  instv("pop", VAL_RBP);
+  inst("ret");
 }
 
 void inst(char* in) {

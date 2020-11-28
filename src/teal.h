@@ -51,10 +51,13 @@ void parse(char* buf);
 #define VAL_RCX 6
 #define VAL_R8  7
 #define VAL_R9  8
-#define VAL_AL  9
+#define VAL_RSP 9
+#define VAL_RBP 10
+#define VAL_AL  11
 
 void init_code();
 void func(char* name);
+void func_fin();
 void inst(char* in);
 void instv(char* in, int val);
 void insts(char* in, char* val);
