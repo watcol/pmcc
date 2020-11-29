@@ -201,112 +201,131 @@ void exp_eof() {
 
 int lex_op() {
   skip_space();
-  char c = *buf;
-  buf++;
-  tmp = 1;
-  if(c == '+') {
+  tmp = 0;
+
+  if(*buf == '+') {
+    buf++;
+    tmp++;
     if(*buf == '+') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_INC;
     } else if (*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_ADDASG;
     } else {
       return OP_ADD;
     }
-  } else if (c == '-') {
+  } else if (*buf == '-') {
+    buf++;
+    tmp++;
     if(*buf == '-') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_DEC;
     } else if (*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_SUBASG;
     } else {
       return OP_SUB;
     }
-  } else if (c == '*') {
+  } else if (*buf == '*') {
+    buf++;
+    tmp++;
     if(*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_MULASG;
     } else {
       return OP_MUL;
     }
-  } else if (c == '/') {
+  } else if (*buf == '/') {
+    buf++;
+    tmp++;
     if(*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_DIVASG;
     } else {
       return OP_DIV;
     }
-  } else if (c == '%') {
+  } else if (*buf == '%') {
+    buf++;
+    tmp++;
     if(*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_REMASG;
     } else {
       return OP_REM;
     }
-  } else if (c == '=') {
+  } else if (*buf == '=') {
+    buf++;
+    tmp++;
     if (*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_EQ;
     } else {
       return OP_ASG;
     }
-  } else if(c == '!') {
+  } else if(*buf == '!') {
+    buf++;
+    tmp++;
     if(*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_NEQ;
     } else {
       return OP_NOT;
     }
-  } else if(c == '<') {
+  } else if(*buf == '<') {
+    buf++;
+    tmp++;
     if (*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_LEQ;
     } else {
       return OP_LESS;
     }
-  } else if(c == '>') {
+  } else if(*buf == '>') {
+    buf++;
+    tmp++;
     if (*buf == '=') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_MEQ;
     } else {
       return OP_MORE;
     }
-  } else if(c == '&') {
+  } else if(*buf == '&') {
+    buf++;
+    tmp++;
     if (*buf == '&') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_AND;
     } else {
       buf--;
-      tmp = 0;
+      tmp--;
       return OP_UNKNOWN;
     }
-  } else if(c == '|') {
+  } else if(*buf == '|') {
+    buf++;
+    tmp++;
     if (*buf == '|') {
       buf++;
-      tmp = 2;
+      tmp++;
       return OP_OR;
     } else {
       buf--;
-      tmp = 0;
+      tmp--;
       return OP_UNKNOWN;
     }
   } else {
-    buf--;
-    tmp = 0;
     return OP_UNKNOWN;
   }
 }
