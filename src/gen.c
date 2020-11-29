@@ -6,6 +6,7 @@ int cur_num;
 char* vars[MAX_VARS];
 int cur_offset;
 int offsets[MAX_VARS];
+int types[MAX_VARS];
 
 void init_code() {
   cur_num = 0;
@@ -14,6 +15,7 @@ void init_code() {
   while(c < MAX_VARS) {
     vars[c] = NULL;
     offsets[c] = 0;
+    types[c] = 0;
     c++;
   }
 
@@ -21,17 +23,23 @@ void init_code() {
 }
 
 
-int get_varid(char* str, int len) {
+int get_varid(char* str, int len, int type) {
   int c = 0;
   while(!str_cmp(str, vars[c], len) && c != cur_num) {
     c++;
   }
 
   if(c == cur_num) {
+    if(type == TY_UNKNOWN) {
+      eputs("Type must be known in the declaration.");
+      sys_exit(1);
+    }
+
     cur_num++;
     vars[c] = str;
-    cur_offset+=8;
-    offsets[c] = c*8;
+    cur_offset+=type;
+    offsets[c] = c*type;
+    types[c] = type;
 
     if(cur_offset >= MAX_VARS) {
       eputs("Too many variables");
@@ -67,8 +75,19 @@ void putval(int i) {
   } else if (i == VAL_AL) {
     put("al");
   } else if (i < 0) {
-    put("QWORD ptr [rbp-");
-    putnum(offsets[-(i+1)]);
+    int id = -(i+1);
+    if(types[id] == TY_CHAR) {
+      put("BYTE");
+    } else if (types[id] == TY_SHORT) {
+      put("WORD");
+    } else if (types[id] == TY_INT) {
+      put("DWORD");
+    } else if (types[id] == TY_LONG) {
+      put("QWORD");
+    }
+
+    put(" ptr [rbp-");
+    putnum(offsets[id]);
     putc(']');
   } else {
     eputs("Unknown operand type.");
@@ -86,7 +105,7 @@ void func(char* name) {
   // Prologue
   instv("push", VAL_RBP);
   instvv("mov", VAL_RBP, VAL_RSP);
-  instvs("sub", VAL_RSP, "240"); // MAX_VARS
+  instvs("sub", VAL_RSP, "200"); // MAX_VARS
 }
 
 void func_fin() {

@@ -67,8 +67,14 @@ void parse();
 #define VAL_RBP 10
 #define VAL_AL  11
 
+#define TY_UNKNOWN 0
+#define TY_CHAR    1
+#define TY_SHORT   2
+#define TY_INT     4
+#define TY_LONG    8
+
 void init_code();
-int get_varid(char* cur, int len);
+int get_varid(char* cur, int len, int type);
 void func(char* name);
 void func_fin();
 void inst(char* in);

@@ -147,7 +147,7 @@ int lex_ident() {
   skip_space();
   if(is_alpha(*cur)) {
     int len = identlen(cur);
-    int id = get_varid(cur, len);
+    int id = get_varid(cur, len, TY_LONG);
     cur+=len;
     return id;
   } else {
