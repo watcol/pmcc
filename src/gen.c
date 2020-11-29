@@ -4,12 +4,14 @@
 
 int var_num;
 char* vars[MAX_VARS];
+int offsets[MAX_VARS];
 
 void init_code() {
   var_num = 0;
   int c = 0;
   while(c < MAX_VARS) {
     vars[c] = NULL;
+    offsets[c] = 0;
     c++;
   }
 
@@ -17,7 +19,7 @@ void init_code() {
 }
 
 
-int get_offset(char* str, int len) {
+int get_varid(char* str, int len) {
   int c = 0;
   while(!str_cmp(str, vars[c], len) && c != var_num) {
     c++;
@@ -33,7 +35,8 @@ int get_offset(char* str, int len) {
     vars[c] = str;
   }
 
-  return c * 8;
+  offsets[c] = c * 8;
+  return -(c+1);
 }
 
 
@@ -62,7 +65,7 @@ void putval(int i) {
     put("al");
   } else if (i < 0) {
     put("QWORD ptr [rbp-");
-    putnum(-(i+1));
+    putnum(offsets[-(i+1)]);
     putc(']');
   } else {
     eputs("Unknown operand type.");

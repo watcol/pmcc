@@ -68,7 +68,7 @@ void parse();
 #define VAL_AL  11
 
 void init_code();
-int get_offset(char* cur, int len);
+int get_varid(char* cur, int len);
 void func(char* name);
 void func_fin();
 void inst(char* in);
