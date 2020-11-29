@@ -20,6 +20,11 @@
 #define OP_INC    15
 #define OP_DEC    16
 #define OP_ASG    17
+#define OP_ADDASG 18
+#define OP_SUBASG 19
+#define OP_MULASG 20
+#define OP_DIVASG 21
+#define OP_REMASG 22
 
 void init_lexer(char *buf);
 int mark();

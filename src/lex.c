@@ -209,6 +209,10 @@ int lex_op() {
       buf++;
       tmp = 2;
       return OP_INC;
+    } else if (*buf == '=') {
+      buf++;
+      tmp = 2;
+      return OP_ADDASG;
     } else {
       return OP_ADD;
     }
@@ -217,15 +221,37 @@ int lex_op() {
       buf++;
       tmp = 2;
       return OP_DEC;
+    } else if (*buf == '=') {
+      buf++;
+      tmp = 2;
+      return OP_SUBASG;
     } else {
       return OP_SUB;
     }
   } else if (c == '*') {
-    return OP_MUL;
+    if(*buf == '=') {
+      buf++;
+      tmp = 2;
+      return OP_MULASG;
+    } else {
+      return OP_MUL;
+    }
   } else if (c == '/') {
-    return OP_DIV;
+    if(*buf == '=') {
+      buf++;
+      tmp = 2;
+      return OP_DIVASG;
+    } else {
+      return OP_DIV;
+    }
   } else if (c == '%') {
-    return OP_REM;
+    if(*buf == '=') {
+      buf++;
+      tmp = 2;
+      return OP_REMASG;
+    } else {
+      return OP_REM;
+    }
   } else if (c == '=') {
     if (*buf == '=') {
       buf++;
