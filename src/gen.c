@@ -1,13 +1,15 @@
 #include"teal.h"
 
-#define MAX_VARS 30
+#define MAX_VARS 200
 
-int var_num;
+int cur_num;
 char* vars[MAX_VARS];
+int cur_offset;
 int offsets[MAX_VARS];
 
 void init_code() {
-  var_num = 0;
+  cur_num = 0;
+  cur_offset = 0;
   int c = 0;
   while(c < MAX_VARS) {
     vars[c] = NULL;
@@ -21,21 +23,22 @@ void init_code() {
 
 int get_varid(char* str, int len) {
   int c = 0;
-  while(!str_cmp(str, vars[c], len) && c != var_num) {
+  while(!str_cmp(str, vars[c], len) && c != cur_num) {
     c++;
   }
 
-  if(c == var_num) {
-    if(var_num == MAX_VARS) {
+  if(c == cur_num) {
+    cur_num++;
+    vars[c] = str;
+    cur_offset+=8;
+    offsets[c] = c*8;
+
+    if(cur_offset >= MAX_VARS) {
       eputs("Too many variables");
       sys_exit(1);
     }
-
-    var_num++;
-    vars[c] = str;
   }
 
-  offsets[c] = c * 8;
   return -(c+1);
 }
 
@@ -83,7 +86,7 @@ void func(char* name) {
   // Prologue
   instv("push", VAL_RBP);
   instvv("mov", VAL_RBP, VAL_RSP);
-  instvs("sub", VAL_RSP, "240"); // 30 * 8
+  instvs("sub", VAL_RSP, "240"); // MAX_VARS
 }
 
 void func_fin() {
