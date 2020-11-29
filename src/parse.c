@@ -24,8 +24,8 @@ int count_and = 1;
 int group_or[1] = {OP_OR};
 int count_or = 1;
 
-int group_asg[1] = {OP_ASG};
-int count_asg = 1;
+int group_asg[6] = {OP_ASG, OP_ADDASG, OP_SUBASG, OP_MULASG, OP_DIVASG, OP_REMASG};
+int count_asg = 6;
 
 void panic_parse(char* at) {
   eput("Parse failed (at \"");
@@ -309,11 +309,33 @@ int expr_asg() {
     return expr_or();
   }
 
-  if(these_op(group_asg, count_asg)) {
+  int o = these_op(group_asg, count_asg);
+  if(o) {
     unmark(m);
     exp_expr_asg();
     instv("pop", VAL_RAX);
-    instvv("mov", l, VAL_RAX);
+    if(o == OP_ASG) {
+      instvv("mov", l, VAL_RAX);
+    } else if(o == OP_ADDASG) {
+      instvv("add", l, VAL_RAX);
+    } else if(o == OP_SUBASG) {
+      instvv("sub", l, VAL_RAX);
+    } else if(o == OP_MULASG) {
+      instvv("imul", l, VAL_RAX);
+    } else if(o == OP_DIVASG) {
+      instvv("mov", VAL_RDI, VAL_RAX);
+      instvv("mov", VAL_RAX, l);
+      inst("cqo");
+      instv("idiv", VAL_RDI);
+      instvv("mov", l, VAL_RAX);
+    } else if(o == OP_REMASG) {
+      instvv("mov", VAL_RDI, VAL_RAX);
+      instvv("mov", VAL_RAX, l);
+      inst("cqo");
+      instv("idiv", VAL_RDI);
+      instvv("mov", l, VAL_RDX);
+      instvv("mov", VAL_RAX, VAL_RDX);
+    }
     instv("push", VAL_RAX);
   } else {
     jump(m);
