@@ -53,20 +53,65 @@ int exp_these_op(int* os, int c);
 // parse.c
 void parse();
 
-// gen.c
-#define VAL_UNKNOWN 0
-#define VAL_LEX 1
-#define VAL_RAX 2
-#define VAL_RDI 3
-#define VAL_RSI 4
-#define VAL_RDX 5
-#define VAL_RCX 6
-#define VAL_R8  7
-#define VAL_R9  8
-#define VAL_RSP 9
-#define VAL_RBP 10
-#define VAL_AL  11
+// gen1.c
+#define REG_UNKNOWN 0
+#define REG_AL   1
+#define REG_DIL  2
+#define REG_SIL  3
+#define REG_DL   4
+#define REG_CL   5
+#define REG_R8B  6
+#define REG_R9B  7
+#define REG_SPL  8
+#define REG_BPL  9
+#define REG_BL  10
+#define REG_AX  11
+#define REG_DI  12
+#define REG_SI  13
+#define REG_DX  14
+#define REG_CX  15
+#define REG_R8W 16
+#define REG_R9W 17
+#define REG_SP  18
+#define REG_BP  19
+#define REG_BX  20
+#define REG_EAX 21
+#define REG_EDI 22
+#define REG_ESI 23
+#define REG_EDX 24
+#define REG_ECX 25
+#define REG_R8D 26
+#define REG_R9D 27
+#define REG_ESP 28
+#define REG_EBP 29
+#define REG_EBX 30
+#define REG_RAX 31
+#define REG_RDI 32
+#define REG_RSI 33
+#define REG_RDX 34
+#define REG_RCX 35
+#define REG_R8  36
+#define REG_R9  37
+#define REG_RSP 38
+#define REG_RBP 39
+#define REG_RBX 40
 
+int conv_type(int reg, int type);
+void inst(char* in);
+void instr(char* in, int val);
+void instm(char* in, int val);
+void instl(char* in);
+void instn(char* in, int val);
+void instrr(char* in, int dst, int src);
+void instrm(char* in, int dst, int src);
+void instrl(char* in, int dst);
+void instrn(char* in, int dst, int src);
+void instmr(char* in, int dst, int src);
+void instmm(char* in, int dst, int src);
+void instml(char* in, int dst);
+void instmn(char* in, int dst, int src);
+
+// gen2.c
 #define TY_UNKNOWN 0
 #define TY_CHAR    1
 #define TY_SHORT   2
@@ -75,13 +120,35 @@ void parse();
 
 void init_code();
 int get_varid(char* cur, int len, int type);
+int get_type(int id);
+int get_offset(int id);
 void func(char* name);
 void func_fin();
-void inst(char* in);
-void instv(char* in, int val);
-void insts(char* in, char* val);
-void instvv(char* in, int dst, int src);
-void instvs(char* in, int dst, char* src);
+void pushl();
+void pushm(int val);
+void pushn(int val);
+void inc(int mem);
+void dec(int mem);
+void add(int type);
+void sub(int type);
+void mul(int type);
+void div(int type);
+void rem(int type);
+void not_(int type);
+void less(int type);
+void leq(int type);
+void more(int type);
+void meq(int type);
+void eq(int type);
+void neq(int type);
+void asg(int type);
+void addasg(int type);
+void subasg(int type);
+void mulasg(int type);
+void divasg(int type);
+void remasg(int type);
+void ret();
+
 
 // util.c
 #define NULL 0

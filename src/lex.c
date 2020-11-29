@@ -129,9 +129,9 @@ int lex_num() {
   skip_space();
   if(is_digit(*cur)) {
     tmp = digitlen(cur);
-    return VAL_LEX;
+    return 1;
   } else {
-    return VAL_UNKNOWN;
+    return 0;
   }
 }
 
@@ -147,11 +147,11 @@ int lex_ident() {
   skip_space();
   if(is_alpha(*cur)) {
     int len = identlen(cur);
-    int id = get_varid(cur, len, TY_LONG);
+    int id = get_varid(cur, len, TY_INT);
     cur+=len;
     return id;
   } else {
-    return VAL_UNKNOWN;
+    return 0;
   }
 }
 

@@ -106,6 +106,11 @@ void putnum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
 
+  if(n < 0) {
+    putc('-');
+    n *= -1;
+  }
+
   if(n == 0) {
     buf[c] = '0';
     c--;
@@ -124,6 +129,11 @@ void putnum(int n) {
 void eputnum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
+
+  if(n < 0) {
+    eputc('-');
+    n *= -1;
+  }
 
   if(n == 0) {
     buf[c] = '0';
