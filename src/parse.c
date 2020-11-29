@@ -1,5 +1,8 @@
 #include"teal.h"
 
+int group_unary[3] = {OP_ADD, OP_SUB, OP_NOT};
+int count_unary = 3;
+
 int group_add[2] = {OP_ADD, OP_SUB};
 int count_add = 2;
 
@@ -47,7 +50,7 @@ void exp_expr_factor() {
 }
 
 int expr_unary() {
-  int o = these_op(group_add, count_add);
+  int o = these_op(group_unary, count_unary);
   if(!expr_factor()) {
     if(o) {
       eputs("Parse failed");
@@ -60,6 +63,12 @@ int expr_unary() {
   if(o == OP_SUB) {
     instv("pop", VAL_RAX);
     instvs("imul", VAL_RAX, "-1");
+    instv("push", VAL_RAX);
+  } else if(o == OP_NOT) {
+    instv("pop", VAL_RAX);
+    instvs("cmp", VAL_RAX, "0");
+    instv("sete", VAL_AL);
+    instvv("movzb", VAL_RAX, VAL_AL);
     instv("push", VAL_RAX);
   }
 
