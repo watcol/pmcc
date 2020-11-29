@@ -3,17 +3,17 @@
 
 // lex.c
 #define OP_UNKNOWN 0
-#define OP_ADD 1
-#define OP_SUB 2
-#define OP_MUL 3
-#define OP_DIV 4
-#define OP_L   5
-#define OP_LE  6
-#define OP_ME  7
-#define OP_M   8
-#define OP_E   9
-#define OP_NE 10
-#define OP_ASG 11
+#define OP_ADD     1
+#define OP_SUB     2
+#define OP_MUL     3
+#define OP_DIV     4
+#define OP_LESS    5
+#define OP_LEQ     6
+#define OP_MORE    7
+#define OP_MEQ     8
+#define OP_EQ      9
+#define OP_NEQ    10
+#define OP_ASG    11
 
 void init_lexer(char *buf);
 int mark();

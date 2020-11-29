@@ -6,10 +6,10 @@ int count_add = 2;
 int group_mul[2] = {OP_MUL, OP_DIV};
 int count_mul = 2;
 
-int group_cmp[4] = {OP_L, OP_LE, OP_ME, OP_M};
+int group_cmp[4] = {OP_LESS, OP_LEQ, OP_MEQ, OP_MORE};
 int count_cmp = 4;
 
-int group_eq[2] = {OP_E, OP_NE};
+int group_eq[2] = {OP_EQ, OP_NEQ};
 int count_eq = 2;
 
 int group_asg[1] = {OP_ASG};
@@ -151,18 +151,18 @@ int expr_cmp() {
     instv("pop", VAL_RDI);
     instv("pop", VAL_RAX);
 
-    if(o == OP_L) {
+    if(o == OP_LESS) {
       instvv("cmp", VAL_RAX, VAL_RDI);
       instv("setl", VAL_AL);
-    } else if(o == OP_LE) {
+    } else if(o == OP_LEQ) {
       instvv("cmp", VAL_RAX, VAL_RDI);
       instv("setle", VAL_AL);
-    } else if(o == OP_ME) {
-      instvv("cmp", VAL_RDI, VAL_RAX);
-      instv("setle", VAL_AL);
-    } else if(o == OP_M) {
+    } else if(o == OP_MORE) {
       instvv("cmp", VAL_RDI, VAL_RAX);
       instv("setl", VAL_AL);
+    } else if(o == OP_MEQ) {
+      instvv("cmp", VAL_RDI, VAL_RAX);
+      instv("setle", VAL_AL);
     }
 
     instvv("movzb", VAL_RAX, VAL_AL);
@@ -191,9 +191,9 @@ int expr_eq() {
     instv("pop", VAL_RAX);
     instvv("cmp", VAL_RAX, VAL_RDI);
 
-    if(o == OP_E) {
+    if(o == OP_EQ) {
       instv("sete", VAL_AL);
-    } else if(o == OP_NE) {
+    } else if(o == OP_NEQ) {
       instv("setne", VAL_AL);
     }
 

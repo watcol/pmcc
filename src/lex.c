@@ -214,7 +214,7 @@ int lex_op() {
     if (*buf == '=') {
       buf++;
       tmp = 2;
-      return OP_E;
+      return OP_EQ;
     } else {
       return OP_ASG;
     }
@@ -222,7 +222,7 @@ int lex_op() {
     if(*buf == '=') {
       buf++;
       tmp = 2;
-      return OP_NE;
+      return OP_NEQ;
     } else {
       buf--;
       tmp = 0;
@@ -232,17 +232,17 @@ int lex_op() {
     if (*buf == '=') {
       buf++;
       tmp = 2;
-      return OP_LE;
+      return OP_LEQ;
     } else {
-      return OP_L;
+      return OP_LESS;
     }
   } else if(c == '>') {
     if (*buf == '=') {
       buf++;
       tmp = 2;
-      return OP_ME;
+      return OP_MEQ;
     } else {
-      return OP_M;
+      return OP_MORE;
     }
   } else {
     buf--;
