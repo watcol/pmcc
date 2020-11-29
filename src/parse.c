@@ -384,14 +384,9 @@ void program() {
   while(stmt()) {}
 }
 
-void parse(char* buf) {
-  init_lexer(buf);
-
-  init_code();
+void parse() {
   func("main");
-
   program();
-
   func_fin();
 
   if(!at_eof()) {

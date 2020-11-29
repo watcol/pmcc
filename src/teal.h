@@ -26,7 +26,7 @@
 #define OP_DIVASG 21
 #define OP_REMASG 22
 
-void init_lexer(char *buf);
+void init_lexer();
 int mark();
 void jump(int c);
 void unmark(int c);
@@ -52,7 +52,7 @@ int exp_this_op(int o);
 int exp_these_op(int* os, int c);
 
 // parse.c
-void parse(char* buf);
+void parse();
 
 // gen.c
 #define VAL_UNKNOWN 0

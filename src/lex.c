@@ -1,15 +1,18 @@
 #include"teal.h"
+#define MAX_BUFFER 50000
 #define MAX_MARKER 100
 #define MAX_VARS 30
 
-char* buf;
+char buf[MAX_BUFFER + 1];
+char* cur;
 char* marker[MAX_MARKER];
 int tmp;
 char* vars[MAX_VARS];
 int var_num;
 
-void init_lexer(char *buf2) {
-  buf = buf2;
+void init_lexer() {
+  read_stdin(buf, MAX_BUFFER);
+  cur = buf;
 
   int c = 0;
   while(c < MAX_MARKER) {
@@ -38,7 +41,7 @@ int mark() {
     sys_exit(1);
   }
 
-  marker[c] = buf;
+  marker[c] = cur;
   return c;
 }
 
@@ -48,7 +51,7 @@ void jump(int c) {
     sys_exit(1);
   }
 
-  buf = marker[c];
+  cur = marker[c];
   marker[c] = NULL;
 }
 
@@ -57,14 +60,14 @@ void unmark(int c) {
 }
 
 void lex_put() {
-  write(buf, tmp);
-  buf+=tmp;
+  write(cur, tmp);
+  cur+=tmp;
   tmp = 0;
 }
 
 int get_offset() {
   int c = 0;
-  while(!str_cmp(buf, vars[c], tmp) && c != var_num) {
+  while(!str_cmp(cur, vars[c], tmp) && c != var_num) {
     c++;
   }
 
@@ -75,42 +78,42 @@ int get_offset() {
     }
 
     var_num++;
-    vars[c] = buf;
+    vars[c] = cur;
   }
 
-  buf += tmp;
+  cur += tmp;
   return c * 8;
 }
 
 int comment() {
-  if(!(*buf == '/' && *(buf+1) == '/')) {
+  if(!(*cur == '/' && *(cur+1) == '/')) {
     return 0;
   }
 
-  while(*buf != '\n') {
-    buf++;
+  while(*cur != '\n') {
+    cur++;
   }
 
   return 1;
 }
 
 void skip_space() {
-  while(is_space(*buf) || comment()) {
-    buf++;
+  while(is_space(*cur) || comment()) {
+    cur++;
   }
 }
 
 void panic_lex() {
   eput("Unexpected token: '");
-  eputc(*buf);
+  eputc(*cur);
   eputs("'.");
   sys_exit(1);
 }
 
 char lex_ch() {
   skip_space();
-  char c = *buf;
-  buf++;
+  char c = *cur;
+  cur++;
   tmp = 1;
   return c;
 }
@@ -119,7 +122,7 @@ char this_ch(char c) {
   if(lex_ch() == c) {
     return c;
   } else {
-    buf-=tmp;
+    cur-=tmp;
     return 0;
   }
 }
@@ -134,8 +137,8 @@ char exp_this_ch(char c) {
 int this_str(char* str) {
   skip_space();
   int len = length(str);
-  if (str_cmp(buf, str, len)) {
-    buf+=len;
+  if (str_cmp(cur, str, len)) {
+    cur+=len;
     return 1;
   }
 
@@ -154,8 +157,8 @@ int exp_this_str(char* str) {
 
 int lex_num() {
   skip_space();
-  if(is_digit(*buf)) {
-    tmp = digitlen(buf);
+  if(is_digit(*cur)) {
+    tmp = digitlen(cur);
     return VAL_LEX;
   } else {
     return VAL_UNKNOWN;
@@ -172,8 +175,8 @@ int exp_num() {
 
 int lex_ident() {
   skip_space();
-  if(is_alpha(*buf)) {
-    tmp = identlen(buf);
+  if(is_alpha(*cur)) {
+    tmp = identlen(cur);
     return -(get_offset() + 1);
   } else {
     return VAL_UNKNOWN;
@@ -190,7 +193,7 @@ int exp_ident() {
 
 int at_eof() {
   skip_space();
-  return !*buf;
+  return !*cur;
 }
 
 void exp_eof() {
@@ -203,125 +206,125 @@ int lex_op() {
   skip_space();
   tmp = 0;
 
-  if(*buf == '+') {
-    buf++;
+  if(*cur == '+') {
+    cur++;
     tmp++;
-    if(*buf == '+') {
-      buf++;
+    if(*cur == '+') {
+      cur++;
       tmp++;
       return OP_INC;
-    } else if (*buf == '=') {
-      buf++;
+    } else if (*cur == '=') {
+      cur++;
       tmp++;
       return OP_ADDASG;
     } else {
       return OP_ADD;
     }
-  } else if (*buf == '-') {
-    buf++;
+  } else if (*cur == '-') {
+    cur++;
     tmp++;
-    if(*buf == '-') {
-      buf++;
+    if(*cur == '-') {
+      cur++;
       tmp++;
       return OP_DEC;
-    } else if (*buf == '=') {
-      buf++;
+    } else if (*cur == '=') {
+      cur++;
       tmp++;
       return OP_SUBASG;
     } else {
       return OP_SUB;
     }
-  } else if (*buf == '*') {
-    buf++;
+  } else if (*cur == '*') {
+    cur++;
     tmp++;
-    if(*buf == '=') {
-      buf++;
+    if(*cur == '=') {
+      cur++;
       tmp++;
       return OP_MULASG;
     } else {
       return OP_MUL;
     }
-  } else if (*buf == '/') {
-    buf++;
+  } else if (*cur == '/') {
+    cur++;
     tmp++;
-    if(*buf == '=') {
-      buf++;
+    if(*cur == '=') {
+      cur++;
       tmp++;
       return OP_DIVASG;
     } else {
       return OP_DIV;
     }
-  } else if (*buf == '%') {
-    buf++;
+  } else if (*cur == '%') {
+    cur++;
     tmp++;
-    if(*buf == '=') {
-      buf++;
+    if(*cur == '=') {
+      cur++;
       tmp++;
       return OP_REMASG;
     } else {
       return OP_REM;
     }
-  } else if (*buf == '=') {
-    buf++;
+  } else if (*cur == '=') {
+    cur++;
     tmp++;
-    if (*buf == '=') {
-      buf++;
+    if (*cur == '=') {
+      cur++;
       tmp++;
       return OP_EQ;
     } else {
       return OP_ASG;
     }
-  } else if(*buf == '!') {
-    buf++;
+  } else if(*cur == '!') {
+    cur++;
     tmp++;
-    if(*buf == '=') {
-      buf++;
+    if(*cur == '=') {
+      cur++;
       tmp++;
       return OP_NEQ;
     } else {
       return OP_NOT;
     }
-  } else if(*buf == '<') {
-    buf++;
+  } else if(*cur == '<') {
+    cur++;
     tmp++;
-    if (*buf == '=') {
-      buf++;
+    if (*cur == '=') {
+      cur++;
       tmp++;
       return OP_LEQ;
     } else {
       return OP_LESS;
     }
-  } else if(*buf == '>') {
-    buf++;
+  } else if(*cur == '>') {
+    cur++;
     tmp++;
-    if (*buf == '=') {
-      buf++;
+    if (*cur == '=') {
+      cur++;
       tmp++;
       return OP_MEQ;
     } else {
       return OP_MORE;
     }
-  } else if(*buf == '&') {
-    buf++;
+  } else if(*cur == '&') {
+    cur++;
     tmp++;
-    if (*buf == '&') {
-      buf++;
+    if (*cur == '&') {
+      cur++;
       tmp++;
       return OP_AND;
     } else {
-      buf--;
+      cur--;
       tmp--;
       return OP_UNKNOWN;
     }
-  } else if(*buf == '|') {
-    buf++;
+  } else if(*cur == '|') {
+    cur++;
     tmp++;
-    if (*buf == '|') {
-      buf++;
+    if (*cur == '|') {
+      cur++;
       tmp++;
       return OP_OR;
     } else {
-      buf--;
+      cur--;
       tmp--;
       return OP_UNKNOWN;
     }
@@ -341,7 +344,7 @@ int exp_op() {
 
 int this_op(int o) {
   if(lex_op() != o) {
-    buf-=tmp;
+    cur-=tmp;
     return 0;
   } else {
     return o;
