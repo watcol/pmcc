@@ -24,7 +24,7 @@ void putval(int i) {
   } else if (i == VAL_AL) {
     put("al");
   } else if (i < 0) {
-    put("[rbp-");
+    put("QWORD ptr [rbp-");
     putnum(-(i+1));
     putc(']');
   } else {

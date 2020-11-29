@@ -1,3 +1,5 @@
-foo = 6;
-bar = 7;
+foo = 5;
+bar = 8;
+foo++;
+bar--;
 return foo * bar;
