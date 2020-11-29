@@ -224,6 +224,8 @@ int lex_op() {
     return OP_MUL;
   } else if (c == '/') {
     return OP_DIV;
+  } else if (c == '%') {
+    return OP_REM;
   } else if (c == '=') {
     if (*buf == '=') {
       buf++;

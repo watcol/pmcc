@@ -9,8 +9,8 @@ int count_unary = 3;
 int group_add[2] = {OP_ADD, OP_SUB};
 int count_add = 2;
 
-int group_mul[2] = {OP_MUL, OP_DIV};
-int count_mul = 2;
+int group_mul[3] = {OP_MUL, OP_DIV, OP_REM};
+int count_mul = 3;
 
 int group_cmp[4] = {OP_LESS, OP_LEQ, OP_MEQ, OP_MORE};
 int count_cmp = 4;
@@ -153,15 +153,20 @@ int expr_mul() {
 
     if(o == OP_MUL) {
       instvv("imul", VAL_RAX, VAL_RDI);
+      instv("push", VAL_RAX);
     } else if (o == OP_DIV) {
       inst("cqo");
       instv("idiv", VAL_RDI);
+      instv("push", VAL_RAX);
+    } else if (o == OP_REM) {
+      inst("cqo");
+      instv("idiv", VAL_RDI);
+      instv("push", VAL_RDX);
     } else {
       eputs("Unknown operator");
       sys_exit(1);
     }
 
-    instv("push", VAL_RAX);
   }
 
   return 1;

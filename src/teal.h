@@ -7,18 +7,19 @@
 #define OP_SUB     2
 #define OP_MUL     3
 #define OP_DIV     4
-#define OP_LESS    5
-#define OP_LEQ     6
-#define OP_MORE    7
-#define OP_MEQ     8
-#define OP_EQ      9
-#define OP_NEQ    10
-#define OP_NOT    11
-#define OP_AND    12
-#define OP_OR     13
-#define OP_INC    14
-#define OP_DEC    15
-#define OP_ASG    16
+#define OP_REM     5
+#define OP_LESS    6
+#define OP_LEQ     7
+#define OP_MORE    8
+#define OP_MEQ     9
+#define OP_EQ     10
+#define OP_NEQ    11
+#define OP_NOT    12
+#define OP_AND    13
+#define OP_OR     14
+#define OP_INC    15
+#define OP_DEC    16
+#define OP_ASG    17
 
 void init_lexer(char *buf);
 int mark();
