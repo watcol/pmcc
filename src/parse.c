@@ -1,5 +1,8 @@
 #include"teal.h"
 
+int group_suf[2] = {OP_INC, OP_DEC};
+int count_suf = 2;
+
 int group_unary[3] = {OP_ADD, OP_SUB, OP_NOT};
 int count_unary = 3;
 
@@ -29,6 +32,19 @@ void panic_parse(char* at) {
   eput(at);
   eputs("\")");
   sys_exit(1);
+}
+
+int lval() {
+  return lex_ident();
+}
+
+int exp_lval() {
+  int l = lval();
+  if(!l) {
+    panic_parse("lval");
+  }
+
+  return l;
 }
 
 void exp_expr();
@@ -61,9 +77,41 @@ void exp_expr_factor() {
   }
 }
 
+int expr_suf() {
+  int m = mark();
+  int l = lval();
+  if(!l) {
+    unmark(m);
+    return expr_factor();
+  }
+
+  int o = these_op(group_suf, count_suf);
+  if(o) {
+    unmark(m);
+    instvv("mov", VAL_RAX, l);
+    if (o == OP_INC) {
+      instv("inc", l);
+    } else if (o == OP_DEC) {
+      instv("dec", l);
+    }
+    instv("push", VAL_RAX);
+  } else {
+    jump(m);
+    return expr_factor();
+  }
+
+  return 1;
+}
+
+void exp_expr_suf() {
+  if(!expr_suf()) {
+    panic_parse("expr_suf");
+  }
+}
+
 int expr_unary() {
   int o = these_op(group_unary, count_unary);
-  if(!expr_factor()) {
+  if(!expr_suf()) {
     if(o) {
       panic_parse("expr_unary");
     } else {
@@ -244,19 +292,6 @@ void exp_expr_or() {
   if(!expr_or()) {
     panic_parse("expr_or");
   }
-}
-
-int lval() {
-  return lex_ident();
-}
-
-int exp_lval() {
-  int l = lval();
-  if(!l) {
-    panic_parse("lval");
-  }
-
-  return l;
 }
 
 void exp_expr_asg();
