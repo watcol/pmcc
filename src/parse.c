@@ -15,6 +15,12 @@ int count_cmp = 4;
 int group_eq[2] = {OP_EQ, OP_NEQ};
 int count_eq = 2;
 
+int group_and[1] = {OP_AND};
+int count_and = 1;
+
+int group_or[1] = {OP_OR};
+int count_or = 1;
+
 int group_asg[1] = {OP_ASG};
 int count_asg = 1;
 
@@ -215,6 +221,28 @@ int expr_eq() {
 
 void exp_expr_eq() {
   if(!expr_eq()) {
+    eputs("Parse failed");
+    sys_exit(1);
+  }
+}
+
+int expr_and() {
+  return expr_eq();
+}
+
+void exp_expr_and() {
+  if(!expr_and()) {
+    eputs("Parse failed");
+    sys_exit(1);
+  }
+}
+
+int expr_or() {
+  return expr_and();
+}
+
+void exp_expr_or() {
+  if(!expr_or()) {
     eputs("Parse failed");
     sys_exit(1);
   }
