@@ -205,9 +205,21 @@ int lex_op() {
   buf++;
   tmp = 1;
   if(c == '+') {
-    return OP_ADD;
+    if(*buf == '+') {
+      buf++;
+      tmp = 2;
+      return OP_INC;
+    } else {
+      return OP_ADD;
+    }
   } else if (c == '-') {
-    return OP_SUB;
+    if(*buf == '-') {
+      buf++;
+      tmp = 2;
+      return OP_DEC;
+    } else {
+      return OP_SUB;
+    }
   } else if (c == '*') {
     return OP_MUL;
   } else if (c == '/') {
