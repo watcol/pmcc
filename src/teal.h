@@ -13,7 +13,10 @@
 #define OP_MEQ     8
 #define OP_EQ      9
 #define OP_NEQ    10
-#define OP_ASG    11
+#define OP_NOT    11
+#define OP_AND    12
+#define OP_OR     13
+#define OP_ASG    14
 
 void init_lexer(char *buf);
 int mark();

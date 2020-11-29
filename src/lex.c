@@ -224,9 +224,7 @@ int lex_op() {
       tmp = 2;
       return OP_NEQ;
     } else {
-      buf--;
-      tmp = 0;
-      return OP_UNKNOWN;
+      return OP_NOT;
     }
   } else if(c == '<') {
     if (*buf == '=') {
@@ -243,6 +241,26 @@ int lex_op() {
       return OP_MEQ;
     } else {
       return OP_MORE;
+    }
+  } else if(c == '&') {
+    if (*buf == '&') {
+      buf++;
+      tmp = 2;
+      return OP_AND;
+    } else {
+      buf--;
+      tmp = 0;
+      return OP_UNKNOWN;
+    }
+  } else if(c == '|') {
+    if (*buf == '|') {
+      buf++;
+      tmp = 2;
+      return OP_OR;
+    } else {
+      buf--;
+      tmp = 0;
+      return OP_UNKNOWN;
     }
   } else {
     buf--;
