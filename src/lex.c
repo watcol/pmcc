@@ -1,14 +1,11 @@
 #include"teal.h"
 #define MAX_BUFFER 50000
 #define MAX_MARKER 100
-#define MAX_VARS 30
 
 char buf[MAX_BUFFER + 1];
 char* cur;
 char* marker[MAX_MARKER];
 int tmp;
-char* vars[MAX_VARS];
-int var_num;
 
 void init_lexer() {
   read_stdin(buf, MAX_BUFFER);
@@ -17,13 +14,6 @@ void init_lexer() {
   int c = 0;
   while(c < MAX_MARKER) {
     marker[c] = NULL;
-    c++;
-  }
-
-  var_num = 0;
-  c = 0;
-  while(c < MAX_VARS) {
-    vars[c] = NULL;
     c++;
   }
 
@@ -63,26 +53,6 @@ void lex_put() {
   write(cur, tmp);
   cur+=tmp;
   tmp = 0;
-}
-
-int get_offset() {
-  int c = 0;
-  while(!str_cmp(cur, vars[c], tmp) && c != var_num) {
-    c++;
-  }
-
-  if(c == var_num) {
-    if(var_num == MAX_VARS) {
-      eputs("Too many variables");
-      sys_exit(1);
-    }
-
-    var_num++;
-    vars[c] = cur;
-  }
-
-  cur += tmp;
-  return c * 8;
 }
 
 int comment() {
@@ -176,8 +146,10 @@ int exp_num() {
 int lex_ident() {
   skip_space();
   if(is_alpha(*cur)) {
-    tmp = identlen(cur);
-    return -(get_offset() + 1);
+    int len = identlen(cur);
+    int offset = get_offset(cur, len);
+    cur+=len;
+    return -(offset + 1);
   } else {
     return VAL_UNKNOWN;
   }

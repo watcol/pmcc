@@ -1,5 +1,42 @@
 #include"teal.h"
 
+#define MAX_VARS 30
+
+int var_num;
+char* vars[MAX_VARS];
+
+void init_code() {
+  var_num = 0;
+  int c = 0;
+  while(c < MAX_VARS) {
+    vars[c] = NULL;
+    c++;
+  }
+
+  puts(".intel_syntax noprefix");
+}
+
+
+int get_offset(char* str, int len) {
+  int c = 0;
+  while(!str_cmp(str, vars[c], len) && c != var_num) {
+    c++;
+  }
+
+  if(c == var_num) {
+    if(var_num == MAX_VARS) {
+      eputs("Too many variables");
+      sys_exit(1);
+    }
+
+    var_num++;
+    vars[c] = str;
+  }
+
+  return c * 8;
+}
+
+
 void putval(int i) {
   if (i == VAL_LEX) {
     lex_put();
@@ -31,10 +68,6 @@ void putval(int i) {
     eputs("Unknown operand type.");
     sys_exit(1);
   }
-}
-
-void init_code() {
-  puts(".intel_syntax noprefix");
 }
 
 void func(char* name) {

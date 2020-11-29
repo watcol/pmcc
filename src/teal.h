@@ -31,7 +31,6 @@ int mark();
 void jump(int c);
 void unmark(int c);
 void lex_put();
-void put_offset();
 void skip_space();
 char lex_ch();
 char this_ch(char c);
@@ -69,6 +68,7 @@ void parse();
 #define VAL_AL  11
 
 void init_code();
+int get_offset(char* cur, int len);
 void func(char* name);
 void func_fin();
 void inst(char* in);
