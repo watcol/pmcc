@@ -24,6 +24,13 @@ int count_or = 1;
 int group_asg[1] = {OP_ASG};
 int count_asg = 1;
 
+void panic_parse(char* at) {
+  eput("Parse failed (at \"");
+  eput(at);
+  eputs("\")");
+  sys_exit(1);
+}
+
 void exp_expr();
 
 int expr_factor() {
@@ -50,8 +57,7 @@ int expr_factor() {
 
 void exp_expr_factor() {
   if(!expr_factor()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_factor");
   }
 }
 
@@ -59,8 +65,7 @@ int expr_unary() {
   int o = these_op(group_unary, count_unary);
   if(!expr_factor()) {
     if(o) {
-      eputs("Parse failed");
-      sys_exit(1);
+      panic_parse("expr_unary");
     } else {
       return 0;
     }
@@ -83,8 +88,7 @@ int expr_unary() {
 
 void exp_expr_unary() {
   if(!expr_unary()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_unary");
   }
 }
 
@@ -117,8 +121,7 @@ int expr_mul() {
 
 void exp_expr_mul() {
   if(!expr_mul()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_mul");
   }
 }
 
@@ -150,8 +153,7 @@ int expr_add() {
 
 void exp_expr_add() {
   if(!expr_add()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_add");
   }
 }
 
@@ -189,8 +191,7 @@ int expr_cmp() {
 
 void exp_expr_cmp() {
   if(!expr_cmp()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_cmp");
   }
 }
 
@@ -221,8 +222,7 @@ int expr_eq() {
 
 void exp_expr_eq() {
   if(!expr_eq()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_eq");
   }
 }
 
@@ -232,8 +232,7 @@ int expr_and() {
 
 void exp_expr_and() {
   if(!expr_and()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_and");
   }
 }
 
@@ -243,8 +242,7 @@ int expr_or() {
 
 void exp_expr_or() {
   if(!expr_or()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_or");
   }
 }
 
@@ -255,8 +253,7 @@ int lval() {
 int exp_lval() {
   int l = lval();
   if(!l) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("lval");
   }
 
   return l;
@@ -269,7 +266,7 @@ int expr_asg() {
   int l = lval();
   if(!l) {
     unmark(m);
-    return expr_eq();
+    return expr_or();
   }
 
   if(these_op(group_asg, count_asg)) {
@@ -280,7 +277,7 @@ int expr_asg() {
     instv("push", VAL_RAX);
   } else {
     jump(m);
-    return expr_eq();
+    return expr_or();
   }
 
   return 1;
@@ -288,8 +285,7 @@ int expr_asg() {
 
 void exp_expr_asg() {
   if(!expr_asg()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr_asg");
   }
 }
 
@@ -299,8 +295,7 @@ int expr() {
 
 void exp_expr() {
   if(!expr()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("expr");
   }
 }
 
@@ -319,8 +314,7 @@ int stmt() {
 
 void exp_stmt() {
   if(!stmt()) {
-    eputs("Parse failed");
-    sys_exit(1);
+    panic_parse("stmt");
   }
 }
 

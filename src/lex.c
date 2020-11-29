@@ -100,8 +100,10 @@ void skip_space() {
   }
 }
 
-void panic() {
-  eputs("Unexpected token.");
+void panic_lex() {
+  eput("Unexpected token: '");
+  eputc(*buf);
+  eputs("'.");
   sys_exit(1);
 }
 
@@ -124,7 +126,7 @@ char this_ch(char c) {
 
 char exp_this_ch(char c) {
   if(!this_ch(c)) {
-    panic();
+    panic_lex();
   }
   return c;
 }
@@ -143,7 +145,7 @@ int this_str(char* str) {
 int exp_this_str(char* str) {
   int len = this_str(str);
   if(!len) {
-    panic();
+    panic_lex();
     return 0;
   }
 
@@ -163,7 +165,7 @@ int lex_num() {
 int exp_num() {
   int i = lex_num();
   if(!i) {
-    panic();
+    panic_lex();
   }
   return i;
 }
@@ -181,7 +183,7 @@ int lex_ident() {
 int exp_ident() {
   int i = lex_ident();
   if(!i) {
-    panic();
+    panic_lex();
   }
   return i;
 }
@@ -193,7 +195,7 @@ int at_eof() {
 
 void exp_eof() {
   if(!at_eof()) {
-    panic();
+    panic_lex();
   }
 }
 
@@ -272,7 +274,7 @@ int lex_op() {
 int exp_op() {
   int o = lex_op();
   if(!o) {
-    panic();
+    panic_lex();
   }
 
   return o;
@@ -301,7 +303,7 @@ int these_op(int* os, int c) {
 
 int exp_this_op(int o) {
   if(!this_op(o)) {
-    panic();
+    panic_lex();
   }
 
   return o;
@@ -310,7 +312,7 @@ int exp_this_op(int o) {
 int exp_these_op(int* os, int c) {
   int o = these_op(os, c);
   if(!o) {
-    panic();
+    panic_lex();
   }
 
   return o;
