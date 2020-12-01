@@ -1,5 +1,4 @@
 #include"teal.h"
-
 #define MAX_VARS 200
 
 int cur_num;

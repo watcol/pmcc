@@ -3,41 +3,35 @@
 #define MAX_INT 20
 
 int is_space(char c) {
-  return c == ' '  || c == '\t' ||
-         c == '\n' || c == '\v' ||
-         c == '\f' || c == '\r';
+  return c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' ||
+         c == '\r';
 }
 
-int is_digit(char c) {
-  return c >= '0' && c <= '9';
-}
+int is_digit(char c) { return c >= '0' && c <= '9'; }
 
 int is_alpha(char c) {
-  return (c >= 'A' && c <= 'Z') ||
-         (c >= 'a' && c <= 'z');
+  return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 }
 
-int is_alphanum(char c) {
-  return is_digit(c) || is_alpha(c);
-}
+int is_alphanum(char c) { return is_digit(c) || is_alpha(c); }
 
-int length(char* buf) {
+int length(char *buf) {
   int len = 0;
-  while(*(buf++)) {
+  while (*(buf++)) {
     len++;
   }
 
   return len;
 }
 
-int str_cmp(char* buf1, char* buf2, int len) {
+int str_cmp(char *buf1, char *buf2, int len) {
   int c = 0;
   if (buf1 == NULL || buf2 == NULL) {
     return 0;
   }
 
-  while(c < len) {
-    if(buf1[c] != buf2[c]) {
+  while (c < len) {
+    if (buf1[c] != buf2[c]) {
       return 0;
     }
     c++;
@@ -45,22 +39,22 @@ int str_cmp(char* buf1, char* buf2, int len) {
   return 1;
 }
 
-int digitlen(char* buf) {
+int digitlen(char *buf) {
   int len = 0;
-  while(is_digit(*(buf++))) {
+  while (is_digit(*(buf++))) {
     len++;
   }
   return len;
 }
 
-int identlen(char* buf) {
-  if(!is_alpha(*buf)) {
+int identlen(char *buf) {
+  if (!is_alpha(*buf)) {
     return 0;
   }
 
   int len = 1;
   buf++;
-  while(is_alphanum(*buf) || *buf == '_') {
+  while (is_alphanum(*buf) || *buf == '_') {
     len++;
     buf++;
   }
@@ -68,9 +62,7 @@ int identlen(char* buf) {
   return len;
 }
 
-int ended() {
-  return read(NULL, 1) == 0;
-}
+int ended() { return read(NULL, 1) == 0; }
 
 void putc(char c) {
   char buf[] = {c};
@@ -106,47 +98,46 @@ void putnum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
 
-  if(n < 0) {
+  if (n < 0) {
     putc('-');
     n *= -1;
   }
 
-  if(n == 0) {
+  if (n == 0) {
     buf[c] = '0';
     c--;
   }
 
-  while(n != 0) {
+  while (n != 0) {
     buf[c] = '0' + (n % 10);
     n /= 10;
     c--;
   }
 
-  put(&buf[c+1]);
+  put(&buf[c + 1]);
 }
-
 
 void eputnum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
 
-  if(n < 0) {
+  if (n < 0) {
     eputc('-');
     n *= -1;
   }
 
-  if(n == 0) {
+  if (n == 0) {
     buf[c] = '0';
     c--;
   }
 
-  while(n != 0) {
+  while (n != 0) {
     buf[c] = '0' + (n % 10);
     n /= 10;
     c--;
   }
 
-  eput(&buf[c+1]);
+  eput(&buf[c + 1]);
 }
 
 void read_stdin(char *buf, int count) {
