@@ -47,31 +47,33 @@ int exp_lval() {
   return l;
 }
 
-void exp_expr();
+int exp_expr();
 
 int expr_factor() {
   if(this_ch('(')) {
-    exp_expr();
+    int ty = exp_expr();
     exp_this_ch(')');
-    return 1;
+    return ty;
   } else if(lex_num()) {
     pushl();
-    return 1;
+    return TY_INT;
   } else {
     int l = lval();
     if (l) {
       pushm(l);
-      return 1;
+      return TY_INT;
     } else {
-      return 0;
+      return TY_UNKNOWN;
     }
   }
 }
 
-void exp_expr_factor() {
-  if(!expr_factor()) {
+int exp_expr_factor() {
+  int res = expr_factor();
+  if(!res) {
     panic_parse("expr_factor");
   }
+  return res;
 }
 
 int expr_suf() {
@@ -98,53 +100,62 @@ int expr_suf() {
   return 1;
 }
 
-void exp_expr_suf() {
-  if(!expr_suf()) {
+int exp_expr_suf() {
+  int res = expr_suf();
+  if(!res) {
     panic_parse("expr_suf");
   }
+  return res;
 }
 
 int expr_unary() {
   int o = these_op(group_unary, count_unary);
-  if(!expr_suf()) {
+  int ty = expr_suf();
+  if(!ty) {
     if(o) {
       panic_parse("expr_unary");
     } else {
-      return 0;
+      return TY_UNKNOWN;
     }
   }
 
   if(o == OP_SUB) {
     pushn(-1);
-    mul(TY_INT);
+    mul(ty);
   } else if(o == OP_NOT) {
-    not_(TY_INT);
+    not_(ty);
   }
 
-  return 1;
+  return ty;
 }
 
-void exp_expr_unary() {
-  if(!expr_unary()) {
+int exp_expr_unary() {
+  int res = expr_unary();
+  if(!res) {
     panic_parse("expr_unary");
   }
+  return res;
 }
 
 int expr_mul() {
-  if(!expr_unary()){
+  int ty1 = expr_unary();
+  if(!ty1){
     return 0;
   }
 
   int o;
   while((o = these_op(group_mul, count_mul))) {
-    exp_expr_unary();
+    int ty2 = exp_expr_unary();
+    if(ty1 != ty2) {
+      panic_parse("type error");
+    }
 
     if(o == OP_MUL) {
-      mul(TY_INT);
+      mul(ty1);
     } else if (o == OP_DIV) {
-      div(TY_INT);
+      div(ty1);
     } else if (o == OP_REM) {
-      rem(TY_INT);
+      rem(ty1);
     } else {
       eputs("Unknown operator");
       sys_exit(1);
@@ -152,122 +163,147 @@ int expr_mul() {
 
   }
 
-  return 1;
+  return ty1;
 }
 
-void exp_expr_mul() {
-  if(!expr_mul()) {
+int exp_expr_mul() {
+  int res = expr_mul();
+  if(!res) {
     panic_parse("expr_mul");
   }
+  return res;
 }
 
 int expr_add() {
-  if(!expr_mul()) {
-    return 0;
+  int ty1 = expr_mul();
+  if(!ty1) {
+    return TY_UNKNOWN;
   }
 
   int o;
   while((o = these_op(group_add, count_add))) {
-    exp_expr_mul();
+    int ty2 = exp_expr_mul();
+    if(ty1 != ty2) {
+      panic_parse("type error");
+    }
 
     if(o == OP_ADD) {
-      add(TY_INT);
+      add(ty1);
     } else if (o == OP_SUB) {
-      sub(TY_INT);
+      sub(ty1);
     } else {
       eputs("Unknown operator");
       sys_exit(1);
     }
   }
 
-  return 1;
+  return ty1;
 }
 
-void exp_expr_add() {
-  if(!expr_add()) {
+int exp_expr_add() {
+  int res = expr_add();
+  if(!res) {
     panic_parse("expr_add");
   }
+  return res;
 }
 
 int expr_cmp() {
-  if(!expr_add()) {
-    return 0;
+  int ty1 = expr_add();
+  if(!ty1) {
+    return TY_UNKNOWN;
   }
 
   int o;
   while((o = these_op(group_cmp, count_cmp))) {
-    exp_expr_add();
+    int ty2 = exp_expr_add();
+    if(ty1 != ty2) {
+      panic_parse("type error");
+    }
 
     if(o == OP_LESS) {
-      less(TY_INT);
+      less(ty1);
     } else if(o == OP_LEQ) {
-      leq(TY_INT);
+      leq(ty1);
     } else if(o == OP_MORE) {
-      more(TY_INT);
+      more(ty1);
     } else if(o == OP_MEQ) {
-      meq(TY_INT);
+      meq(ty1);
     }
   }
 
-  return 1;
+  return ty1;
 }
 
-void exp_expr_cmp() {
-  if(!expr_cmp()) {
+int exp_expr_cmp() {
+  int res = expr_cmp();
+  if(!res) {
     panic_parse("expr_cmp");
   }
+  return res;
 }
 
 int expr_eq() {
-  if(!expr_cmp()) {
-    return 0;
+  int ty1 = expr_cmp();
+  if(!ty1) {
+    return TY_UNKNOWN;
   }
 
   int o;
   while((o = these_op(group_eq, count_eq))) {
-    exp_expr_cmp();
+    int ty2 = exp_expr_cmp();
+    if(ty1 != ty2) {
+      panic_parse("type error");
+    }
 
     if(o == OP_EQ) {
-      eq(TY_INT);
+      eq(ty1);
     } else if(o == OP_NEQ) {
-      neq(TY_INT);
+      neq(ty1);
     }
   }
 
-  return 1;
+  return ty1;
 }
 
-void exp_expr_eq() {
-  if(!expr_eq()) {
+int exp_expr_eq() {
+  int res = expr_eq();
+  if(!res) {
     panic_parse("expr_eq");
   }
+  return res;
 }
 
 int expr_and() {
   return expr_eq();
 }
 
-void exp_expr_and() {
-  if(!expr_and()) {
+int exp_expr_and() {
+  int res = expr_and();
+  if(!res) {
     panic_parse("expr_and");
   }
+  return res;
 }
 
 int expr_or() {
   return expr_and();
 }
 
-void exp_expr_or() {
-  if(!expr_or()) {
+int exp_expr_or() {
+  int res = expr_or();
+  if(!res) {
     panic_parse("expr_or");
   }
+  return res;
 }
 
-void exp_expr_asg();
+int exp_expr_asg();
 
 int expr_asg() {
   int m = mark();
   int l = lval();
+  int ty = get_type(l);
   if(!l) {
     unmark(m);
     return expr_or();
@@ -276,7 +312,10 @@ int expr_asg() {
   int o = these_op(group_asg, count_asg);
   if(o) {
     unmark(m);
-    exp_expr_asg();
+    if(ty != exp_expr_asg()) {
+      panic_parse("type error");
+    }
+
     if(o == OP_ASG) {
       asg(l);
     } else if(o == OP_ADDASG) {
@@ -295,23 +334,27 @@ int expr_asg() {
     return expr_or();
   }
 
-  return 1;
+  return ty;
 }
 
-void exp_expr_asg() {
-  if(!expr_asg()) {
+int exp_expr_asg() {
+  int res = expr_asg();
+  if(!res) {
     panic_parse("expr_asg");
   }
+  return res;
 }
 
 int expr() {
   return expr_asg();
 }
 
-void exp_expr() {
-  if(!expr()) {
+int exp_expr() {
+  int res = expr();
+  if(!res) {
     panic_parse("expr");
   }
+  return res;
 }
 
 int stmt() {
