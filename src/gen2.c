@@ -30,8 +30,7 @@ int get_varid(char* str, int len, int type) {
 
   if(c == cur_num) {
     if(type == TY_UNKNOWN) {
-      eputs("Type must be known in the declaration.");
-      sys_exit(1);
+      panic("Type must be known in the declaration.");
     }
 
     cur_num++;
@@ -41,8 +40,7 @@ int get_varid(char* str, int len, int type) {
     types[c] = type;
 
     if(cur_offset >= MAX_VARS) {
-      eputs("Too many variables");
-      sys_exit(1);
+      panic("Too many variables");
     }
   }
 
@@ -161,8 +159,7 @@ void div(int type) {
   instr("pop", REG_RAX);
 
   if(type == TY_CHAR) {
-    eputs("Division for char is not supported.");
-    sys_exit(1);
+    panic("Division for char is not supported.");
   } else if(type == TY_SHORT) {
     inst("cwd");
   } else if(type == TY_INT) {
@@ -182,8 +179,7 @@ void rem(int type) {
   instr("pop", REG_RAX);
 
   if(type == TY_CHAR) {
-    eputs("Division for char is not supported.");
-    sys_exit(1);
+    panic("Division for char is not supported.");
   } else if(type == TY_SHORT) {
     inst("cwd");
   } else if(type == TY_INT) {

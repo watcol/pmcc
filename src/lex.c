@@ -27,8 +27,7 @@ int mark() {
   }
 
   if(c == MAX_MARKER) {
-    eputs("Too many markers.");
-    sys_exit(1);
+    panic("Too many markers.");
   }
 
   marker[c] = cur;
@@ -37,8 +36,7 @@ int mark() {
 
 void jump(int c) {
   if(marker[c] == NULL) {
-    eputs("Use of unavailable marker.");
-    sys_exit(1);
+    panic("Use of unavailable marker.");
   }
 
   cur = marker[c];

@@ -157,8 +157,7 @@ int expr_mul() {
     } else if (o == OP_REM) {
       rem(ty1);
     } else {
-      eputs("Unknown operator");
-      sys_exit(1);
+      panic("Unknown operator");
     }
 
   }
@@ -184,7 +183,7 @@ int expr_add() {
   while((o = these_op(group_add, count_add))) {
     int ty2 = exp_expr_mul();
     if(ty1 != ty2) {
-      panic_parse("type error");
+      panic("Type unmatched");
     }
 
     if(o == OP_ADD) {
@@ -192,8 +191,7 @@ int expr_add() {
     } else if (o == OP_SUB) {
       sub(ty1);
     } else {
-      eputs("Unknown operator");
-      sys_exit(1);
+      panic("Unknown operator");
     }
   }
 
@@ -218,7 +216,7 @@ int expr_cmp() {
   while((o = these_op(group_cmp, count_cmp))) {
     int ty2 = exp_expr_add();
     if(ty1 != ty2) {
-      panic_parse("type error");
+      panic("Type unmatched");
     }
 
     if(o == OP_LESS) {
@@ -253,7 +251,7 @@ int expr_eq() {
   while((o = these_op(group_eq, count_eq))) {
     int ty2 = exp_expr_cmp();
     if(ty1 != ty2) {
-      panic_parse("type error");
+      panic("Type unmatched");
     }
 
     if(o == OP_EQ) {
@@ -313,7 +311,7 @@ int expr_asg() {
   if(o) {
     unmark(m);
     if(ty != exp_expr_asg()) {
-      panic_parse("type error");
+      panic("Type unmatched");
     }
 
     if(o == OP_ASG) {

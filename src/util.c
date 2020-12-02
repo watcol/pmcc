@@ -94,6 +94,11 @@ void eputs(char *s) {
   eputc('\n');
 }
 
+void panic(char* msg) {
+  eputs(msg);
+  sys_exit(1);
+}
+
 void putnum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
@@ -145,7 +150,6 @@ void read_stdin(char *buf, int count) {
   buf[rc] = '\0';
 
   if (!ended()) {
-    eputs("The source is too long.");
-    sys_exit(1);
+    panic("The source is too long.");
   }
 }

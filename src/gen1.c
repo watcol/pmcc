@@ -12,8 +12,7 @@ void putreg(int i) {
   if (i > 0 && i <= 40) {
     put(regs[i]);
   } else {
-    eputs("Unknown operand type.");
-    sys_exit(1);
+    panic("Unknown operand type.");
   }
 }
 
@@ -60,8 +59,7 @@ void putmem(int id) {
   int type = get_type(id);
   int offset = get_offset(id);
   if(type == TY_UNKNOWN) {
-    eputs("Undeclared variable.");
-    sys_exit(1);
+    panic("Undeclared variable.");
   }
 
   if(type == TY_CHAR) {
@@ -73,8 +71,7 @@ void putmem(int id) {
   } else if(type == TY_LONG) {
     put("QWORD");
   } else {
-    eputs("Unknown type.");
-    sys_exit(1);
+    panic("Unknown type.");
   }
 
   put(" ptr [rbp-");

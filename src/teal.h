@@ -168,6 +168,7 @@ void put(char *s);
 void eput(char *s);
 void puts(char *s);
 void eputs(char *s);
+void panic(char *msg);
 void putnum();
 void eputnum();
 
