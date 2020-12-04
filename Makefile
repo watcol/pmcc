@@ -24,7 +24,8 @@ util.o: src/util.c
 sys.o: src/sys.s
 	as -o $@ $^
 
-# test: teal
+test: teal
+	echo "Nothing to do"
 
 fmt: src/main.c src/teal.h src/util.c
 	clang-format -i $^

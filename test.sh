@@ -4,15 +4,14 @@ set -u
 # ./test.sh <input file> <expected status code>
 main() {
   # Compile code
-  ./teal < $1 > tmp.s
-  cc -o tmp tmp.s
+  ./teal < $1 > tmp.ll
 
   # Set return code to $status
-  ./tmp
+  lli tmp.ll
   local status="$?"
 
   # Clean up
-  rm tmp tmp.s
+  rm tmp.ll
 
   # Check the status
   if [ "$status" = "$2" ]; then
