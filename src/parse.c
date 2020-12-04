@@ -61,7 +61,7 @@ int expr_factor() {
     int l = lval();
     if (l) {
       pushm(l);
-      return TY_INT;
+      return get_type(l);
     } else {
       return TY_UNKNOWN;
     }
@@ -97,7 +97,7 @@ int expr_suf() {
     return expr_factor();
   }
 
-  return 1;
+  return get_type(l);
 }
 
 int exp_expr_suf() {
@@ -355,12 +355,21 @@ int exp_expr() {
   return res;
 }
 
+int stmt();
 void exp_stmt();
 
 int stmt_single() {
   if(!expr()) return 0;
 
   exp_this_ch(';');
+  return 1;
+}
+
+int stmt_multi() {
+  if(!this_ch('{')) return 0;
+
+  while(stmt()) {}
+  exp_this_ch('}');
   return 1;
 }
 
@@ -392,7 +401,7 @@ int stmt_if() {
 }
 
 int stmt() {
-  if(!stmt_ret() && !stmt_if()) {
+  if(!stmt_multi() && !stmt_ret() && !stmt_if()) {
     return stmt_single();
   }
 
