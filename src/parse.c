@@ -357,31 +357,48 @@ int exp_expr() {
 
 void exp_stmt();
 
-int stmt() {
-  if(this_str("return")) {
-    exp_expr();
-    ret();
-  } else if(this_str("if")) {
-    exp_this_ch('(');
-    exp_expr();
-    exp_this_ch(')');
-
-    int id = if_begin();
-    exp_stmt();
-
-    if_else(id);
-    if(this_str("else")) exp_stmt();
-
-    if_end(id);
-
-    return 1;
-  } else if(!expr()) {
-    return 0;
-  }
+int stmt_single() {
+  if(!expr()) return 0;
 
   exp_this_ch(';');
   return 1;
 }
+
+int stmt_ret() {
+  if(!this_str("return")) return 0;
+
+  exp_expr();
+  exp_this_ch(';');
+  ret();
+  return 1;
+}
+
+int stmt_if() {
+  if(!this_str("if")) return 0;
+
+  exp_this_ch('(');
+  exp_expr();
+  exp_this_ch(')');
+
+  int id = if_begin();
+  exp_stmt();
+
+  if_else(id);
+  if(this_str("else")) exp_stmt();
+
+  if_end(id);
+
+  return 1;
+}
+
+int stmt() {
+  if(!stmt_ret() && !stmt_if()) {
+    return stmt_single();
+  }
+
+  return 1;
+}
+
 
 void exp_stmt() {
   if(!stmt()) {
