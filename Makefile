@@ -24,11 +24,7 @@ util.o: src/util.c
 sys.o: src/sys.s
 	as -o $@ $^
 
-test: teal test/arith.tl test/cmp.tl test/flow.tl
-	./test.sh test/arith.tl 42
-	./test.sh test/cmp.tl 1
-	./test.sh test/var.tl 42
-	./test.sh test/flow.tl 2
+# test: teal
 
 fmt: src/main.c src/teal.h src/util.c
 	clang-format -i $^
