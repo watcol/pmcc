@@ -361,3 +361,20 @@ void if_else(int id) {
 void if_end(int id) {
   label(id, LB_END);
 }
+
+int while_begin() {
+  lb_id++;
+  label(lb_id, LB_BEGIN);
+  return lb_id;
+}
+
+void while_eval(int id) {
+  instr("pop", REG_RAX);
+  instrn("cmp", REG_RAX, 0);
+  instlb("je", lb_id, LB_END);
+}
+
+void while_end(int id) {
+  instlb("jmp", id, LB_BEGIN);
+  label(id, LB_END);
+}

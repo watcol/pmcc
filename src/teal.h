@@ -160,6 +160,9 @@ void ret();
 int if_begin();
 void if_else(int id);
 void if_end(int id);
+int while_begin();
+void while_eval(int id);
+void while_end(int id);
 
 // util.c
 #define NULL 0

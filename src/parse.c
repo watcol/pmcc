@@ -430,8 +430,24 @@ int stmt_if() {
   return 1;
 }
 
+int stmt_while() {
+  if(!this_str("while")) return 0;
+
+  int id = while_begin();
+
+  exp_this_ch('(');
+  exp_expr();
+  exp_this_ch(')');
+  while_eval(id);
+
+  exp_stmt();
+  while_end(id);
+
+  return 1;
+}
+
 int stmt() {
-  if(!stmt_multi() && !stmt_ret() && !stmt_if()) {
+  if(!stmt_multi() && !stmt_ret() && !stmt_if() && !stmt_while()) {
     return stmt_single();
   }
 
