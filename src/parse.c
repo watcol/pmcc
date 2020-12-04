@@ -446,7 +446,7 @@ void exp_stmt() {
 }
 
 void program() {
-  while(stmt()) {}
+  stmt();
 }
 
 void parse() {
