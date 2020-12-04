@@ -8,6 +8,8 @@ char* regs[41] = {
   "rax", "rdi", "rsi", "rdx", "rcx",  "r8",  "r9", "rsp", "rbp", "rbx",
 };
 
+char* lbs[4] = { "unknown", "begin", "else", "end"};
+
 void putreg(int i) {
   if (i > 0 && i <= 40) {
     put(regs[i]);
@@ -53,6 +55,22 @@ int reg_type(int i) {
   } else {
     return TY_UNKNOWN;
   }
+}
+
+void putlabel(int id, int type) {
+  put(".L");
+  putnum(id);
+  putc('_');
+  if (0 < type && type <= 3) {
+    put(lbs[type]);
+  } else {
+    panic("Unknown label type.");
+  }
+}
+
+void label(int id, int type) {
+  putlabel(id, type);
+  puts(":");
 }
 
 void putmem(int id) {
@@ -107,7 +125,6 @@ void instl(char* in) {
   putc(' ');
   lex_put();
   putc('\n');
-
 }
 
 void instn(char* in, int val) {
@@ -115,6 +132,14 @@ void instn(char* in, int val) {
   put(in);
   putc(' ');
   putnum(val);
+  putc('\n');
+}
+
+void instlb(char* in, int id, int type) {
+  put("  ");
+  put(in);
+  putc(' ');
+  putlabel(id, type);
   putc('\n');
 }
 

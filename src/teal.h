@@ -96,12 +96,19 @@ void parse();
 #define REG_RBP 39
 #define REG_RBX 40
 
+#define LB_UNKNOWN 0
+#define LB_BEGIN 1
+#define LB_ELSE 2
+#define LB_END 3
+
 int conv_type(int reg, int type);
+void label(int id, int type);
 void inst(char *in);
 void instr(char *in, int val);
 void instm(char *in, int val);
 void instl(char *in);
 void instn(char *in, int val);
+void instlb(char* in, int id, int typw);
 void instrr(char *in, int dst, int src);
 void instrm(char *in, int dst, int src);
 void instrl(char *in, int dst);
