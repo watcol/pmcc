@@ -270,6 +270,24 @@ void neq(int type) {
   instr("push", REG_RAX);
 }
 
+void and_() {
+  instr("pop", REG_RDI);
+  int id = if_begin();
+  instr("push", REG_RDI);
+  if_else(id);
+  instn("push", 0);
+  if_end(id);
+}
+
+void or_() {
+  instr("pop", REG_RDI);
+  int id = if_begin();
+  instr("push", REG_RAX);
+  if_else(id);
+  instn("push", REG_RDI);
+  if_end(id);
+}
+
 void asg(int mem) {
   int rax = conv_type(REG_RAX, get_type(mem));
   instr("pop", REG_RAX);

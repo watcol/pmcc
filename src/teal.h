@@ -148,6 +148,8 @@ void more(int type);
 void meq(int type);
 void eq(int type);
 void neq(int type);
+void and_();
+void or_();
 void asg(int type);
 void addasg(int type);
 void subasg(int type);

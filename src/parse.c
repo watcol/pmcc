@@ -273,7 +273,22 @@ int exp_expr_eq() {
 }
 
 int expr_and() {
-  return expr_eq();
+  int ty1 = expr_eq();
+  if(!ty1) {
+    return TY_UNKNOWN;
+  }
+
+  int o;
+  while((o = these_op(group_and, count_and))) {
+    int ty2 = exp_expr_eq();
+    if(ty1 != ty2) {
+      panic("Type unmatched");
+    }
+
+    if(o == OP_AND) and_();
+  }
+
+  return ty1;
 }
 
 int exp_expr_and() {
@@ -285,7 +300,22 @@ int exp_expr_and() {
 }
 
 int expr_or() {
-  return expr_and();
+  int ty1 = expr_and();
+  if(!ty1) {
+    return TY_UNKNOWN;
+  }
+
+  int o;
+  while((o = these_op(group_or, count_or))) {
+    int ty2 = exp_expr_and();
+    if(ty1 != ty2) {
+      panic("Type unmatched");
+    }
+
+    if(o == OP_OR) or_();
+  }
+
+  return ty1;
 }
 
 int exp_expr_or() {
