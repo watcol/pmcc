@@ -355,10 +355,26 @@ int exp_expr() {
   return res;
 }
 
+void exp_stmt();
+
 int stmt() {
   if(this_str("return")) {
     exp_expr();
     ret();
+  } else if(this_str("if")) {
+    exp_this_ch('(');
+    exp_expr();
+    exp_this_ch(')');
+
+    int id = if_begin();
+    exp_stmt();
+
+    if_else(id);
+    if(this_str("else")) exp_stmt();
+
+    if_end(id);
+
+    return 1;
   } else if(!expr()) {
     return 0;
   }

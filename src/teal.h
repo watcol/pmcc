@@ -155,6 +155,9 @@ void mulasg(int type);
 void divasg(int type);
 void remasg(int type);
 void ret();
+int if_begin();
+void if_else(int id);
+void if_end(int id);
 
 // util.c
 #define NULL 0

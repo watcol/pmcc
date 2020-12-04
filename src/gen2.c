@@ -6,6 +6,7 @@ char* vars[MAX_VARS];
 int cur_offset;
 int offsets[MAX_VARS];
 int types[MAX_VARS];
+int lb_id;
 
 void init_code() {
   cur_num = 0;
@@ -18,6 +19,7 @@ void init_code() {
     c++;
   }
 
+  lb_id = 0;
   puts(".intel_syntax noprefix");
 }
 
@@ -323,4 +325,21 @@ void remasg(int mem) {
 void ret() {
   instr("pop", REG_RAX);
   func_fin();
+}
+
+int if_begin() {
+  lb_id++;
+  instr("pop", REG_RAX);
+  instrn("cmp", REG_RAX, 0);
+  instlb("je", lb_id, LB_ELSE);
+  return lb_id;
+}
+
+void if_else(int id) {
+  instlb("jmp", id, LB_END);
+  label(id, LB_ELSE);
+}
+
+void if_end(int id) {
+  label(id, LB_END);
 }
