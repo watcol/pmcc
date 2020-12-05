@@ -466,9 +466,9 @@ void program() {
 }
 
 void parse() {
-  llfunc_begin("main", TY_I32, NULL, 0);
+  func_begin("main", TY_I32, NULL, 0);
   //program();
-  llfunc_end();
+  func_end();
 
   if(!at_eof()) {
     eputs("WARN: Unread characters are remain.");

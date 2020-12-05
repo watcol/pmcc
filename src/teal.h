@@ -55,6 +55,8 @@ void parse();
 
 // gen.c
 void init_code();
+void func_begin(char* name, int ret, int* args, int argc);
+void func_end();
 int get_varid(char *cur, int len, int type);
 int get_type(int id);
 int get_offset(int id);

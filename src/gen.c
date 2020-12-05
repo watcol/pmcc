@@ -5,7 +5,7 @@ int var_offset;
 char* vars[MAX_VARS];
 int var_ty[MAX_VARS];
 
-void init_code() {
+void clean_var() {
   var_offset = 0;
 
   int c = 0;
@@ -14,6 +14,26 @@ void init_code() {
     var_ty[c] = TY_UNKNOWN;
     c++;
   }
+}
+
+void init_code() {
+  clean_var();
+}
+
+void func_begin(char* name, int ret, int* args, int argc) {
+  llfunc_begin(name, ret, args, argc);
+
+  var_offset = argc;
+  int c = 0;
+  while(c < argc) {
+    var_ty[c] = args[c];
+    c++;
+  }
+}
+
+void func_end() {
+  clean_var();
+  llfunc_end();
 }
 
 int get_varid(char *cur, int len, int type) {
