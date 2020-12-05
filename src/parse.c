@@ -467,7 +467,8 @@ void program() {
 
 void parse() {
   func_begin("main", TY_I32, NULL, 0);
-  //program();
+  llbb_begin("entry");
+  program();
   func_end();
 
   if(!at_eof()) {
