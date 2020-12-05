@@ -55,6 +55,8 @@ void parse();
 
 // gen1.c
 void putty(int ty);
+void func_begin(char* name, int ret, int* args, int argc);
+void func_end();
 
 // gen2.c
 #define TY_UNKNOWN 0
@@ -67,8 +69,6 @@ void init_code();
 int get_varid(char *cur, int len, int type);
 int get_type(int id);
 int get_offset(int id);
-void func(char *name);
-void func_fin();
 void pushl();
 void pushm(int val);
 void pushn(int val);

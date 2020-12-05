@@ -9,3 +9,27 @@ void putty(int ty) {
 
   put(types[ty]);
 }
+
+void func_begin(char* name, int ret, int* args, int argc) {
+  put("define ");
+  putty(ret);
+  put(" @");
+  put(name);
+  putc('(');
+
+  int c = 0;
+  while(c < argc) {
+    putty(args[c]);
+    put(" %");
+    putnum(c);
+
+    if(c != argc-1) put(", ");
+    c++;
+  }
+
+  puts(") {");
+}
+
+void func_end() {
+  puts("}\n");
+}

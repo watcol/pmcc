@@ -23,16 +23,6 @@ int get_offset(int id) {
   return 0;
 }
 
-void func(char *name) {
-  put("define i64 @");
-  put(name);
-  puts("() {");
-}
-
-void func_fin() {
-  puts("}");
-}
-
 void pushl() {
   eputs("Unimplemented");
   sys_exit(1);
