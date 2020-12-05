@@ -195,9 +195,8 @@ void remasg(int type) {
   sys_exit(1);
 }
 
-void ret() {
-  eputs("Unimplemented");
-  sys_exit(1);
+void ret(int ty, int val) {
+  llinstn("ret", ty, val);
 }
 
 int if_begin() {

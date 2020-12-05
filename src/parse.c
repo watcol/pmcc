@@ -408,7 +408,7 @@ int stmt_ret() {
 
   exp_expr();
   exp_this_ch(';');
-  ret();
+  ret(TY_I32, 0);
   return 1;
 }
 

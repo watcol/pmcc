@@ -89,7 +89,7 @@ void subasg(int type);
 void mulasg(int type);
 void divasg(int type);
 void remasg(int type);
-void ret();
+void ret(int ty, int val);
 int if_begin();
 void if_else(int id);
 void if_end(int id);
