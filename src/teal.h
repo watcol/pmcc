@@ -61,7 +61,7 @@ void putty(int ty);
 #define TY_I8 1
 #define TY_I16 2
 #define TY_I32 3
-#define TY_L64 4
+#define TY_I64 4
 
 void init_code();
 int get_varid(char *cur, int len, int type);
