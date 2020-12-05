@@ -1,6 +1,19 @@
 #include"teal.h"
+#define MAX_VARS 100
+
+int var_offset;
+char* vars[MAX_VARS];
+int var_ty[MAX_VARS];
 
 void init_code() {
+  var_offset = 0;
+
+  int c = 0;
+  while(c < MAX_VARS) {
+    vars[c] = NULL;
+    var_ty[c] = TY_UNKNOWN;
+    c++;
+  }
 }
 
 int get_varid(char *cur, int len, int type) {
