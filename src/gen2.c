@@ -1,8 +1,6 @@
 #include"teal.h"
 
 void init_code() {
-  puts("source_filename = \"tmp\"");
-  putc('\n');
 }
 
 int get_varid(char *cur, int len, int type) {
