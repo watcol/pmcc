@@ -56,7 +56,7 @@ int expr_factor() {
     return ty;
   } else if(lex_num()) {
     pushl();
-    return TY_INT;
+    return TY_I32;
   } else {
     int l = lval();
     if (l) {
