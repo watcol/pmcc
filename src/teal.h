@@ -54,17 +54,17 @@ int exp_these_op(int *os, int c);
 void parse();
 
 // gen1.c
-void putty(int ty);
-void func_begin(char* name, int ret, int* args, int argc);
-void func_end();
-
-// gen2.c
 #define TY_UNKNOWN 0
 #define TY_I8 1
 #define TY_I16 2
 #define TY_I32 3
 #define TY_I64 4
 
+void putty(int ty);
+void func_begin(char* name, int ret, int* args, int argc);
+void func_end();
+
+// gen2.c
 void init_code();
 int get_varid(char *cur, int len, int type);
 int get_type(int id);
