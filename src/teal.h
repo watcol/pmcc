@@ -63,6 +63,9 @@ void parse();
 void putty(int ty);
 void func_begin(char* name, int ret, int* args, int argc);
 void func_end();
+void bb_begin(char* name);
+void bb_end();
+void instn(char* in, int ty, int val);
 
 // gen2.c
 void init_code();

@@ -33,3 +33,22 @@ void func_begin(char* name, int ret, int* args, int argc) {
 void func_end() {
   puts("}\n");
 }
+
+void bb_begin(char* name) {
+  put(name);
+  puts(":");
+}
+
+void bb_end() {
+  putc('\n');
+}
+
+void instn(char* in, int ty, int val) {
+  put("  ");
+  put(in);
+  putc(' ');
+  putty(ty);
+  putc(' ');
+  putnum(val);
+  putc('\n');
+}
