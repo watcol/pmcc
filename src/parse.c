@@ -61,7 +61,7 @@ int expr_factor() {
     int l = lval();
     if (l) {
       pushm(l);
-      return get_type(l);
+      return lvar_type(l);
     } else {
       return TY_UNKNOWN;
     }
@@ -97,7 +97,7 @@ int expr_suf() {
     return expr_factor();
   }
 
-  return get_type(l);
+  return lvar_type(l);
 }
 
 int exp_expr_suf() {
@@ -331,7 +331,7 @@ int exp_expr_asg();
 int expr_asg() {
   int m = mark();
   int l = lval();
-  int ty = get_type(l);
+  int ty = lvar_type(l);
   if(!l) {
     unmark(m);
     return expr_or();
