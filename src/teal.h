@@ -60,12 +60,12 @@ void parse();
 #define TY_I32 3
 #define TY_I64 4
 
-void putty(int ty);
-void func_begin(char* name, int ret, int* args, int argc);
-void func_end();
-void bb_begin(char* name);
-void bb_end();
-void instn(char* in, int ty, int val);
+void llputty(int ty);
+void llfunc_begin(char* name, int ret, int* args, int argc);
+void llfunc_end();
+void llbb_begin(char* name);
+void llbb_end();
+void llinstn(char* in, int ty, int val);
 
 // gen2.c
 void init_code();

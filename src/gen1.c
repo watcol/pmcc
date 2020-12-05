@@ -2,7 +2,7 @@
 
 char* types[5] = {"unknown", "i8", "i16", "i32", "i64"};
 
-void putty(int ty) {
+void llputty(int ty) {
   if(ty == TY_UNKNOWN) {
     panic("Unknown type.");
   }
@@ -10,16 +10,16 @@ void putty(int ty) {
   put(types[ty]);
 }
 
-void func_begin(char* name, int ret, int* args, int argc) {
+void llfunc_begin(char* name, int ret, int* args, int argc) {
   put("define ");
-  putty(ret);
+  llputty(ret);
   put(" @");
   put(name);
   putc('(');
 
   int c = 0;
   while(c < argc) {
-    putty(args[c]);
+    llputty(args[c]);
     put(" %");
     putnum(c);
 
@@ -30,24 +30,24 @@ void func_begin(char* name, int ret, int* args, int argc) {
   puts(") {");
 }
 
-void func_end() {
+void llfunc_end() {
   puts("}\n");
 }
 
-void bb_begin(char* name) {
+void llbb_begin(char* name) {
   put(name);
   puts(":");
 }
 
-void bb_end() {
+void llbb_end() {
   putc('\n');
 }
 
-void instn(char* in, int ty, int val) {
+void llinstn(char* in, int ty, int val) {
   put("  ");
   put(in);
   putc(' ');
-  putty(ty);
+  llputty(ty);
   putc(' ');
   putnum(val);
   putc('\n');
