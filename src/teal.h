@@ -53,21 +53,7 @@ int exp_these_op(int *os, int c);
 // parse.c
 void parse();
 
-// gen1.c
-#define TY_UNKNOWN 0
-#define TY_I8 1
-#define TY_I16 2
-#define TY_I32 3
-#define TY_I64 4
-
-void llputty(int ty);
-void llfunc_begin(char* name, int ret, int* args, int argc);
-void llfunc_end();
-void llbb_begin(char* name);
-void llbb_end();
-void llinstn(char* in, int ty, int val);
-
-// gen2.c
+// gen.c
 void init_code();
 int get_varid(char *cur, int len, int type);
 int get_type(int id);
@@ -104,6 +90,20 @@ void if_end(int id);
 int while_begin();
 void while_eval(int id);
 void while_end(int id);
+
+// gen_llvm.c
+#define TY_UNKNOWN 0
+#define TY_I8 1
+#define TY_I16 2
+#define TY_I32 3
+#define TY_I64 4
+
+void llputty(int ty);
+void llfunc_begin(char* name, int ret, int* args, int argc);
+void llfunc_end();
+void llbb_begin(char* name);
+void llbb_end();
+void llinstn(char* in, int ty, int val);
 
 // util.c
 #define NULL 0
