@@ -54,6 +54,8 @@ int exp_these_op(int *os, int c);
 void parse();
 
 // gen1.c
+void putty(int ty);
+
 // gen2.c
 #define TY_UNKNOWN 0
 #define TY_I8 1
