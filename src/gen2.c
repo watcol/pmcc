@@ -1,8 +1,8 @@
 #include"teal.h"
 
 void init_code() {
-  eputs("Unimplemented");
-  sys_exit(1);
+  puts("source_filename = \"tmp\"");
+  putc('\n');
 }
 
 int get_varid(char *cur, int len, int type) {
@@ -24,13 +24,13 @@ int get_offset(int id) {
 }
 
 void func(char *name) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  put("define i64 @");
+  put(name);
+  puts("() {");
 }
 
 void func_fin() {
-  eputs("Unimplemented");
-  sys_exit(1);
+  puts("}");
 }
 
 void pushl() {

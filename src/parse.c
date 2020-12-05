@@ -467,7 +467,7 @@ void program() {
 
 void parse() {
   func("main");
-  program();
+  //program();
   func_fin();
 
   if(!at_eof()) {
