@@ -40,7 +40,7 @@ int lVal() {
 
 int expLVal() {
   int l = lVal();
-  if(!l) {
+  if(l < 0) {
     panicParse("lVal");
   }
 

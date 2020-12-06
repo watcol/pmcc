@@ -138,13 +138,13 @@ int lexIdent() {
     cur+=len;
     return id;
   } else {
-    return 0;
+    return -1;
   }
 }
 
 int expIdent() {
   int i = lexIdent();
-  if(!i) {
+  if(i < 0) {
     panicLex();
   }
   return i;
