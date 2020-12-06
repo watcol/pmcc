@@ -116,24 +116,59 @@ int not_(int var) {
   return new_var;
 }
 
-void add(int type) {
-  panic("Unimplemented");
+int mul(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int new_var = lVarAdd(NULL, ty);
+
+  llInstVVAsg("mul", new_var, var1, var2);
+
+  return new_var;
 }
 
-void sub(int type) {
-  panic("Unimplemented");
+int div(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int new_var = lVarAdd(NULL, ty);
+
+  llInstVVAsg("sdiv", new_var, var1, var2);
+
+  return new_var;
 }
 
-void mul(int type) {
-  panic("Unimplemented");
+int rem(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int new_var = lVarAdd(NULL, ty);
+
+  llInstVVAsg("srem", new_var, var1, var2);
+
+  return new_var;
 }
 
-void div(int type) {
-  panic("Unimplemented");
+int add(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int new_var = lVarAdd(NULL, ty);
+
+  llInstVVAsg("add", new_var, var1, var2);
+
+  return new_var;
 }
 
-void rem(int type) {
-  panic("Unimplemented");
+int sub(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int new_var = lVarAdd(NULL, ty);
+
+  llInstVVAsg("sub", new_var, var1, var2);
+
+  return new_var;
 }
 
 void less(int type) {

@@ -138,69 +138,63 @@ int expExprUnary() {
 }
 
 int exprMul() {
-  int ty1 = exprUnary();
-  if(!ty1){
-    return 0;
+  int var1 = exprUnary();
+  if(var1 < 0){
+    return -1;
   }
 
   int o;
   while((o = theseOp(group_mul, count_mul))) {
-    int ty2 = expExprUnary();
-    if(ty1 != ty2) {
-      panicParse("type error");
-    }
+    int var2 = expExprUnary();
 
     if(o == OP_MUL) {
-      mul(ty1);
+      var1 = mul(var1, var2);
     } else if (o == OP_DIV) {
-      div(ty1);
+      var1 = div(var1, var2);
     } else if (o == OP_REM) {
-      rem(ty1);
+      var1 = rem(var1, var2);
     } else {
       panic("Unknown operator");
     }
 
   }
 
-  return ty1;
+  return var1;
 }
 
 int expExprMul() {
   int res = exprMul();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprMul");
   }
   return res;
 }
 
 int exprAdd() {
-  int ty1 = exprMul();
-  if(!ty1) {
+  int var1 = exprMul();
+  if(var1 < 0) {
     return TY_UNKNOWN;
   }
 
   int o;
   while((o = theseOp(group_add, count_add))) {
-    int ty2 = expExprMul();
-    if(ty1 != ty2) {
-      panic("Type unmatched");
-    }
+    int var2 = expExprMul();
 
     if(o == OP_ADD) {
-      add(ty1);
+      var1 = add(var1, var2);
     } else if (o == OP_SUB) {
-      sub(ty1);
+      var1 = sub(var1, var2);
     } else {
       panic("Unknown operator");
     }
   }
 
-  return ty1;
+  return var1;
 }
 
 int expExprAdd() {
   int res = exprAdd();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprAdd");
   }
   return res;
