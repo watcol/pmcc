@@ -8,12 +8,12 @@
 #define OP_MUL 3
 #define OP_DIV 4
 #define OP_REM 5
-#define OP_LESS 6
-#define OP_LEQ 7
-#define OP_MORE 8
-#define OP_MEQ 9
+#define OP_LT 6
+#define OP_LE 7
+#define OP_GT 8
+#define OP_GE 9
 #define OP_EQ 10
-#define OP_NEQ 11
+#define OP_NE 11
 #define OP_NOT 12
 #define OP_AND 13
 #define OP_OR 14

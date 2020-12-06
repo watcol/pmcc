@@ -239,7 +239,7 @@ int lexOp() {
     if(*cur == '=') {
       cur++;
       tmp++;
-      return OP_NEQ;
+      return OP_NE;
     } else {
       return OP_NOT;
     }
@@ -249,9 +249,9 @@ int lexOp() {
     if (*cur == '=') {
       cur++;
       tmp++;
-      return OP_LEQ;
+      return OP_LE;
     } else {
-      return OP_LESS;
+      return OP_LT;
     }
   } else if(*cur == '>') {
     cur++;
@@ -259,9 +259,9 @@ int lexOp() {
     if (*cur == '=') {
       cur++;
       tmp++;
-      return OP_MEQ;
+      return OP_GE;
     } else {
-      return OP_MORE;
+      return OP_GT;
     }
   } else if(*cur == '&') {
     cur++;

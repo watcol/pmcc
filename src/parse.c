@@ -12,10 +12,10 @@ int count_add = 2;
 int group_mul[3] = {OP_MUL, OP_DIV, OP_REM};
 int count_mul = 3;
 
-int group_cmp[4] = {OP_LESS, OP_LEQ, OP_MEQ, OP_MORE};
+int group_cmp[4] = {OP_LE, OP_LT, OP_GE, OP_GT};
 int count_cmp = 4;
 
-int group_eq[2] = {OP_EQ, OP_NEQ};
+int group_eq[2] = {OP_EQ, OP_NE};
 int count_eq = 2;
 
 int group_and[1] = {OP_AND};
@@ -213,13 +213,13 @@ int exprCmp() {
       panic("Type unmatched");
     }
 
-    if(o == OP_LESS) {
+    if(o == OP_LT) {
       less(ty1);
-    } else if(o == OP_LEQ) {
+    } else if(o == OP_LE) {
       leq(ty1);
-    } else if(o == OP_MORE) {
+    } else if(o == OP_GT) {
       more(ty1);
-    } else if(o == OP_MEQ) {
+    } else if(o == OP_GE) {
       meq(ty1);
     }
   }
@@ -250,7 +250,7 @@ int exprEq() {
 
     if(o == OP_EQ) {
       eq(ty1);
-    } else if(o == OP_NEQ) {
+    } else if(o == OP_NE) {
       neq(ty1);
     }
   }
