@@ -200,6 +200,23 @@ void llStoreVal(int var, int val) {
   putCh('\n');
 }
 
+void llStore(int dst, int src) {
+  int ty = lVarType(src);
+  if(llRefTy(ty) != lVarType(dst)) panic("Type unmatched.");
+
+  putStr("  store ");
+  llPutTy(ty);
+  putCh(' ');
+  llPutVar(src);
+  putStr(", ");
+  llPutTy(llRefTy(ty));
+  putCh(' ');
+  llPutVar(dst);
+  putStr(", ");
+  llPutAlign(ty);
+  putCh('\n');
+}
+
 void llLoad(int dst, int src) {
   int ty = lVarType(dst);
   if(llRefTy(ty) != lVarType(src)) panic("Type unmatched.");

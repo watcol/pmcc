@@ -122,6 +122,7 @@ void llIcmpVVAsg(char* name, int dst, int src1, int src2);
 void llZeroExt(int dst, int src);
 void llAlloca(int var);
 void llStoreVal(int var, int val);
+void llStore(int dst, int src);
 void llLoad(int dst, int src);
 
 // util.c

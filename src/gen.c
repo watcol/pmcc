@@ -62,191 +62,234 @@ int lVarType(int id) {
 }
 
 int constNum(int ty, int val) {
-  int var1 = lVarAdd(NULL, llRefTy(ty));
-  llAlloca(var1);
-  llStoreVal(var1, val);
+  int var = lVarAdd(NULL, llRefTy(ty));
+  llAlloca(var);
+  llStoreVal(var, val);
 
-  int var2 = lVarAdd(NULL, ty);
-  llLoad(var2, var1);
+  return var;
+}
 
-  return var2;
+int refVar(int var) {
+  int res = lVarAdd(NULL, llRefTy(lVarType(var)));
+  llAlloca(res);
+  llStore(res, var);
+  return res;
+}
+
+int derefVar(int var) {
+  int res = lVarAdd(NULL, llDerefTy(lVarType(var)));
+  llLoad(res, var);
+  return res;
 }
 
 int defVar(char* buf, int len, int ty) {
   int var = lVarFind(buf, len);
-  if(var == -1) var = lVarAdd(buf, llRefTy(ty));
+  if(var == -1) {
+    var = lVarAdd(buf, llRefTy(ty));
+    llAlloca(var);
+  }
+
   if(lVarType(var) != llRefTy(ty)) panic("Type unmatched");
 
-  llAlloca(var);
   return var;
 }
 
 int inc(int var) {
   int ty = lVarType(var);
-  int new_var = lVarAdd(NULL, ty);
 
-  llInstNVAsg("add", new_var, 1, var);
-  return new_var;
+  int dvar = derefVar(var);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
+
+  llInstNVAsg("add", new_var, 1, dvar);
+  return refVar(new_var);
 }
 
 int dec(int var) {
   int ty = lVarType(var);
-  int new_var = lVarAdd(NULL, ty);
 
-  llInstNVAsg("add", new_var, -1, var);
-  return new_var;
+  int dvar = derefVar(var);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
+
+  llInstNVAsg("add", new_var, -1, dvar);
+  return refVar(new_var);
 }
 
 int neg(int var) {
   int ty = lVarType(var);
-  int new_var = lVarAdd(NULL, ty);
 
-  llInstNVAsg("sub", new_var, 0, var);
-  return new_var;
+  int dvar = derefVar(var);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
+
+  llInstNVAsg("sub", new_var, 0, dvar);
+  return refVar(new_var);
 }
 
 int not_(int var) {
   int ty = lVarType(var);
+
+  int dvar = derefVar(var);
   int tmp_var = lVarAdd(NULL, TY_I1);
 
-  llIcmpNVAsg("eq", tmp_var, 0, var);
-  int new_var = lVarAdd(NULL, ty);
+  llIcmpNVAsg("eq", tmp_var, 0, dvar);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
   llZeroExt(new_var, tmp_var);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int mul(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
-  int new_var = lVarAdd(NULL, ty);
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
 
-  llInstVVAsg("mul", new_var, var1, var2);
+  llInstVVAsg("mul", new_var, dvar1, dvar2);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int div(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
-  int new_var = lVarAdd(NULL, ty);
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
 
-  llInstVVAsg("sdiv", new_var, var1, var2);
+  llInstVVAsg("sdiv", new_var, dvar1, dvar2);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int rem(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
-  int new_var = lVarAdd(NULL, ty);
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
 
-  llInstVVAsg("srem", new_var, var1, var2);
+  llInstVVAsg("srem", new_var, dvar1, dvar2);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int add(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
-  int new_var = lVarAdd(NULL, ty);
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
 
-  llInstVVAsg("add", new_var, var1, var2);
+  llInstVVAsg("add", new_var, dvar1, dvar2);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int sub(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
-  int new_var = lVarAdd(NULL, ty);
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
 
-  llInstVVAsg("sub", new_var, var1, var2);
+  llInstVVAsg("sub", new_var, dvar1, dvar2);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int lt(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("slt", tmp_var, var1, var2);
+  llIcmpVVAsg("slt", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, ty);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
   llZeroExt(new_var, tmp_var);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int le(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("sle", tmp_var, var1, var2);
+  llIcmpVVAsg("sle", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, ty);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
   llZeroExt(new_var, tmp_var);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int gt(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("sgt", tmp_var, var1, var2);
+  llIcmpVVAsg("sgt", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, ty);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
   llZeroExt(new_var, tmp_var);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int ge(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("sge", tmp_var, var1, var2);
+  llIcmpVVAsg("sge", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, ty);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
   llZeroExt(new_var, tmp_var);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int eq(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("eq", tmp_var, var1, var2);
+  llIcmpVVAsg("eq", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, ty);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
   llZeroExt(new_var, tmp_var);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 int ne(int var1, int var2) {
   int ty = lVarType(var1);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("ne", tmp_var, var1, var2);
+  llIcmpVVAsg("ne", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, ty);
+  int new_var = lVarAdd(NULL, llDerefTy(ty));
   llZeroExt(new_var, tmp_var);
 
-  return new_var;
+  return refVar(new_var);
 }
 
 void and_() {
@@ -282,7 +325,7 @@ void remasg(int type) {
 }
 
 void ret(int var) {
-  llInstV("ret", var);
+  llInstV("ret", derefVar(var));
 }
 
 int ifBegin() {
