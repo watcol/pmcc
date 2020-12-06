@@ -51,9 +51,9 @@ int expExpr();
 
 int exprFactor() {
   if(thisCh('(')) {
-    int ty = expExpr();
+    int var = expExpr();
     expThisCh(')');
-    return ty;
+    return var;
   } else {
     int i = lexNum();
     if(i != -1) {
@@ -66,7 +66,7 @@ int exprFactor() {
 
 int expExprFactor() {
   int res = exprFactor();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprFactor");
   }
   return res;
