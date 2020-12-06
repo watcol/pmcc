@@ -117,6 +117,8 @@ void llBbEnd();
 void llInstV(char* name, int var);
 void llInstNVAsg(char* name, int dst, int src1, int src2);
 void llIcmpNVAsg(char* cond, int dst, int src1, int src2);
+void llInstVVAsg(char* name, int dst, int src1, int src2);
+void llIcmpVVAsg(char* name, int dst, int src1, int src2);
 void llZeroExt(int dst, int src);
 void llAlloca(int var);
 void llStoreVal(int var, int val);

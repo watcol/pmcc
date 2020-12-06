@@ -130,6 +130,39 @@ void llIcmpNVAsg(char* cond, int dst, int src1, int src2) {
   putCh('\n');
 }
 
+void llInstVVAsg(char* name, int dst, int src1, int src2) {
+  int ty = lVarType(dst);
+  if(ty != lVarType(src1)) panic("Type unmatched");
+  if(ty != lVarType(src2)) panic("Type unmatched");
+
+  llPutAsg(dst);
+  putStr(name);
+  putCh(' ');
+  llPutTy(ty);
+  putCh(' ');
+  llPutVar(src1);
+  putStr(", ");
+  llPutVar(src2);
+  putCh('\n');
+}
+
+void llIcmpVVAsg(char* cond, int dst, int src1, int src2) {
+  int ty = lVarType(src1);
+  if(lVarType(dst) != TY_I1) panic("Type unmatched");
+  if(lVarType(src2) != ty) panic("Type unmatched");
+
+  llPutAsg(dst);
+  putStr("icmp ");
+  putStr(cond);
+  putCh(' ');
+  llPutTy(ty);
+  putCh(' ');
+  llPutVar(src1);
+  putStr(", ");
+  llPutVar(src2);
+  putCh('\n');
+}
+
 void llZeroExt(int dst, int src) {
   llPutAsg(dst);
   putStr("zext ");
