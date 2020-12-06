@@ -81,20 +81,6 @@ int constNum(int ty, int val) {
   return var2;
 }
 
-// Deprecated ------------
-void pushl() {
-  panic("Unimplemented");
-}
-
-void pushm(int val) {
-  panic("Unimplemented");
-}
-
-void pushn(int val) {
-  panic("Unimplemented");
-}
-// -----------------------
-
 int inc(int var) {
   int ty = lVarType(var);
   int new_var = lVarAdd(NULL, ty);
