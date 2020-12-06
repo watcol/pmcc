@@ -109,6 +109,8 @@ void whileEnd(int id);
 #define TY_I64_REF_REF 12
 
 void llPutTy(int ty);
+int llRefTy(int ty);
+int llDerefTy(int ty);
 void llFuncBegin(char* name, int ret, int* args, int argc);
 void llFuncEnd();
 void llBbBegin(char* name);
@@ -116,6 +118,7 @@ void llBbEnd();
 void llRetN(int ty, int val);
 void llAlloca(int var);
 void llStoreVal(int var, int val);
+void llLoad(int dst, int src);
 
 // util.c
 #define NULL 0

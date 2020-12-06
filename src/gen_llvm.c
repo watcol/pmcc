@@ -103,14 +103,31 @@ void llAlloca(int var) {
 }
 
 void llStoreVal(int var, int val) {
-  int ty = lVarType(var);
+  int ty = llDerefTy(lVarType(var));
+
   putStr("  store ");
-  llPutTy(llDerefTy(ty));
+  llPutTy(ty);
   putCh(' ');
   putNum(val);
   putStr(", ");
-  llPutTy(ty);
+  llPutTy(llRefTy(ty));
   llPutVar(var);
   putStr(", ");
-  llPutAlign(llDerefTy(ty));
+  llPutAlign(ty);
+}
+
+void llLoad(int dst, int src) {
+  int ty = lVarType(dst);
+  if(llRefTy(ty) != lVarType(src)) panic("Type unmatched.");
+
+  putStr("  ");
+  llPutVar(dst);
+  putStr(" = load ");
+  llPutTy(ty);
+  putStr(", ");
+  llPutTy(llRefTy(ty));
+  putCh(' ');
+  llPutVar(src);
+  putStr(", ");
+  llPutAlign(ty);
 }
