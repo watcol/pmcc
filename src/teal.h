@@ -94,16 +94,16 @@ void whileEnd(int id);
 
 // gen_llvm.c
 #define TY_UNKNOWN 0
-#define TY_I8 1
-#define TY_I16 2
+#define TY_I1 1
+#define TY_I8 2
 #define TY_I32 3
 #define TY_I64 4
-#define TY_I8_REF 5
-#define TY_I16_REF 6
+#define TY_I1_REF 5
+#define TY_I8_REF 6
 #define TY_I32_REF 7
 #define TY_I64_REF 8
-#define TY_I8_REF_REF 9
-#define TY_I16_REF_REF 10
+#define TY_I1_REF_REF 9
+#define TY_I8_REF_REF 10
 #define TY_I32_REF_REF 11
 #define TY_I64_REF_REF 12
 

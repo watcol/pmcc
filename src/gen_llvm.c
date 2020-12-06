@@ -2,9 +2,9 @@
 
 char* types[13] = {
   "unknown",
-  "i8",   "i16",   "i32",   "i64",
-  "i8*",  "i16*",  "i32*",  "i64*",
-  "i8**", "i16**", "i32**", "i64**"
+  "i1",   "i8",   "i32",   "i64",
+  "i1*",  "i8*",  "i32*",  "i64*",
+  "i1**", "i8**", "i32**", "i64**"
 };
 
 void llPutTy(int ty) {
@@ -68,8 +68,8 @@ void llPutVar(int id) {
 }
 
 int llAlign(int ty) {
-  if(ty == TY_I8) return 1;
-  else if(ty == TY_I16) return 2;
+  if(ty == TY_I1) return 1;
+  else if(ty == TY_I8) return 1;
   else if(ty == TY_I32) return 4;
   else if(ty == TY_I64) return 8;
   else if(ty >= TY_I8_REF && ty <= TY_I64_REF_REF) return 8;
