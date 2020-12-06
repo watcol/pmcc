@@ -121,9 +121,9 @@ int exprUnary() {
   }
 
   if(o == OP_SUB) {
-    neg(var);
+    var = neg(var);
   } else if(o == OP_NOT) {
-    not_(var);
+    var = not_(var);
   }
 
   return var;

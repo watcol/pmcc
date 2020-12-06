@@ -110,6 +110,23 @@ void llInstNVAsg(char* name, int dst, int src1, int src2) {
   putCh('\n');
 }
 
+void llIcmpNVAsg(char* cond, int dst, int src1, int src2) {
+  int ty = lVarType(src2);
+  if(lVarType(dst) != TY_I1) panic("Type unmatched");
+
+  putStr("  ");
+  llPutVar(dst);
+  putStr(" = icmp ");
+  putStr(cond);
+  putCh(' ');
+  llPutTy(ty);
+  putCh(' ');
+  putNum(src1);
+  putStr(", ");
+  llPutVar(src2);
+  putCh('\n');
+}
+
 void llZeroExt(int dst, int src) {
   putStr("  ");
   llPutVar(dst);

@@ -105,6 +105,17 @@ int neg(int var) {
   return new_var;
 }
 
+int not_(int var) {
+  int ty = lVarType(var);
+  int tmp_var = lVarAdd(NULL, TY_I1);
+
+  llIcmpNVAsg("eq", tmp_var, 0, var);
+  int new_var = lVarAdd(NULL, ty);
+  llZeroExt(new_var, tmp_var);
+
+  return new_var;
+}
+
 void add(int type) {
   panic("Unimplemented");
 }
@@ -122,10 +133,6 @@ void div(int type) {
 }
 
 void rem(int type) {
-  panic("Unimplemented");
-}
-
-void not_(int type) {
   panic("Unimplemented");
 }
 
