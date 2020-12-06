@@ -111,9 +111,11 @@ void llStoreVal(int var, int val) {
   putNum(val);
   putStr(", ");
   llPutTy(llRefTy(ty));
+  putCh(' ');
   llPutVar(var);
   putStr(", ");
   llPutAlign(ty);
+  putCh('\n');
 }
 
 void llLoad(int dst, int src) {
@@ -130,4 +132,5 @@ void llLoad(int dst, int src) {
   llPutVar(src);
   putStr(", ");
   llPutAlign(ty);
+  putCh('\n');
 }
