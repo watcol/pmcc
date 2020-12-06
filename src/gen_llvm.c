@@ -83,6 +83,12 @@ void llPutAlign(int ty) {
   putNum(llAlign(ty));
 }
 
+void llPutAsg(int var) {
+  putStr("  ");
+  llPutVar(var);
+  putStr(" = ");
+}
+
 void llInstV(char* name, int var) {
   putStr("  ");
   putStr(name);
@@ -97,9 +103,7 @@ void llInstNVAsg(char* name, int dst, int src1, int src2) {
   int ty = lVarType(dst);
   if(ty != lVarType(src2)) panic("Type unmatched");
 
-  putStr("  ");
-  llPutVar(dst);
-  putStr(" = ");
+  llPutAsg(dst);
   putStr(name);
   putCh(' ');
   llPutTy(ty);
@@ -114,9 +118,8 @@ void llIcmpNVAsg(char* cond, int dst, int src1, int src2) {
   int ty = lVarType(src2);
   if(lVarType(dst) != TY_I1) panic("Type unmatched");
 
-  putStr("  ");
-  llPutVar(dst);
-  putStr(" = icmp ");
+  llPutAsg(dst);
+  putStr("icmp ");
   putStr(cond);
   putCh(' ');
   llPutTy(ty);
@@ -128,9 +131,8 @@ void llIcmpNVAsg(char* cond, int dst, int src1, int src2) {
 }
 
 void llZeroExt(int dst, int src) {
-  putStr("  ");
-  llPutVar(dst);
-  putStr(" = zext ");
+  llPutAsg(dst);
+  putStr("zext ");
   llPutTy(lVarType(src));
   putCh(' ');
   llPutVar(src);
@@ -141,9 +143,8 @@ void llZeroExt(int dst, int src) {
 
 void llAlloca(int var) {
   int ty = llDerefTy(lVarType(var));
-  putStr("  ");
-  llPutVar(var);
-  putStr(" = alloca ");
+  llPutAsg(var);
+  putStr("alloca ");
   llPutTy(ty);
   putStr(", ");
   llPutAlign(ty);
@@ -170,9 +171,8 @@ void llLoad(int dst, int src) {
   int ty = lVarType(dst);
   if(llRefTy(ty) != lVarType(src)) panic("Type unmatched.");
 
-  putStr("  ");
-  llPutVar(dst);
-  putStr(" = load ");
+  llPutAsg(dst);
+  putStr("load ");
   llPutTy(ty);
   putStr(", ");
   llPutTy(llRefTy(ty));
