@@ -116,7 +116,7 @@ void llFuncBegin(char* name, int ret, int* args, int argc);
 void llFuncEnd();
 void llBbBegin(char* name);
 void llBbEnd();
-void llRetN(int ty, int val);
+void llRet(int var);
 void llAlloca(int var);
 void llStoreVal(int var, int val);
 void llLoad(int dst, int src);

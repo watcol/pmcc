@@ -402,9 +402,9 @@ int stmtMulti() {
 int stmtRet() {
   if(!thisStr("return")) return 0;
 
-  expExpr();
+  int var = expExpr();
   expThisCh(';');
-  ret(TY_I32, 0);
+  llRet(var);
   return 1;
 }
 
