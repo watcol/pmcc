@@ -173,7 +173,7 @@ int expExprMul() {
 int exprAdd() {
   int var1 = exprMul();
   if(var1 < 0) {
-    return TY_UNKNOWN;
+    return -1;
   }
 
   int o;
@@ -201,66 +201,60 @@ int expExprAdd() {
 }
 
 int exprCmp() {
-  int ty1 = exprAdd();
-  if(!ty1) {
-    return TY_UNKNOWN;
+  int var1 = exprAdd();
+  if(var1 < 0) {
+    return -1;
   }
 
   int o;
   while((o = theseOp(group_cmp, count_cmp))) {
-    int ty2 = expExprAdd();
-    if(ty1 != ty2) {
-      panic("Type unmatched");
-    }
+    int var2 = expExprAdd();
 
     if(o == OP_LT) {
-      less(ty1);
+      var1 = lt(var1, var2);
     } else if(o == OP_LE) {
-      leq(ty1);
+      var1 = le(var1, var2);
     } else if(o == OP_GT) {
-      more(ty1);
+      var1 = gt(var1, var2);
     } else if(o == OP_GE) {
-      meq(ty1);
+      var1 = ge(var1, var2);
     }
   }
 
-  return ty1;
+  return var1;
 }
 
 int expExprCmp() {
   int res = exprCmp();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprCmp");
   }
   return res;
 }
 
 int exprEq() {
-  int ty1 = exprCmp();
-  if(!ty1) {
-    return TY_UNKNOWN;
+  int var1 = exprCmp();
+  if(var1 < 0) {
+    return -1;
   }
 
   int o;
   while((o = theseOp(group_eq, count_eq))) {
-    int ty2 = expExprCmp();
-    if(ty1 != ty2) {
-      panic("Type unmatched");
-    }
+    int var2 = expExprCmp();
 
     if(o == OP_EQ) {
-      eq(ty1);
+      var1 = eq(var1, var2);
     } else if(o == OP_NE) {
-      neq(ty1);
+      var1 = ne(var1, var2);
     }
   }
 
-  return ty1;
+  return var1;
 }
 
 int expExprEq() {
   int res = exprEq();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprEq");
   }
   return res;

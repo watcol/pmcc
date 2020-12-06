@@ -171,28 +171,82 @@ int sub(int var1, int var2) {
   return new_var;
 }
 
-void less(int type) {
-  panic("Unimplemented");
+int lt(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int tmp_var = lVarAdd(NULL, TY_I1);
+  llIcmpVVAsg("slt", tmp_var, var1, var2);
+
+  int new_var = lVarAdd(NULL, ty);
+  llZeroExt(new_var, tmp_var);
+
+  return new_var;
 }
 
-void leq(int type) {
-  panic("Unimplemented");
+int le(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int tmp_var = lVarAdd(NULL, TY_I1);
+  llIcmpVVAsg("sle", tmp_var, var1, var2);
+
+  int new_var = lVarAdd(NULL, ty);
+  llZeroExt(new_var, tmp_var);
+
+  return new_var;
 }
 
-void more(int type) {
-  panic("Unimplemented");
+int gt(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int tmp_var = lVarAdd(NULL, TY_I1);
+  llIcmpVVAsg("sgt", tmp_var, var1, var2);
+
+  int new_var = lVarAdd(NULL, ty);
+  llZeroExt(new_var, tmp_var);
+
+  return new_var;
 }
 
-void meq(int type) {
-  panic("Unimplemented");
+int ge(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int tmp_var = lVarAdd(NULL, TY_I1);
+  llIcmpVVAsg("sge", tmp_var, var1, var2);
+
+  int new_var = lVarAdd(NULL, ty);
+  llZeroExt(new_var, tmp_var);
+
+  return new_var;
 }
 
-void eq(int type) {
-  panic("Unimplemented");
+int eq(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int tmp_var = lVarAdd(NULL, TY_I1);
+  llIcmpVVAsg("eq", tmp_var, var1, var2);
+
+  int new_var = lVarAdd(NULL, ty);
+  llZeroExt(new_var, tmp_var);
+
+  return new_var;
 }
 
-void neq(int type) {
-  panic("Unimplemented");
+int ne(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int tmp_var = lVarAdd(NULL, TY_I1);
+  llIcmpVVAsg("ne", tmp_var, var1, var2);
+
+  int new_var = lVarAdd(NULL, ty);
+  llZeroExt(new_var, tmp_var);
+
+  return new_var;
 }
 
 void and_() {
