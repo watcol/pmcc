@@ -110,6 +110,18 @@ void llInstNVAsg(char* name, int dst, int src1, int src2) {
   putCh('\n');
 }
 
+void llZeroExt(int dst, int src) {
+  putStr("  ");
+  llPutVar(dst);
+  putStr(" = zext ");
+  llPutTy(lVarType(src));
+  putCh(' ');
+  llPutVar(src);
+  putStr(" to ");
+  llPutTy(lVarType(dst));
+  putCh('\n');
+}
+
 void llAlloca(int var) {
   int ty = llDerefTy(lVarType(var));
   putStr("  ");

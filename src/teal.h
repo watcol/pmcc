@@ -116,6 +116,7 @@ void llBbBegin(char* name);
 void llBbEnd();
 void llInstV(char* name, int var);
 void llInstNVAsg(char* name, int dst, int src1, int src2);
+void llZeroExt(int dst, int src);
 void llAlloca(int var);
 void llStoreVal(int var, int val);
 void llLoad(int dst, int src);
