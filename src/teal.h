@@ -108,7 +108,8 @@ void llfunc_begin(char* name, int ret, int* args, int argc);
 void llfunc_end();
 void llbb_begin(char* name);
 void llbb_end();
-void llinstn(char* in, int ty, int val);
+void llretn(int ty, int val);
+void llalloca(int var, int ty, int val);
 
 // util.c
 #define NULL 0

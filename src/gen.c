@@ -196,7 +196,7 @@ void remasg(int type) {
 }
 
 void ret(int ty, int val) {
-  llinstn("ret", ty, val);
+  llretn(ty, val);
 }
 
 int if_begin() {

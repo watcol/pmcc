@@ -43,12 +43,40 @@ void llbb_end() {
   putc('\n');
 }
 
-void llinstn(char* in, int ty, int val) {
-  put("  ");
-  put(in);
-  putc(' ');
+void llputvar(int id) {
+  putc('%');
+  putnum(id);
+}
+
+int llalign(int ty) {
+  if(ty == TY_I8) return 1;
+  else if(ty == TY_I16) return 2;
+  else if(ty == TY_I32) return 4;
+  else if(ty == TY_I64) return 8;
+
+  panic("Unknown type.");
+  return 0;
+}
+
+void llputalign(int ty) {
+  put("align ");
+  putnum(llalign(ty));
+}
+
+void llretn(int ty, int val) {
+  put("  ret ");
   llputty(ty);
   putc(' ');
   putnum(val);
+  putc('\n');
+}
+
+void llalloca(int var, int ty, int val) {
+  put("  ");
+  llputvar(var);
+  put(" = alloca ");
+  llputty(ty);
+  put(", ");
+  llputalign(ty);
   putc('\n');
 }
