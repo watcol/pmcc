@@ -83,22 +83,27 @@ int exprSuf() {
   int o = theseOp(group_suf, count_suf);
   if(o) {
     unmark(m);
-    if (o == OP_INC) {
-      inc(l);
-    } else if (o == OP_DEC) {
-      dec(l);
-    }
   } else {
     jump(m);
     return exprFactor();
   }
 
-  return lVarType(l);
+  while(o) {
+    if (o == OP_INC) {
+      l = inc(l);
+    } else if (o == OP_DEC) {
+      l = dec(l);
+    }
+
+    o = theseOp(group_suf, count_suf);
+  }
+
+  return l;
 }
 
 int expExprSuf() {
   int res = exprSuf();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprSuf");
   }
   return res;

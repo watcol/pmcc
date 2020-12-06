@@ -81,6 +81,7 @@ int constNum(int ty, int val) {
   return var2;
 }
 
+// Deprecated ------------
 void pushl() {
   panic("Unimplemented");
 }
@@ -92,13 +93,22 @@ void pushm(int val) {
 void pushn(int val) {
   panic("Unimplemented");
 }
+// -----------------------
 
-void inc(int mem) {
-  panic("Unimplemented");
+int inc(int var) {
+  int ty = lVarType(var);
+  int new_var = lVarAdd(NULL, ty);
+
+  llInstNVAsg("add", new_var, 1, var);
+  return new_var;
 }
 
-void dec(int mem) {
-  panic("Unimplemented");
+int dec(int var) {
+  int ty = lVarType(var);
+  int new_var = lVarAdd(NULL, ty);
+
+  llInstNVAsg("add", new_var, -1, var);
+  return new_var;
 }
 
 void add(int type) {

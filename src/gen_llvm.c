@@ -93,6 +93,23 @@ void llInstV(char* name, int var) {
   putCh('\n');
 }
 
+void llInstNVAsg(char* name, int dst, int src1, int src2) {
+  int ty = lVarType(dst);
+  if(ty != lVarType(src2)) panic("Type unmatched");
+
+  putStr("  ");
+  llPutVar(dst);
+  putStr(" = ");
+  putStr(name);
+  putCh(' ');
+  llPutTy(ty);
+  putCh(' ');
+  putNum(src1);
+  putStr(", ");
+  llPutVar(src2);
+  putCh('\n');
+}
+
 void llAlloca(int var) {
   int ty = llDerefTy(lVarType(var));
   putStr("  ");
