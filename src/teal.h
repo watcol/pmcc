@@ -66,6 +66,7 @@ void pushm(int val);
 void pushn(int val);
 int inc(int var);
 int dec(int var);
+int neg(int var);
 void add(int type);
 void sub(int type);
 void mul(int type);

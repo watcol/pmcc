@@ -111,6 +111,14 @@ int dec(int var) {
   return new_var;
 }
 
+int neg(int var) {
+  int ty = lVarType(var);
+  int new_var = lVarAdd(NULL, ty);
+
+  llInstNVAsg("sub", new_var, 0, var);
+  return new_var;
+}
+
 void add(int type) {
   panic("Unimplemented");
 }

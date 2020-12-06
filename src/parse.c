@@ -74,8 +74,8 @@ int expExprFactor() {
 
 int exprSuf() {
   int m = mark();
-  int l = lVal();
-  if(!l) {
+  int var = lVal();
+  if(var < 0) {
     unmark(m);
     return exprFactor();
   }
@@ -90,15 +90,15 @@ int exprSuf() {
 
   while(o) {
     if (o == OP_INC) {
-      l = inc(l);
+      var = inc(var);
     } else if (o == OP_DEC) {
-      l = dec(l);
+      var = dec(var);
     }
 
     o = theseOp(group_suf, count_suf);
   }
 
-  return l;
+  return var;
 }
 
 int expExprSuf() {
@@ -111,8 +111,8 @@ int expExprSuf() {
 
 int exprUnary() {
   int o = theseOp(group_unary, count_unary);
-  int ty = exprSuf();
-  if(!ty) {
+  int var = exprSuf();
+  if(var < 0) {
     if(o) {
       panicParse("exprUnary");
     } else {
@@ -121,13 +121,12 @@ int exprUnary() {
   }
 
   if(o == OP_SUB) {
-    pushn(-1);
-    mul(ty);
+    neg(var);
   } else if(o == OP_NOT) {
-    not_(ty);
+    not_(var);
   }
 
-  return ty;
+  return var;
 }
 
 int expExprUnary() {
