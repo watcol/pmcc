@@ -181,8 +181,8 @@ void remasg(int type) {
   panic("Unimplemented");
 }
 
-void ret(int ty, int val) {
-  panic("Unimplemented");
+void ret(int var) {
+  llInstV("ret", var);
 }
 
 int ifBegin() {

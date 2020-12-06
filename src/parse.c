@@ -404,7 +404,7 @@ int stmtRet() {
 
   int var = expExpr();
   expThisCh(';');
-  llRet(var);
+  ret(var);
   return 1;
 }
 

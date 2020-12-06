@@ -83,8 +83,10 @@ void llPutAlign(int ty) {
   putNum(llAlign(ty));
 }
 
-void llRet(int var) {
-  putStr("  ret ");
+void llInstV(char* name, int var) {
+  putStr("  ");
+  putStr(name);
+  putCh(' ');
   llPutTy(lVarType(var));
   putCh(' ');
   llPutVar(var);
