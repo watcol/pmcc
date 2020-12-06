@@ -26,43 +26,40 @@
 #define OP_DIVASG 21
 #define OP_REMASG 22
 
-void init_lexer();
+void initLexer();
 int mark();
 void jump(int c);
 void unmark(int c);
-void skip_space();
-char lex_ch();
-char this_ch(char c);
-char exp_this_ch(char c);
-int this_str(char *str);
-int exp_this_str(char *str);
-int lex_num();
-int exp_num();
-int lex_ident();
-int exp_ident();
-int at_eof();
-void exp_eof();
-int lex_op();
-int exp_op();
-int this_op(int o);
-int these_op(int *os, int c);
-int exp_this_op(int o);
-int exp_these_op(int *os, int c);
+void skipSpace();
+char lexCh();
+char thisCh(char c);
+char expThisCh(char c);
+int thisStr(char *str);
+int expThisStr(char *str);
+int lexNum();
+int expNum();
+int lexIdent();
+int expIdent();
+int atEof();
+void expEof();
+int lexOp();
+int expOp();
+int thisOp(int o);
+int theseOp(int *os, int c);
+int expThisOp(int o);
+int expTheseOp(int *os, int c);
 
 // parse.c
 void parse();
 
 // gen.c
-void init_code();
-void func_begin(char* name, int ret, int* args, int argc);
-void func_end();
-int lvar_find(char* cur, int len);
-int lvar_add(char* buf, int ty);
-int lvar_type(int id);
-int lvar_get(char* cur, int len, int ty);
-int get_varid(char *cur, int len, int type);
-int get_type(int id);
-int get_offset(int id);
+void initCode();
+void funcBegin(char* name, int ret, int* args, int argc);
+void funcEnd();
+int lVarFind(char* cur, int len);
+int lVarAdd(char* buf, int ty);
+int lVarType(int id);
+int lVarGet(char* cur, int len, int ty);
 void pushl();
 void pushm(int val);
 void pushn(int val);
@@ -89,12 +86,12 @@ void mulasg(int type);
 void divasg(int type);
 void remasg(int type);
 void ret(int ty, int val);
-int if_begin();
-void if_else(int id);
-void if_end(int id);
-int while_begin();
-void while_eval(int id);
-void while_end(int id);
+int ifBegin();
+void ifElse(int id);
+void ifEnd(int id);
+int whileBegin();
+void whileEval(int id);
+void whileEnd(int id);
 
 // gen_llvm.c
 #define TY_UNKNOWN 0
@@ -111,42 +108,42 @@ void while_end(int id);
 #define TY_I32_REF_REF 11
 #define TY_I64_REF_REF 12
 
-void llputty(int ty);
-void llfunc_begin(char* name, int ret, int* args, int argc);
-void llfunc_end();
-void llbb_begin(char* name);
-void llbb_end();
-void llretn(int ty, int val);
-void llalloca(int var);
+void llPutTy(int ty);
+void llFuncBegin(char* name, int ret, int* args, int argc);
+void llFuncEnd();
+void llBbBegin(char* name);
+void llBbEnd();
+void llRetN(int ty, int val);
+void llAlloca(int var);
 
 // util.c
 #define NULL 0
 
-int is_space(char c);
-int is_digit(char c);
-int is_alpha(char c);
-int is_alphanum(char c);
+int isSpace(char c);
+int isDigit(char c);
+int isAlpha(char c);
+int isAlphaNum(char c);
 int length(char *buf);
-int str_cmp(char *buf1, char *buf2, int len);
-int strtoi(char *buf, char **ret);
-int digitlen(char *buf);
-int identlen(char *buf);
-void read_stdin(char *buf, int count);
+int strCmp(char *buf1, char *buf2, int len);
+int strToI(char *buf, char **ret);
+int digitLen(char *buf);
+int identLen(char *buf);
+void readStdin(char *buf, int count);
 int ended();
-void putc(char c);
-void eputc(char c);
+void putC(char c);
+void ePutC(char c);
 void put(char *s);
-void eput(char *s);
-void puts(char *s);
-void eputs(char *s);
+void ePut(char *s);
+void putS(char *s);
+void ePutS(char *s);
 void panic(char *msg);
-void putnum();
-void eputnum();
+void putNum();
+void ePutNum();
 
 // sys.s
-void sys_exit(int code);
+void sysExit(int code);
 int read(void *buf, int count);
 void write(void *buf, int count);
-void ewrite(void *buf, int count);
+void eWrite(void *buf, int count);
 
 #endif

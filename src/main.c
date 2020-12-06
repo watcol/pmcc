@@ -1,8 +1,8 @@
 #include "teal.h"
 
 int main() {
-  init_lexer();
-  init_code();
+  initLexer();
+  initCode();
   parse();
   return 0;
 }

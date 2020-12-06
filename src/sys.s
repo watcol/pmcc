@@ -18,8 +18,8 @@ write:
   syscall
   ret
 
-.globl ewrite
-ewrite:
+.globl eWrite
+eWrite:
   mov rdx, rsi
   mov rsi, rdi
   mov rdi, 2
@@ -27,8 +27,8 @@ ewrite:
   syscall
   ret
 
-.globl sys_exit
-sys_exit:
+.globl sysExit
+sysExit:
   mov rax, 60
   syscall
   ret

@@ -7,8 +7,8 @@ char* cur;
 char* marker[MAX_MARKER];
 int tmp;
 
-void init_lexer() {
-  read_stdin(buf, MAX_BUFFER);
+void initLexer() {
+  readStdin(buf, MAX_BUFFER);
   cur = buf;
 
   int c = 0;
@@ -59,29 +59,29 @@ int comment() {
   return 1;
 }
 
-void skip_space() {
-  while(is_space(*cur) || comment()) {
+void skipSpace() {
+  while(isSpace(*cur) || comment()) {
     cur++;
   }
 }
 
-void panic_lex() {
-  eput("Unexpected token: '");
-  eputc(*cur);
-  eputs("'.");
-  sys_exit(1);
+void panicLex() {
+  ePut("Unexpected token: '");
+  ePutC(*cur);
+  ePutS("'.");
+  sysExit(1);
 }
 
-char lex_ch() {
-  skip_space();
+char lexCh() {
+  skipSpace();
   char c = *cur;
   cur++;
   tmp = 1;
   return c;
 }
 
-char this_ch(char c) {
-  if(lex_ch() == c) {
+char thisCh(char c) {
+  if(lexCh() == c) {
     return c;
   } else {
     cur-=tmp;
@@ -89,17 +89,17 @@ char this_ch(char c) {
   }
 }
 
-char exp_this_ch(char c) {
-  if(!this_ch(c)) {
-    panic_lex();
+char expThisCh(char c) {
+  if(!thisCh(c)) {
+    panicLex();
   }
   return c;
 }
 
-int this_str(char* str) {
-  skip_space();
+int thisStr(char* str) {
+  skipSpace();
   int len = length(str);
-  if (str_cmp(cur, str, len)) {
+  if (strCmp(cur, str, len)) {
     cur+=len;
     return 1;
   }
@@ -107,34 +107,34 @@ int this_str(char* str) {
   return 0;
 }
 
-int exp_this_str(char* str) {
-  int len = this_str(str);
+int expThisStr(char* str) {
+  int len = thisStr(str);
   if(!len) {
-    panic_lex();
+    panicLex();
     return 0;
   }
 
   return len;
 }
 
-int lex_num() {
-  skip_space();
-  return strtoi(cur, &cur);
+int lexNum() {
+  skipSpace();
+  return strToI(cur, &cur);
 }
 
-int exp_num() {
-  int i = lex_num();
+int expNum() {
+  int i = lexNum();
   if(i == -1) {
-    panic_lex();
+    panicLex();
   }
   return i;
 }
 
-int lex_ident() {
-  skip_space();
-  if(is_alpha(*cur)) {
-    int len = identlen(cur);
-    int id = lvar_get(cur, len, TY_I32);
+int lexIdent() {
+  skipSpace();
+  if(isAlpha(*cur)) {
+    int len = identLen(cur);
+    int id = lVarGet(cur, len, TY_I32);
     cur+=len;
     return id;
   } else {
@@ -142,27 +142,27 @@ int lex_ident() {
   }
 }
 
-int exp_ident() {
-  int i = lex_ident();
+int expIdent() {
+  int i = lexIdent();
   if(!i) {
-    panic_lex();
+    panicLex();
   }
   return i;
 }
 
-int at_eof() {
-  skip_space();
+int atEof() {
+  skipSpace();
   return !*cur;
 }
 
-void exp_eof() {
-  if(!at_eof()) {
-    panic_lex();
+void expEof() {
+  if(!atEof()) {
+    panicLex();
   }
 }
 
-int lex_op() {
-  skip_space();
+int lexOp() {
+  skipSpace();
   tmp = 0;
 
   if(*cur == '+') {
@@ -292,17 +292,17 @@ int lex_op() {
   }
 }
 
-int exp_op() {
-  int o = lex_op();
+int expOp() {
+  int o = lexOp();
   if(!o) {
-    panic_lex();
+    panicLex();
   }
 
   return o;
 }
 
-int this_op(int o) {
-  if(lex_op() != o) {
+int thisOp(int o) {
+  if(lexOp() != o) {
     cur-=tmp;
     return 0;
   } else {
@@ -310,10 +310,10 @@ int this_op(int o) {
   }
 }
 
-int these_op(int* os, int c) {
+int theseOp(int* os, int c) {
   int i = 0;
   while(i < c) {
-    if(this_op(os[i])) {
+    if(thisOp(os[i])) {
       return os[i];
     }
     i++;
@@ -322,18 +322,18 @@ int these_op(int* os, int c) {
   return 0;
 }
 
-int exp_this_op(int o) {
-  if(!this_op(o)) {
-    panic_lex();
+int expThisOp(int o) {
+  if(!thisOp(o)) {
+    panicLex();
   }
 
   return o;
 }
 
-int exp_these_op(int* os, int c) {
-  int o = these_op(os, c);
+int expTheseOp(int* os, int c) {
+  int o = theseOp(os, c);
   if(!o) {
-    panic_lex();
+    panicLex();
   }
 
   return o;

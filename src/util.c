@@ -2,18 +2,18 @@
 
 #define MAX_INT 20
 
-int is_space(char c) {
+int isSpace(char c) {
   return c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' ||
          c == '\r';
 }
 
-int is_digit(char c) { return c >= '0' && c <= '9'; }
+int isDigit(char c) { return c >= '0' && c <= '9'; }
 
-int is_alpha(char c) {
+int isAlpha(char c) {
   return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 }
 
-int is_alphanum(char c) { return is_digit(c) || is_alpha(c); }
+int isAlphaNum(char c) { return isDigit(c) || isAlpha(c); }
 
 int length(char *buf) {
   int len = 0;
@@ -24,7 +24,7 @@ int length(char *buf) {
   return len;
 }
 
-int str_cmp(char *buf1, char *buf2, int len) {
+int strCmp(char *buf1, char *buf2, int len) {
   int c = 0;
   if (buf1 == NULL || buf2 == NULL) {
     return 0;
@@ -39,12 +39,12 @@ int str_cmp(char *buf1, char *buf2, int len) {
   return 1;
 }
 
-int strtoi(char *buf, char **ret) {
+int strToI(char *buf, char **ret) {
   int i = 0;
 
-  if(!is_digit(*buf)) return -1;
+  if(!isDigit(*buf)) return -1;
 
-  while(is_digit(*buf)) {
+  while(isDigit(*buf)) {
     i *= 10;
     i += *buf - '0';
     buf++;
@@ -54,22 +54,22 @@ int strtoi(char *buf, char **ret) {
   return i;
 }
 
-int digitlen(char *buf) {
+int digitLen(char *buf) {
   int len = 0;
-  while (is_digit(*(buf++))) {
+  while (isDigit(*(buf++))) {
     len++;
   }
   return len;
 }
 
-int identlen(char *buf) {
-  if (!is_alpha(*buf)) {
+int identLen(char *buf) {
+  if (!isAlpha(*buf)) {
     return 0;
   }
 
   int len = 1;
   buf++;
-  while (is_alphanum(*buf) || *buf == '_') {
+  while (isAlphaNum(*buf) || *buf == '_') {
     len++;
     buf++;
   }
@@ -79,14 +79,14 @@ int identlen(char *buf) {
 
 int ended() { return read(NULL, 1) == 0; }
 
-void putc(char c) {
+void putC(char c) {
   char buf[] = {c};
   write(buf, 1);
 }
 
-void eputc(char c) {
+void ePutC(char c) {
   char buf[] = {c};
-  ewrite(buf, 1);
+  eWrite(buf, 1);
 }
 
 void put(char *s) {
@@ -94,32 +94,32 @@ void put(char *s) {
   write(s, len);
 }
 
-void eput(char *s) {
+void ePut(char *s) {
   int len = length(s);
-  ewrite(s, len);
+  eWrite(s, len);
 }
 
-void puts(char *s) {
+void putS(char *s) {
   put(s);
-  putc('\n');
+  putC('\n');
 }
 
-void eputs(char *s) {
-  eput(s);
-  eputc('\n');
+void ePutS(char *s) {
+  ePut(s);
+  ePutC('\n');
 }
 
 void panic(char* msg) {
-  eputs(msg);
-  sys_exit(1);
+  ePutS(msg);
+  sysExit(1);
 }
 
-void putnum(int n) {
+void putNum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
 
   if (n < 0) {
-    putc('-');
+    putC('-');
     n *= -1;
   }
 
@@ -137,12 +137,12 @@ void putnum(int n) {
   put(&buf[c + 1]);
 }
 
-void eputnum(int n) {
+void ePutNum(int n) {
   char buf[MAX_INT + 1];
   int c = MAX_INT;
 
   if (n < 0) {
-    eputc('-');
+    ePutC('-');
     n *= -1;
   }
 
@@ -157,10 +157,10 @@ void eputnum(int n) {
     c--;
   }
 
-  eput(&buf[c + 1]);
+  ePut(&buf[c + 1]);
 }
 
-void read_stdin(char *buf, int count) {
+void readStdin(char *buf, int count) {
   int rc = read(buf, count);
   buf[rc] = '\0';
 

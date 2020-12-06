@@ -7,7 +7,7 @@ char* types[13] = {
   "i8**", "i16**", "i32**", "i64**"
 };
 
-void llputty(int ty) {
+void llPutTy(int ty) {
   if(ty == TY_UNKNOWN) {
     panic("Unknown type.");
   }
@@ -15,59 +15,59 @@ void llputty(int ty) {
     put(types[ty]);
 }
 
-int llrefty(int ty) {
+int llRefTy(int ty) {
   if(ty <= TY_UNKNOWN) panic("Unknown type.");
   if(ty >= TY_I8_REF_REF) panic("Can't refer the reference of reference.");
 
   return ty + 4;
 }
 
-int llderefty(int ty) {
+int llDerefTy(int ty) {
   if(ty <= TY_UNKNOWN) panic("Unknwon type.");
   if(ty <= TY_I64) panic("Can't derefer the entity type.");
 
   return ty - 4;
 }
 
-void llfunc_begin(char* name, int ret, int* args, int argc) {
+void llFuncBegin(char* name, int ret, int* args, int argc) {
   put("define ");
-  llputty(ret);
+  llPutTy(ret);
   put(" @");
   put(name);
-  putc('(');
+  putC('(');
 
   int c = 0;
   while(c < argc) {
-    llputty(args[c]);
+    llPutTy(args[c]);
     put(" %");
-    putnum(c);
+    putNum(c);
 
     if(c != argc-1) put(", ");
     c++;
   }
 
-  puts(") {");
+  putS(") {");
 }
 
-void llfunc_end() {
-  puts("}\n");
+void llFuncEnd() {
+  putS("}\n");
 }
 
-void llbb_begin(char* name) {
+void llBbBegin(char* name) {
   put(name);
-  puts(":");
+  putS(":");
 }
 
-void llbb_end() {
-  putc('\n');
+void llBbEnd() {
+  putC('\n');
 }
 
-void llputvar(int id) {
-  putc('%');
-  putnum(id);
+void llPutVar(int id) {
+  putC('%');
+  putNum(id);
 }
 
-int llalign(int ty) {
+int llAlign(int ty) {
   if(ty == TY_I8) return 1;
   else if(ty == TY_I16) return 2;
   else if(ty == TY_I32) return 4;
@@ -77,26 +77,26 @@ int llalign(int ty) {
   return 0;
 }
 
-void llputalign(int ty) {
+void llPutAlign(int ty) {
   put("align ");
-  putnum(llalign(ty));
+  putNum(llAlign(ty));
 }
 
-void llretn(int ty, int val) {
+void llRetN(int ty, int val) {
   put("  ret ");
-  llputty(ty);
-  putc(' ');
-  putnum(val);
-  putc('\n');
+  llPutTy(ty);
+  putC(' ');
+  putNum(val);
+  putC('\n');
 }
 
-void llalloca(int var) {
-  int ty = llderefty(lvar_type(var));
+void llAlloca(int var) {
+  int ty = llDerefTy(lVarType(var));
   put("  ");
-  llputvar(var);
+  llPutVar(var);
   put(" = alloca ");
-  llputty(ty);
+  llPutTy(ty);
   put(", ");
-  llputalign(ty);
-  putc('\n');
+  llPutAlign(ty);
+  putC('\n');
 }

@@ -27,61 +27,61 @@ int count_or = 1;
 int group_asg[6] = {OP_ASG, OP_ADDASG, OP_SUBASG, OP_MULASG, OP_DIVASG, OP_REMASG};
 int count_asg = 6;
 
-void panic_parse(char* at) {
-  eput("Parse failed (at \"");
-  eput(at);
-  eputs("\")");
-  sys_exit(1);
+void panicParse(char* at) {
+  ePut("Parse failed (at \"");
+  ePut(at);
+  ePutS("\")");
+  sysExit(1);
 }
 
-int lval() {
-  return lex_ident();
+int lVal() {
+  return lexIdent();
 }
 
-int exp_lval() {
-  int l = lval();
+int expLVal() {
+  int l = lVal();
   if(!l) {
-    panic_parse("lval");
+    panicParse("lVal");
   }
 
   return l;
 }
 
-int exp_expr();
+int expExpr();
 
-int expr_factor() {
-  if(this_ch('(')) {
-    int ty = exp_expr();
-    exp_this_ch(')');
+int exprFactor() {
+  if(thisCh('(')) {
+    int ty = expExpr();
+    expThisCh(')');
     return ty;
   } else {
-    int i = lex_num();
+    int i = lexNum();
     if(i != -1) {
-      int var = lvar_add(NULL, TY_I32);
+      int var = lVarAdd(NULL, TY_I32);
       return var;
     } else {
-      return lval();
+      return lVal();
     }
   }
 }
 
-int exp_expr_factor() {
-  int res = expr_factor();
+int expExprFactor() {
+  int res = exprFactor();
   if(!res) {
-    panic_parse("expr_factor");
+    panicParse("exprFactor");
   }
   return res;
 }
 
-int expr_suf() {
+int exprSuf() {
   int m = mark();
-  int l = lval();
+  int l = lVal();
   if(!l) {
     unmark(m);
-    return expr_factor();
+    return exprFactor();
   }
 
-  int o = these_op(group_suf, count_suf);
+  int o = theseOp(group_suf, count_suf);
   if(o) {
     unmark(m);
     if (o == OP_INC) {
@@ -91,26 +91,26 @@ int expr_suf() {
     }
   } else {
     jump(m);
-    return expr_factor();
+    return exprFactor();
   }
 
-  return lvar_type(l);
+  return lVarType(l);
 }
 
-int exp_expr_suf() {
-  int res = expr_suf();
+int expExprSuf() {
+  int res = exprSuf();
   if(!res) {
-    panic_parse("expr_suf");
+    panicParse("exprSuf");
   }
   return res;
 }
 
-int expr_unary() {
-  int o = these_op(group_unary, count_unary);
-  int ty = expr_suf();
+int exprUnary() {
+  int o = theseOp(group_unary, count_unary);
+  int ty = exprSuf();
   if(!ty) {
     if(o) {
-      panic_parse("expr_unary");
+      panicParse("exprUnary");
     } else {
       return TY_UNKNOWN;
     }
@@ -126,25 +126,25 @@ int expr_unary() {
   return ty;
 }
 
-int exp_expr_unary() {
-  int res = expr_unary();
+int expExprUnary() {
+  int res = exprUnary();
   if(!res) {
-    panic_parse("expr_unary");
+    panicParse("exprUnary");
   }
   return res;
 }
 
-int expr_mul() {
-  int ty1 = expr_unary();
+int exprMul() {
+  int ty1 = exprUnary();
   if(!ty1){
     return 0;
   }
 
   int o;
-  while((o = these_op(group_mul, count_mul))) {
-    int ty2 = exp_expr_unary();
+  while((o = theseOp(group_mul, count_mul))) {
+    int ty2 = expExprUnary();
     if(ty1 != ty2) {
-      panic_parse("type error");
+      panicParse("type error");
     }
 
     if(o == OP_MUL) {
@@ -162,23 +162,23 @@ int expr_mul() {
   return ty1;
 }
 
-int exp_expr_mul() {
-  int res = expr_mul();
+int expExprMul() {
+  int res = exprMul();
   if(!res) {
-    panic_parse("expr_mul");
+    panicParse("exprMul");
   }
   return res;
 }
 
-int expr_add() {
-  int ty1 = expr_mul();
+int exprAdd() {
+  int ty1 = exprMul();
   if(!ty1) {
     return TY_UNKNOWN;
   }
 
   int o;
-  while((o = these_op(group_add, count_add))) {
-    int ty2 = exp_expr_mul();
+  while((o = theseOp(group_add, count_add))) {
+    int ty2 = expExprMul();
     if(ty1 != ty2) {
       panic("Type unmatched");
     }
@@ -195,23 +195,23 @@ int expr_add() {
   return ty1;
 }
 
-int exp_expr_add() {
-  int res = expr_add();
+int expExprAdd() {
+  int res = exprAdd();
   if(!res) {
-    panic_parse("expr_add");
+    panicParse("exprAdd");
   }
   return res;
 }
 
-int expr_cmp() {
-  int ty1 = expr_add();
+int exprCmp() {
+  int ty1 = exprAdd();
   if(!ty1) {
     return TY_UNKNOWN;
   }
 
   int o;
-  while((o = these_op(group_cmp, count_cmp))) {
-    int ty2 = exp_expr_add();
+  while((o = theseOp(group_cmp, count_cmp))) {
+    int ty2 = expExprAdd();
     if(ty1 != ty2) {
       panic("Type unmatched");
     }
@@ -230,23 +230,23 @@ int expr_cmp() {
   return ty1;
 }
 
-int exp_expr_cmp() {
-  int res = expr_cmp();
+int expExprCmp() {
+  int res = exprCmp();
   if(!res) {
-    panic_parse("expr_cmp");
+    panicParse("exprCmp");
   }
   return res;
 }
 
-int expr_eq() {
-  int ty1 = expr_cmp();
+int exprEq() {
+  int ty1 = exprCmp();
   if(!ty1) {
     return TY_UNKNOWN;
   }
 
   int o;
-  while((o = these_op(group_eq, count_eq))) {
-    int ty2 = exp_expr_cmp();
+  while((o = theseOp(group_eq, count_eq))) {
+    int ty2 = expExprCmp();
     if(ty1 != ty2) {
       panic("Type unmatched");
     }
@@ -261,23 +261,23 @@ int expr_eq() {
   return ty1;
 }
 
-int exp_expr_eq() {
-  int res = expr_eq();
+int expExprEq() {
+  int res = exprEq();
   if(!res) {
-    panic_parse("expr_eq");
+    panicParse("exprEq");
   }
   return res;
 }
 
-int expr_and() {
-  int ty1 = expr_eq();
+int exprAnd() {
+  int ty1 = exprEq();
   if(!ty1) {
     return TY_UNKNOWN;
   }
 
   int o;
-  while((o = these_op(group_and, count_and))) {
-    int ty2 = exp_expr_eq();
+  while((o = theseOp(group_and, count_and))) {
+    int ty2 = expExprEq();
     if(ty1 != ty2) {
       panic("Type unmatched");
     }
@@ -288,23 +288,23 @@ int expr_and() {
   return ty1;
 }
 
-int exp_expr_and() {
-  int res = expr_and();
+int expExprAnd() {
+  int res = exprAnd();
   if(!res) {
-    panic_parse("expr_and");
+    panicParse("exprAnd");
   }
   return res;
 }
 
-int expr_or() {
-  int ty1 = expr_and();
+int exprOr() {
+  int ty1 = exprAnd();
   if(!ty1) {
     return TY_UNKNOWN;
   }
 
   int o;
-  while((o = these_op(group_or, count_or))) {
-    int ty2 = exp_expr_and();
+  while((o = theseOp(group_or, count_or))) {
+    int ty2 = expExprAnd();
     if(ty1 != ty2) {
       panic("Type unmatched");
     }
@@ -315,29 +315,29 @@ int expr_or() {
   return ty1;
 }
 
-int exp_expr_or() {
-  int res = expr_or();
+int expExprOr() {
+  int res = exprOr();
   if(!res) {
-    panic_parse("expr_or");
+    panicParse("exprOr");
   }
   return res;
 }
 
-int exp_expr_asg();
+int expExprAsg();
 
-int expr_asg() {
+int exprAsg() {
   int m = mark();
-  int l = lval();
-  int ty = lvar_type(l);
+  int l = lVal();
+  int ty = lVarType(l);
   if(!l) {
     unmark(m);
-    return expr_or();
+    return exprOr();
   }
 
-  int o = these_op(group_asg, count_asg);
+  int o = theseOp(group_asg, count_asg);
   if(o) {
     unmark(m);
-    if(ty != exp_expr_asg()) {
+    if(ty != expExprAsg()) {
       panic("Type unmatched");
     }
 
@@ -356,105 +356,105 @@ int expr_asg() {
     }
   } else {
     jump(m);
-    return expr_or();
+    return exprOr();
   }
 
   return ty;
 }
 
-int exp_expr_asg() {
-  int res = expr_asg();
+int expExprAsg() {
+  int res = exprAsg();
   if(!res) {
-    panic_parse("expr_asg");
+    panicParse("exprAsg");
   }
   return res;
 }
 
 int expr() {
-  return expr_asg();
+  return exprAsg();
 }
 
-int exp_expr() {
+int expExpr() {
   int res = expr();
   if(!res) {
-    panic_parse("expr");
+    panicParse("expr");
   }
   return res;
 }
 
 int stmt();
-void exp_stmt();
+void expStmt();
 
-int stmt_single() {
+int stmtSingle() {
   if(!expr()) return 0;
 
-  exp_this_ch(';');
+  expThisCh(';');
   return 1;
 }
 
-int stmt_multi() {
-  if(!this_ch('{')) return 0;
+int stmtMulti() {
+  if(!thisCh('{')) return 0;
 
   while(stmt()) {}
-  exp_this_ch('}');
+  expThisCh('}');
   return 1;
 }
 
-int stmt_ret() {
-  if(!this_str("return")) return 0;
+int stmtRet() {
+  if(!thisStr("return")) return 0;
 
-  exp_expr();
-  exp_this_ch(';');
+  expExpr();
+  expThisCh(';');
   ret(TY_I32, 0);
   return 1;
 }
 
-int stmt_if() {
-  if(!this_str("if")) return 0;
+int stmtIf() {
+  if(!thisStr("if")) return 0;
 
-  exp_this_ch('(');
-  exp_expr();
-  exp_this_ch(')');
+  expThisCh('(');
+  expExpr();
+  expThisCh(')');
 
-  int id = if_begin();
-  exp_stmt();
+  int id = ifBegin();
+  expStmt();
 
-  if_else(id);
-  if(this_str("else")) exp_stmt();
+  ifElse(id);
+  if(thisStr("else")) expStmt();
 
-  if_end(id);
+  ifEnd(id);
 
   return 1;
 }
 
-int stmt_while() {
-  if(!this_str("while")) return 0;
+int stmtWhile() {
+  if(!thisStr("while")) return 0;
 
-  int id = while_begin();
+  int id = whileBegin();
 
-  exp_this_ch('(');
-  exp_expr();
-  exp_this_ch(')');
-  while_eval(id);
+  expThisCh('(');
+  expExpr();
+  expThisCh(')');
+  whileEval(id);
 
-  exp_stmt();
-  while_end(id);
+  expStmt();
+  whileEnd(id);
 
   return 1;
 }
 
 int stmt() {
-  if(!stmt_multi() && !stmt_ret() && !stmt_if() && !stmt_while()) {
-    return stmt_single();
+  if(!stmtMulti() && !stmtRet() && !stmtIf() && !stmtWhile()) {
+    return stmtSingle();
   }
 
   return 1;
 }
 
 
-void exp_stmt() {
+void expStmt() {
   if(!stmt()) {
-    panic_parse("stmt");
+    panicParse("stmt");
   }
 }
 
@@ -463,12 +463,12 @@ void program() {
 }
 
 void parse() {
-  func_begin("main", TY_I32, NULL, 0);
-  llbb_begin("entry");
+  funcBegin("main", TY_I32, NULL, 0);
+  llBbBegin("entry");
   program();
-  func_end();
+  funcEnd();
 
-  if(!at_eof()) {
-    eputs("WARN: Unread characters are remain.");
+  if(!atEof()) {
+    ePutS("WARN: Unread characters are remain.");
   }
 }

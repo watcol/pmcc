@@ -5,7 +5,7 @@ int lvars_offset;
 char* lvars[MAX_VARS];
 int lvars_ty[MAX_VARS];
 
-void clean_var() {
+void cleanVar() {
   lvars_offset = 0;
 
   int c = 0;
@@ -16,12 +16,12 @@ void clean_var() {
   }
 }
 
-void init_code() {
-  clean_var();
+void initCode() {
+  cleanVar();
 }
 
-void func_begin(char* name, int ret, int* args, int argc) {
-  llfunc_begin(name, ret, args, argc);
+void funcBegin(char* name, int ret, int* args, int argc) {
+  llFuncBegin(name, ret, args, argc);
 
   lvars_offset = argc;
   int c = 0;
@@ -31,21 +31,21 @@ void func_begin(char* name, int ret, int* args, int argc) {
   }
 }
 
-void func_end() {
-  clean_var();
-  llfunc_end();
+void funcEnd() {
+  cleanVar();
+  llFuncEnd();
 }
 
-int lvar_find(char* cur, int len) {
+int lVarFind(char* cur, int len) {
   int c = 0;
-  while(!str_cmp(lvars[c], cur, len) && c < lvars_offset) c++;
+  while(!strCmp(lvars[c], cur, len) && c < lvars_offset) c++;
 
   if(c == lvars_offset) return -1;
 
   return c;
 }
 
-int lvar_add(char* buf, int ty) {
+int lVarAdd(char* buf, int ty) {
   if(lvars_offset == MAX_VARS) panic("Too many variables.");
 
   int id = lvars_offset;
@@ -57,177 +57,146 @@ int lvar_add(char* buf, int ty) {
   return id;
 }
 
-int lvar_type(int id) {
+int lVarType(int id) {
   return lvars_ty[id];
 }
 
-int lvar_get(char *cur, int len, int ty) {
-  int c = lvar_find(cur, len);
+int lVarGet(char *cur, int len, int ty) {
+  int c = lVarFind(cur, len);
 
-  if(c == -1) c = lvar_add(cur, ty);
+  if(c == -1) c = lVarAdd(cur, ty);
 
-  if(lvar_type(c) != ty) panic("Type unmatched");
+  if(lVarType(c) != ty) panic("Type unmatched");
   return c;
 }
 
 void pushl() {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void pushm(int val) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void pushn(int val) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void inc(int mem) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void dec(int mem) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void add(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void sub(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void mul(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void div(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void rem(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void not_(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void less(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void leq(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void more(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void meq(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void eq(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void neq(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void and_() {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void or_() {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void asg(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void addasg(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void subasg(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void mulasg(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void divasg(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void remasg(int type) {
-  eputs("Unimplemented");
-  sys_exit(1);
+  panic("Unimplemented");
 }
 
 void ret(int ty, int val) {
-  llretn(ty, val);
+  panic("Unimplemented");
 }
 
-int if_begin() {
-  eputs("Unimplemented");
-  sys_exit(1);
+int ifBegin() {
+  panic("Unimplemented");
   return 0;
 }
 
-void if_else(int id) {
-  eputs("Unimplemented");
-  sys_exit(1);
+void ifElse(int id) {
+  panic("Unimplemented");
 }
 
-void if_end(int id) {
-  eputs("Unimplemented");
-  sys_exit(1);
+void ifEnd(int id) {
+  panic("Unimplemented");
 }
 
-int while_begin() {
-  eputs("Unimplemented");
-  sys_exit(1);
+int whileBegin() {
+  panic("Unimplemented");
   return 0;
 }
 
-void while_eval(int id) {
-  eputs("Unimplemented");
-  sys_exit(1);
+void whileEval(int id) {
+  panic("Unimplemented");
 }
 
-void while_end(int id) {
-  eputs("Unimplemented");
-  sys_exit(1);
+void whileEnd(int id) {
+  panic("Unimplemented");
 }
 
