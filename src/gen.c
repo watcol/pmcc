@@ -70,6 +70,17 @@ int lVarGet(char *cur, int len, int ty) {
   return c;
 }
 
+int constNum(int ty, int val) {
+  int var1 = lVarAdd(NULL, llRefTy(ty));
+  llAlloca(var1);
+  llStoreVal(var1, val);
+
+  int var2 = lVarAdd(NULL, ty);
+  llLoad(var2, var1);
+
+  return var2;
+}
+
 void pushl() {
   panic("Unimplemented");
 }

@@ -60,6 +60,7 @@ int lVarFind(char* cur, int len);
 int lVarAdd(char* buf, int ty);
 int lVarType(int id);
 int lVarGet(char* cur, int len, int ty);
+int constNum(int ty, int val);
 void pushl();
 void pushm(int val);
 void pushn(int val);

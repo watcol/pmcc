@@ -57,8 +57,7 @@ int exprFactor() {
   } else {
     int i = lexNum();
     if(i != -1) {
-      int var = lVarAdd(NULL, TY_I32);
-      return var;
+      return constNum(TY_I32, i);
     } else {
       return lVal();
     }
