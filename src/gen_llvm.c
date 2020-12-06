@@ -100,3 +100,16 @@ void llAlloca(int var) {
   llPutAlign(ty);
   putCh('\n');
 }
+
+void llStoreVal(int var, int val) {
+  int ty = lVarType(var);
+  putStr("  store ");
+  llPutTy(llDerefTy(ty));
+  putCh(' ');
+  putNum(val);
+  putStr(", ");
+  llPutTy(ty);
+  llPutVar(var);
+  putStr(", ");
+  llPutAlign(llDerefTy(ty));
+}

@@ -115,6 +115,7 @@ void llBbBegin(char* name);
 void llBbEnd();
 void llRetN(int ty, int val);
 void llAlloca(int var);
+void llStoreVal(int var, int val);
 
 // util.c
 #define NULL 0
