@@ -102,6 +102,14 @@ void while_end(int id);
 #define TY_I16 2
 #define TY_I32 3
 #define TY_I64 4
+#define TY_I8_REF 5
+#define TY_I16_REF 6
+#define TY_I32_REF 7
+#define TY_I64_REF 8
+#define TY_I8_REF_REF 9
+#define TY_I16_REF_REF 10
+#define TY_I32_REF_REF 11
+#define TY_I64_REF_REF 12
 
 void llputty(int ty);
 void llfunc_begin(char* name, int ret, int* args, int argc);
@@ -109,7 +117,7 @@ void llfunc_end();
 void llbb_begin(char* name);
 void llbb_end();
 void llretn(int ty, int val);
-void llalloca(int var, int ty, int val);
+void llalloca(int var);
 
 // util.c
 #define NULL 0

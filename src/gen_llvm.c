@@ -1,13 +1,32 @@
 #include"teal.h"
 
-char* types[5] = {"unknown", "i8", "i16", "i32", "i64"};
+char* types[13] = {
+  "unknown",
+  "i8",   "i16",   "i32",   "i64",
+  "i8*",  "i16*",  "i32*",  "i64*",
+  "i8**", "i16**", "i32**", "i64**"
+};
 
 void llputty(int ty) {
   if(ty == TY_UNKNOWN) {
     panic("Unknown type.");
   }
 
-  put(types[ty]);
+    put(types[ty]);
+}
+
+int llrefty(int ty) {
+  if(ty <= TY_UNKNOWN) panic("Unknown type.");
+  if(ty >= TY_I8_REF_REF) panic("Can't refer the reference of reference.");
+
+  return ty + 4;
+}
+
+int llderefty(int ty) {
+  if(ty <= TY_UNKNOWN) panic("Unknwon type.");
+  if(ty <= TY_I64) panic("Can't derefer the entity type.");
+
+  return ty - 4;
 }
 
 void llfunc_begin(char* name, int ret, int* args, int argc) {
@@ -71,7 +90,8 @@ void llretn(int ty, int val) {
   putc('\n');
 }
 
-void llalloca(int var, int ty, int val) {
+void llalloca(int var) {
+  int ty = llderefty(lvar_type(var));
   put("  ");
   llputvar(var);
   put(" = alloca ");
