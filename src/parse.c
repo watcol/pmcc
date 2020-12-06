@@ -54,16 +54,13 @@ int expr_factor() {
     int ty = exp_expr();
     exp_this_ch(')');
     return ty;
-  } else if(lex_num()) {
-    pushl();
-    return TY_I32;
   } else {
-    int l = lval();
-    if (l) {
-      pushm(l);
-      return lvar_type(l);
+    int i = lex_num();
+    if(i != -1) {
+      int var = lvar_add(NULL, TY_I32);
+      return var;
     } else {
-      return TY_UNKNOWN;
+      return lval();
     }
   }
 }
