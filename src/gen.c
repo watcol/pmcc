@@ -61,15 +61,6 @@ int lVarType(int id) {
   return lvars_ty[id];
 }
 
-int lVarGet(char *cur, int len, int ty) {
-  int c = lVarFind(cur, len);
-
-  if(c == -1) c = lVarAdd(cur, ty);
-
-  if(lVarType(c) != ty) panic("Type unmatched");
-  return c;
-}
-
 int constNum(int ty, int val) {
   int var1 = lVarAdd(NULL, llRefTy(ty));
   llAlloca(var1);
@@ -79,6 +70,15 @@ int constNum(int ty, int val) {
   llLoad(var2, var1);
 
   return var2;
+}
+
+int defVar(char* buf, int len, int ty) {
+  int var = lVarFind(buf, len);
+  if(var == -1) var = lVarAdd(buf, llRefTy(ty));
+  if(lVarType(var) != llRefTy(ty)) panic("Type unmatched");
+
+  llAlloca(var);
+  return var;
 }
 
 int inc(int var) {

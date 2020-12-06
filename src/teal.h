@@ -59,7 +59,7 @@ void funcEnd();
 int lVarFind(char* cur, int len);
 int lVarAdd(char* buf, int ty);
 int lVarType(int id);
-int lVarGet(char* cur, int len, int ty);
+int defVar(char* buf, int len, int ty);
 int constNum(int ty, int val);
 int inc(int var);
 int dec(int var);

@@ -134,9 +134,9 @@ int lexIdent() {
   skipSpace();
   if(isAlpha(*cur)) {
     int len = identLen(cur);
-    int id = lVarGet(cur, len, TY_I32);
+    int var = defVar(cur, len, TY_I32);
     cur+=len;
-    return id;
+    return var;
   } else {
     return -1;
   }
