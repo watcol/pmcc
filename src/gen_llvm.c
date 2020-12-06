@@ -72,6 +72,7 @@ int llAlign(int ty) {
   else if(ty == TY_I16) return 2;
   else if(ty == TY_I32) return 4;
   else if(ty == TY_I64) return 8;
+  else if(ty >= TY_I8_REF && ty <= TY_I64_REF_REF) return 8;
 
   panic("Unknown type.");
   return 0;
