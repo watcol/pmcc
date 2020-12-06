@@ -39,6 +39,21 @@ int str_cmp(char *buf1, char *buf2, int len) {
   return 1;
 }
 
+int strtoi(char *buf, char **ret) {
+  int i = 0;
+
+  if(!is_digit(*buf)) return -1;
+
+  while(is_digit(*buf)) {
+    i *= 10;
+    i += *buf - '0';
+    buf++;
+  }
+
+  *ret = buf;
+  return i;
+}
+
 int digitlen(char *buf) {
   int len = 0;
   while (is_digit(*(buf++))) {

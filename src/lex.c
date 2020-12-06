@@ -47,12 +47,6 @@ void unmark(int c) {
   marker[c] = NULL;
 }
 
-void lex_put() {
-  write(cur, tmp);
-  cur+=tmp;
-  tmp = 0;
-}
-
 int comment() {
   if(!(*cur == '/' && *(cur+1) == '/')) {
     return 0;
@@ -125,17 +119,12 @@ int exp_this_str(char* str) {
 
 int lex_num() {
   skip_space();
-  if(is_digit(*cur)) {
-    tmp = digitlen(cur);
-    return 1;
-  } else {
-    return 0;
-  }
+  return strtoi(cur, &cur);
 }
 
 int exp_num() {
   int i = lex_num();
-  if(!i) {
+  if(i == -1) {
     panic_lex();
   }
   return i;
