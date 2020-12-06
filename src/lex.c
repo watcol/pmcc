@@ -66,9 +66,9 @@ void skipSpace() {
 }
 
 void panicLex() {
-  ePut("Unexpected token: '");
-  ePutC(*cur);
-  ePutS("'.");
+  ePutStr("Unexpected token: '");
+  ePutCh(*cur);
+  ePutStrLn("'.");
   sysExit(1);
 }
 

@@ -79,38 +79,38 @@ int identLen(char *buf) {
 
 int ended() { return read(NULL, 1) == 0; }
 
-void putC(char c) {
+void putCh(char c) {
   char buf[] = {c};
   write(buf, 1);
 }
 
-void ePutC(char c) {
+void ePutCh(char c) {
   char buf[] = {c};
   eWrite(buf, 1);
 }
 
-void put(char *s) {
+void putStr(char *s) {
   int len = length(s);
   write(s, len);
 }
 
-void ePut(char *s) {
+void ePutStr(char *s) {
   int len = length(s);
   eWrite(s, len);
 }
 
-void putS(char *s) {
-  put(s);
-  putC('\n');
+void putStrLn(char *s) {
+  putStr(s);
+  putCh('\n');
 }
 
-void ePutS(char *s) {
-  ePut(s);
-  ePutC('\n');
+void ePutStrLn(char *s) {
+  ePutStr(s);
+  ePutCh('\n');
 }
 
 void panic(char* msg) {
-  ePutS(msg);
+  ePutStrLn(msg);
   sysExit(1);
 }
 
@@ -119,7 +119,7 @@ void putNum(int n) {
   int c = MAX_INT;
 
   if (n < 0) {
-    putC('-');
+    putCh('-');
     n *= -1;
   }
 
@@ -134,7 +134,7 @@ void putNum(int n) {
     c--;
   }
 
-  put(&buf[c + 1]);
+  putStr(&buf[c + 1]);
 }
 
 void ePutNum(int n) {
@@ -142,7 +142,7 @@ void ePutNum(int n) {
   int c = MAX_INT;
 
   if (n < 0) {
-    ePutC('-');
+    ePutCh('-');
     n *= -1;
   }
 
@@ -157,7 +157,7 @@ void ePutNum(int n) {
     c--;
   }
 
-  ePut(&buf[c + 1]);
+  ePutStr(&buf[c + 1]);
 }
 
 void readStdin(char *buf, int count) {

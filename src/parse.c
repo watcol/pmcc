@@ -28,9 +28,9 @@ int group_asg[6] = {OP_ASG, OP_ADDASG, OP_SUBASG, OP_MULASG, OP_DIVASG, OP_REMAS
 int count_asg = 6;
 
 void panicParse(char* at) {
-  ePut("Parse failed (at \"");
-  ePut(at);
-  ePutS("\")");
+  ePutStr("Parse failed (at \"");
+  ePutStr(at);
+  ePutStrLn("\")");
   sysExit(1);
 }
 
@@ -469,6 +469,6 @@ void parse() {
   funcEnd();
 
   if(!atEof()) {
-    ePutS("WARN: Unread characters are remain.");
+    ePutStrLn("WARN: Unread characters are remain.");
   }
 }

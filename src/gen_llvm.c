@@ -12,7 +12,7 @@ void llPutTy(int ty) {
     panic("Unknown type.");
   }
 
-    put(types[ty]);
+    putStr(types[ty]);
 }
 
 int llRefTy(int ty) {
@@ -30,40 +30,40 @@ int llDerefTy(int ty) {
 }
 
 void llFuncBegin(char* name, int ret, int* args, int argc) {
-  put("define ");
+  putStr("define ");
   llPutTy(ret);
-  put(" @");
-  put(name);
-  putC('(');
+  putStr(" @");
+  putStr(name);
+  putCh('(');
 
   int c = 0;
   while(c < argc) {
     llPutTy(args[c]);
-    put(" %");
+    putStr(" %");
     putNum(c);
 
-    if(c != argc-1) put(", ");
+    if(c != argc-1) putStr(", ");
     c++;
   }
 
-  putS(") {");
+  putStrLn(") {");
 }
 
 void llFuncEnd() {
-  putS("}\n");
+  putStrLn("}\n");
 }
 
 void llBbBegin(char* name) {
-  put(name);
-  putS(":");
+  putStr(name);
+  putStrLn(":");
 }
 
 void llBbEnd() {
-  putC('\n');
+  putCh('\n');
 }
 
 void llPutVar(int id) {
-  putC('%');
+  putCh('%');
   putNum(id);
 }
 
@@ -78,25 +78,25 @@ int llAlign(int ty) {
 }
 
 void llPutAlign(int ty) {
-  put("align ");
+  putStr("align ");
   putNum(llAlign(ty));
 }
 
 void llRetN(int ty, int val) {
-  put("  ret ");
+  putStr("  ret ");
   llPutTy(ty);
-  putC(' ');
+  putCh(' ');
   putNum(val);
-  putC('\n');
+  putCh('\n');
 }
 
 void llAlloca(int var) {
   int ty = llDerefTy(lVarType(var));
-  put("  ");
+  putStr("  ");
   llPutVar(var);
-  put(" = alloca ");
+  putStr(" = alloca ");
   llPutTy(ty);
-  put(", ");
+  putStr(", ");
   llPutAlign(ty);
-  putC('\n');
+  putCh('\n');
 }
