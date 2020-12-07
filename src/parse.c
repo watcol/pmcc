@@ -116,7 +116,7 @@ int exprUnary() {
     if(o) {
       panicParse("exprUnary");
     } else {
-      return TY_UNKNOWN;
+      return -1;
     }
   }
 
@@ -131,7 +131,7 @@ int exprUnary() {
 
 int expExprUnary() {
   int res = exprUnary();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprUnary");
   }
   return res;
@@ -287,8 +287,8 @@ int expExprAnd() {
 
 int exprOr() {
   int var1 = exprAnd();
-  if(!var1) {
-    return TY_UNKNOWN;
+  if(var1 < 0) {
+    return -1;
   }
 
   int o;
@@ -371,7 +371,7 @@ int stmt();
 void expStmt();
 
 int stmtSingle() {
-  if(!expr()) return 0;
+  if(expr() < 0) return 0;
 
   expThisCh(';');
   return 1;
