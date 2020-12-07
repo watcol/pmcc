@@ -101,7 +101,9 @@ int inc(int var) {
   int new_var = lVarAdd(NULL, llDerefTy(ty));
 
   llInstNVAsg("add", new_var, 1, dvar);
-  return refVar(new_var);
+
+  llStore(var, new_var);
+  return var;
 }
 
 int dec(int var) {
@@ -111,7 +113,9 @@ int dec(int var) {
   int new_var = lVarAdd(NULL, llDerefTy(ty));
 
   llInstNVAsg("add", new_var, -1, dvar);
-  return refVar(new_var);
+
+  llStore(var, new_var);
+  return var;
 }
 
 int neg(int var) {
