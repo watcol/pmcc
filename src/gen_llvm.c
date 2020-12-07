@@ -1,10 +1,11 @@
 #include"teal.h"
 
-char* types[13] = {
+char* types[17] = {
   "unknown",
   "i1",   "i8",   "i32",   "i64",
   "i1*",  "i8*",  "i32*",  "i64*",
-  "i1**", "i8**", "i32**", "i64**"
+  "i1**", "i8**", "i32**", "i64**",
+  "i1***", "i8***", "i32***", "i64***"
 };
 
 void llPutTy(int ty) {
@@ -17,7 +18,7 @@ void llPutTy(int ty) {
 
 int llRefTy(int ty) {
   if(ty <= TY_UNKNOWN) panic("Unknown type.");
-  if(ty >= TY_I8_REF_REF) panic("Can't refer the reference of reference.");
+  if(ty >= TY_I8_REF_REF_REF) panic("Can't refer the reference of reference of reference.");
 
   return ty + 4;
 }
@@ -72,7 +73,7 @@ int llAlign(int ty) {
   else if(ty == TY_I8) return 1;
   else if(ty == TY_I32) return 4;
   else if(ty == TY_I64) return 8;
-  else if(ty >= TY_I8_REF && ty <= TY_I64_REF_REF) return 8;
+  else if(ty >= TY_I8_REF && ty <= TY_I64_REF_REF_REF) return 8;
 
   panic("Unknown type.");
   return 0;

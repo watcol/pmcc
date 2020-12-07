@@ -106,6 +106,10 @@ void whileEnd(int id);
 #define TY_I8_REF_REF 10
 #define TY_I32_REF_REF 11
 #define TY_I64_REF_REF 12
+#define TY_I1_REF_REF_REF 13
+#define TY_I8_REF_REF_REF 14
+#define TY_I32_REF_REF_REF 15
+#define TY_I64_REF_REF_REF 16
 
 void llPutTy(int ty);
 int llRefTy(int ty);
