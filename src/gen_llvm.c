@@ -8,9 +8,9 @@ char* types[17] = {
   "i1***", "i8***", "i32***", "i64***"
 };
 
-char* bbs[6] = {
+char* bbs[7] = {
   "unknown",
-  "if.else", "if.end",
+  "if.begin", "if.else", "if.end",
   "while.eval", "while.begin", "while.end"
 };
 

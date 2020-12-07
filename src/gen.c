@@ -5,6 +5,8 @@ int lvars_offset;
 char* lvars[MAX_VARS];
 int lvars_ty[MAX_VARS];
 
+int bbs_offset;
+
 void cleanVar() {
   lvars_offset = 0;
 
@@ -14,6 +16,8 @@ void cleanVar() {
     lvars_ty[c] = TY_UNKNOWN;
     c++;
   }
+
+  bbs_offset = 0;
 }
 
 void initCode() {
@@ -320,17 +324,27 @@ void ret(int var) {
   llInstV("ret", derefVar(var));
 }
 
-int ifBegin() {
-  panic("Unimplemented");
-  return 0;
+int ifBegin(int var) {
+  bbs_offset++;
+  int id = bbs_offset;
+
+  int dvar = derefVar(var);
+  int cond = lVarAdd(NULL, TY_I1);
+  llIcmpNVAsg("ne", cond, 0, dvar);
+  llBrCond(cond, id, BB_IF_BEGIN, BB_IF_ELSE);
+  llBb(id, BB_IF_BEGIN);
+
+  return id;
 }
 
 void ifElse(int id) {
-  panic("Unimplemented");
+  llBr(id, BB_IF_END);
+  llBb(id, BB_IF_ELSE);
 }
 
 void ifEnd(int id) {
-  panic("Unimplemented");
+  llBr(id, BB_IF_END);
+  llBb(id, BB_IF_END);
 }
 
 int whileBegin() {

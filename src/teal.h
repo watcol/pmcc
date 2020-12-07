@@ -54,11 +54,12 @@ void parse();
 
 // gen.c
 #define BB_UNKNOWN 0
-#define BB_IF_ELSE 1
-#define BB_IF_END 2
-#define BB_WHILE_EVAL 3
-#define BB_WHILE_BEGIN 4
-#define BB_WHILE_END 5
+#define BB_IF_BEGIN 1
+#define BB_IF_ELSE 2
+#define BB_IF_END 3
+#define BB_WHILE_EVAL 4
+#define BB_WHILE_BEGIN 5
+#define BB_WHILE_END 6
 
 void initCode();
 void funcBegin(char* name, int ret, int* args, int argc);
@@ -87,7 +88,7 @@ void and_();
 void or_();
 int asg(int dst, int src);
 void ret(int var);
-int ifBegin();
+int ifBegin(int var);
 void ifElse(int id);
 void ifEnd(int id);
 int whileBegin();

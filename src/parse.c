@@ -398,10 +398,10 @@ int stmtIf() {
   if(!thisStr("if")) return 0;
 
   expThisCh('(');
-  expExpr();
+  int var = expExpr();
   expThisCh(')');
 
-  int id = ifBegin();
+  int id = ifBegin(var);
   expStmt();
 
   ifElse(id);
