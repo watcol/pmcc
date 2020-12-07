@@ -418,9 +418,9 @@ int stmtWhile() {
   int id = whileBegin();
 
   expThisCh('(');
-  expExpr();
+  int var = expExpr();
   expThisCh(')');
-  whileEval(id);
+  whileEval(id, var);
 
   expStmt();
   whileEnd(id);

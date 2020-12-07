@@ -92,7 +92,7 @@ int ifBegin(int var);
 void ifElse(int id);
 void ifEnd(int id);
 int whileBegin();
-void whileEval(int id);
+void whileEval(int id, int var);
 void whileEnd(int id);
 
 // gen_llvm.c

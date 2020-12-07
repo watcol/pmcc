@@ -359,15 +359,24 @@ void ifEnd(int id) {
 }
 
 int whileBegin() {
-  panic("Unimplemented");
-  return 0;
+  bbs_offset++;
+  int id = bbs_offset;
+  llBr(id, BB_WHILE_EVAL);
+  llBb(id, BB_WHILE_EVAL);
+  return id;
 }
 
-void whileEval(int id) {
-  panic("Unimplemented");
+void whileEval(int id, int var) {
+  int dvar = derefVar(var);
+  int cond = lVarAdd(NULL, TY_I1);
+  llIcmpNVAsg("ne", cond, 0, dvar);
+  llBrCond(cond, id, BB_WHILE_BEGIN, BB_WHILE_END);
+
+  llBb(id, BB_WHILE_BEGIN);
 }
 
 void whileEnd(int id) {
-  panic("Unimplemented");
+  llBr(id, BB_WHILE_EVAL);
+  llBb(id, BB_WHILE_END);
 }
 
