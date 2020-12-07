@@ -54,8 +54,7 @@ void llFuncEnd() {
   putStrLn("}\n");
 }
 
-void llBbBegin(char* name) {
-  putStr(name);
+void llBbBegin() {
   putStrLn(":");
 }
 

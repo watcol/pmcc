@@ -111,7 +111,7 @@ int llRefTy(int ty);
 int llDerefTy(int ty);
 void llFuncBegin(char* name, int ret, int* args, int argc);
 void llFuncEnd();
-void llBbBegin(char* name);
+void llBbBegin();
 void llBbEnd();
 void llInstV(char* name, int var);
 void llInstNVAsg(char* name, int dst, int src1, int src2);

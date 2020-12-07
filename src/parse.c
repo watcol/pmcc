@@ -449,8 +449,10 @@ void program() {
 
 void parse() {
   funcBegin("main", TY_I32, NULL, 0);
-  llBbBegin("entry");
+  putStr("entry");
+  llBbBegin();
   program();
+  llBbEnd();
   funcEnd();
 
   if(!atEof()) {
