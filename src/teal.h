@@ -97,22 +97,19 @@ void whileEnd(int id);
 
 // gen_llvm.c
 #define TY_UNKNOWN 0
-#define TY_I1 1
-#define TY_I8 2
-#define TY_I32 3
-#define TY_I64 4
+#define TY_VOID 1
+#define TY_I1 2
+#define TY_U8 3
+#define TY_I32 4
 #define TY_I1_REF 5
-#define TY_I8_REF 6
+#define TY_U8_REF 6
 #define TY_I32_REF 7
-#define TY_I64_REF 8
-#define TY_I1_REF_REF 9
-#define TY_I8_REF_REF 10
-#define TY_I32_REF_REF 11
-#define TY_I64_REF_REF 12
-#define TY_I1_REF_REF_REF 13
-#define TY_I8_REF_REF_REF 14
-#define TY_I32_REF_REF_REF 15
-#define TY_I64_REF_REF_REF 16
+#define TY_I1_REF_REF 8
+#define TY_U8_REF_REF 9
+#define TY_I32_REF_REF 10
+#define TY_I1_REF_REF_REF 11
+#define TY_U8_REF_REF_REF 12
+#define TY_I32_REF_REF_REF 13
 
 void llPutTy(int ty);
 int llRefTy(int ty);
