@@ -37,6 +37,7 @@ int llDerefTy(int ty) {
 }
 
 void llPutBb(int id, int bb) {
+  if(bb <= BB_UNKNOWN || bb > BB_WHILE_END) panic("Unknown BasicBlock.");
   putStr(bbs[bb]);
   putCh('-');
   putNum(id);
