@@ -261,54 +261,50 @@ int expExprEq() {
 }
 
 int exprAnd() {
-  int ty1 = exprEq();
-  if(!ty1) {
-    return TY_UNKNOWN;
+  int var1 = exprEq();
+  if(var1 < 0) {
+    return -1;
   }
 
   int o;
   while((o = theseOp(group_and, count_and))) {
-    int ty2 = expExprEq();
-    if(ty1 != ty2) {
-      panic("Type unmatched");
-    }
+    // int var2 = expExprEq();
+    expExprEq();
 
     if(o == OP_AND) and_();
   }
 
-  return ty1;
+  return var1;
 }
 
 int expExprAnd() {
   int res = exprAnd();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprAnd");
   }
   return res;
 }
 
 int exprOr() {
-  int ty1 = exprAnd();
-  if(!ty1) {
+  int var1 = exprAnd();
+  if(!var1) {
     return TY_UNKNOWN;
   }
 
   int o;
   while((o = theseOp(group_or, count_or))) {
-    int ty2 = expExprAnd();
-    if(ty1 != ty2) {
-      panic("Type unmatched");
-    }
+    // int var2 = expExprAnd();
+    expExprAnd();
 
     if(o == OP_OR) or_();
   }
 
-  return ty1;
+  return var1;
 }
 
 int expExprOr() {
   int res = exprOr();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprOr");
   }
   return res;
@@ -365,7 +361,7 @@ int expr() {
 
 int expExpr() {
   int res = expr();
-  if(!res) {
+  if(res < 0) {
     panicParse("expr");
   }
   return res;
