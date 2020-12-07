@@ -1,13 +1,18 @@
 #include"teal.h"
 #define MAX_VARS 100
 
+int ret_ty;
+
 int lvars_offset;
 char* lvars[MAX_VARS];
 int lvars_ty[MAX_VARS];
 
 int bbs_offset;
 
+
 void cleanVar() {
+  ret_ty = TY_UNKNOWN;
+
   lvars_offset = 0;
 
   int c = 0;
@@ -25,6 +30,7 @@ void initCode() {
 }
 
 void funcBegin(char* name, int ret, int* args, int argc) {
+  ret_ty = ret;
   llFuncBegin(name, ret, args, argc);
 
   lvars_offset = argc;
@@ -34,10 +40,13 @@ void funcBegin(char* name, int ret, int* args, int argc) {
     c++;
   }
 
+  // Skip the implicit basic block.
   lvars_offset++;
 }
 
 void funcEnd() {
+  // dummy ret
+  llInstN("ret", ret_ty, 1);
   cleanVar();
   llFuncEnd();
 }
@@ -322,6 +331,8 @@ int asg(int dst, int src) {
 
 void ret(int var) {
   llInstV("ret", derefVar(var));
+  // Skip the implicit basic block.
+  lvars_offset++;
 }
 
 int ifBegin(int var) {

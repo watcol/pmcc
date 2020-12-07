@@ -121,6 +121,7 @@ void llFuncBegin(char* name, int ret, int* args, int argc);
 void llFuncEnd();
 void llBb(int id, int bb);
 void llInstV(char* name, int var);
+void llInstN(char* name, int ty, int val);
 void llInstNVAsg(char* name, int dst, int src1, int src2);
 void llIcmpNVAsg(char* cond, int dst, int src1, int src2);
 void llInstVVAsg(char* name, int dst, int src1, int src2);

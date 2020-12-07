@@ -110,6 +110,16 @@ void llInstV(char* name, int var) {
   putCh('\n');
 }
 
+void llInstN(char* name, int ty, int val) {
+  putStr("  ");
+  putStr(name);
+  putCh(' ');
+  llPutTy(ty);
+  putCh(' ');
+  putNum(val);
+  putCh('\n');
+}
+
 void llInstNVAsg(char* name, int dst, int src1, int src2) {
   int ty = lVarType(dst);
   if(ty != lVarType(src2)) panic("Type unmatched");
