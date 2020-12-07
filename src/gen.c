@@ -29,6 +29,8 @@ void funcBegin(char* name, int ret, int* args, int argc) {
     lvars_ty[c] = args[c];
     c++;
   }
+
+  lvars_offset++;
 }
 
 void funcEnd() {

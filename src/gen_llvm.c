@@ -54,12 +54,12 @@ void llFuncEnd() {
   putStrLn("}\n");
 }
 
-void llBbBegin() {
-  putStrLn(":");
-}
-
-void llBbEnd() {
+void llBb(char* bb, int id) {
   putCh('\n');
+  putStr(bb);
+  putCh('-');
+  putNum(id);
+  putStrLn(":");
 }
 
 void llPutVar(int id) {
