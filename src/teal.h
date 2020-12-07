@@ -112,6 +112,8 @@ void whileEnd(int id);
 #define TY_I32_REF_REF_REF 13
 
 void llPutTy(int ty);
+int llIsRef(int ty);
+int llIsUnsigned(int ty);
 int llRefTy(int ty);
 int llDerefTy(int ty);
 void llFuncBegin(char* name, int ret, int* args, int argc);

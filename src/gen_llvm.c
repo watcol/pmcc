@@ -22,6 +22,14 @@ void llPutTy(int ty) {
     putStr(types[ty]);
 }
 
+int llIsRef(int ty) {
+  return ty >= TY_I1_REF && ty <= TY_I32_REF_REF_REF;
+}
+
+int llIsUnsigned(int ty) {
+  return ty == TY_U8 || llIsRef(ty);
+}
+
 int llRefTy(int ty) {
   if(ty <= TY_VOID) panic("Unknown type.");
   if(ty >= TY_I1_REF_REF_REF) panic("Can't refer the reference of reference of reference.");

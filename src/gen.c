@@ -223,14 +223,16 @@ int sub(int var1, int var2) {
 
 int lt(int var1, int var2) {
   int ty = lVarType(var1);
+  int dty = llDerefTy(ty);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
   int dvar1 = derefVar(var1);
   int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("slt", tmp_var, dvar1, dvar2);
+  if(llIsUnsigned(dty)) llIcmpVVAsg("ult", tmp_var, dvar1, dvar2);
+  else llIcmpVVAsg("slt", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, llDerefTy(ty));
+  int new_var = lVarAdd(NULL, dty);
   llZeroExt(new_var, tmp_var);
 
   return refVar(new_var);
@@ -238,14 +240,16 @@ int lt(int var1, int var2) {
 
 int le(int var1, int var2) {
   int ty = lVarType(var1);
+  int dty = llDerefTy(ty);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
   int dvar1 = derefVar(var1);
   int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("sle", tmp_var, dvar1, dvar2);
+  if(llIsUnsigned(dty)) llIcmpVVAsg("ule", tmp_var, dvar1, dvar2);
+  else llIcmpVVAsg("sle", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, llDerefTy(ty));
+  int new_var = lVarAdd(NULL, dty);
   llZeroExt(new_var, tmp_var);
 
   return refVar(new_var);
@@ -253,14 +257,16 @@ int le(int var1, int var2) {
 
 int gt(int var1, int var2) {
   int ty = lVarType(var1);
+  int dty = llDerefTy(ty);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
   int dvar1 = derefVar(var1);
   int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("sgt", tmp_var, dvar1, dvar2);
+  if(llIsUnsigned(dty)) llIcmpVVAsg("ugt", tmp_var, dvar1, dvar2);
+  else llIcmpVVAsg("sgt", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, llDerefTy(ty));
+  int new_var = lVarAdd(NULL, dty);
   llZeroExt(new_var, tmp_var);
 
   return refVar(new_var);
@@ -268,14 +274,16 @@ int gt(int var1, int var2) {
 
 int ge(int var1, int var2) {
   int ty = lVarType(var1);
+  int dty = llDerefTy(ty);
   if(ty != lVarType(var2)) panic("Type unmatched");
 
   int dvar1 = derefVar(var1);
   int dvar2 = derefVar(var2);
   int tmp_var = lVarAdd(NULL, TY_I1);
-  llIcmpVVAsg("sge", tmp_var, dvar1, dvar2);
+  if(llIsUnsigned(dty)) llIcmpVVAsg("uge", tmp_var, dvar1, dvar2);
+  else llIcmpVVAsg("sge", tmp_var, dvar1, dvar2);
 
-  int new_var = lVarAdd(NULL, llDerefTy(ty));
+  int new_var = lVarAdd(NULL, dty);
   llZeroExt(new_var, tmp_var);
 
   return refVar(new_var);
