@@ -318,9 +318,8 @@ int expExprAsg();
 
 int exprAsg() {
   int m = mark();
-  int l = lVal();
-  int ty = lVarType(l);
-  if(!l) {
+  int var = lVal();
+  if(var < 0) {
     unmark(m);
     return exprOr();
   }
@@ -328,34 +327,33 @@ int exprAsg() {
   int o = theseOp(group_asg, count_asg);
   if(o) {
     unmark(m);
-    if(ty != expExprAsg()) {
-      panic("Type unmatched");
+    int src = expExprAsg();
+
+    if(o == OP_ADDASG) src = add(var, src);
+    else if(o == OP_SUBASG) {
+      src = sub(var, src);
+    } else if(o == OP_MULASG) {
+      src = mul(var, src);
+    } else if(o == OP_DIVASG) {
+      src = div(var, src);
+    } else if(o == OP_REMASG) {
+      src = rem(var, src);
+    } else if(o != OP_ASG) {
+      panic("Unknown operator");
     }
 
-    if(o == OP_ASG) {
-      asg(l);
-    } else if(o == OP_ADDASG) {
-      addasg(l);
-    } else if(o == OP_SUBASG) {
-      subasg(l);
-    } else if(o == OP_MULASG) {
-      mulasg(l);
-    } else if(o == OP_DIVASG) {
-      divasg(l);
-    } else if(o == OP_REMASG) {
-      remasg(l);
-    }
+    var = asg(var, src);
   } else {
     jump(m);
     return exprOr();
   }
 
-  return ty;
+  return var;
 }
 
 int expExprAsg() {
   int res = exprAsg();
-  if(!res) {
+  if(res < 0) {
     panicParse("exprAsg");
   }
   return res;

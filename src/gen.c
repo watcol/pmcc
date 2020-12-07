@@ -300,28 +300,14 @@ void or_() {
   panic("Unimplemented");
 }
 
-void asg(int type) {
-  panic("Unimplemented");
-}
+int asg(int dst, int src) {
+  int ty = lVarType(dst);
+  if(ty != lVarType(src)) panic("Type unmatched");
 
-void addasg(int type) {
-  panic("Unimplemented");
-}
+  int dsrc = derefVar(src);
+  llStore(dst, dsrc);
 
-void subasg(int type) {
-  panic("Unimplemented");
-}
-
-void mulasg(int type) {
-  panic("Unimplemented");
-}
-
-void divasg(int type) {
-  panic("Unimplemented");
-}
-
-void remasg(int type) {
-  panic("Unimplemented");
+  return dst;
 }
 
 void ret(int var) {
