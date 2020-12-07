@@ -53,6 +53,13 @@ int expTheseOp(int *os, int c);
 void parse();
 
 // gen.c
+#define BB_UNKNOWN 0
+#define BB_IF_ELSE 1
+#define BB_IF_END 2
+#define BB_WHILE_EVAL 3
+#define BB_WHILE_BEGIN 4
+#define BB_WHILE_END 5
+
 void initCode();
 void funcBegin(char* name, int ret, int* args, int argc);
 void funcEnd();
@@ -111,7 +118,7 @@ int llRefTy(int ty);
 int llDerefTy(int ty);
 void llFuncBegin(char* name, int ret, int* args, int argc);
 void llFuncEnd();
-void llBb(char* bb, int id);
+void llBb(int id, int bb);
 void llInstV(char* name, int var);
 void llInstNVAsg(char* name, int dst, int src1, int src2);
 void llIcmpNVAsg(char* cond, int dst, int src1, int src2);

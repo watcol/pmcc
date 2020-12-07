@@ -8,6 +8,12 @@ char* types[17] = {
   "i1***", "i8***", "i32***", "i64***"
 };
 
+char* bbs[6] = {
+  "unknown",
+  "if.else", "if.end",
+  "while.eval", "while.begin", "while.end"
+};
+
 void llPutTy(int ty) {
   if(ty == TY_UNKNOWN) {
     panic("Unknown type.");
@@ -28,6 +34,12 @@ int llDerefTy(int ty) {
   if(ty <= TY_I64) panic("Can't derefer the entity type.");
 
   return ty - 4;
+}
+
+void llPutBb(int id, int bb) {
+  putStr(bbs[bb]);
+  putCh('-');
+  putNum(id);
 }
 
 void llFuncBegin(char* name, int ret, int* args, int argc) {
@@ -54,11 +66,9 @@ void llFuncEnd() {
   putStrLn("}\n");
 }
 
-void llBb(char* bb, int id) {
+void llBb(int id, int bb) {
   putCh('\n');
-  putStr(bb);
-  putCh('-');
-  putNum(id);
+  llPutBb(id, bb);
   putStrLn(":");
 }
 
