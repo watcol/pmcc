@@ -129,6 +129,8 @@ void llAlloca(int var);
 void llStoreVal(int var, int val);
 void llStore(int dst, int src);
 void llLoad(int dst, int src);
+void llBr(int id, int bb);
+void llBrCond(int cond, int id, int bb1, int bb2);
 
 // util.c
 #define NULL 0

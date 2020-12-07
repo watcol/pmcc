@@ -243,3 +243,21 @@ void llLoad(int dst, int src) {
   llPutAlign(ty);
   putCh('\n');
 }
+
+void llBr(int id, int bb) {
+  putStr("  br label %");
+  llPutBb(id, bb);
+  putCh('\n');
+}
+
+void llBrCond(int cond, int id, int bb1, int bb2) {
+  if(lVarType(cond) != TY_I1) panic("Type unmatched.");
+
+  putStr("  br i1 ");
+  llPutVar(cond);
+  putStr(", label %");
+  llPutBb(id, bb1);
+  putStr(", label %");
+  llPutBb(id, bb2);
+  putCh('\n');
+}
