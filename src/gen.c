@@ -151,7 +151,7 @@ int not_(int var) {
 
   llIcmpNVAsg("eq", tmp_var, 0, dvar);
   int new_var = lVarAdd(NULL, llDerefTy(ty));
-  llZeroExt(new_var, tmp_var);
+  llConv("zext", new_var, tmp_var);
 
   return refVar(new_var);
 }
@@ -233,7 +233,7 @@ int lt(int var1, int var2) {
   else llIcmpVVAsg("slt", tmp_var, dvar1, dvar2);
 
   int new_var = lVarAdd(NULL, dty);
-  llZeroExt(new_var, tmp_var);
+  llConv("zext", new_var, tmp_var);
 
   return refVar(new_var);
 }
@@ -250,7 +250,7 @@ int le(int var1, int var2) {
   else llIcmpVVAsg("sle", tmp_var, dvar1, dvar2);
 
   int new_var = lVarAdd(NULL, dty);
-  llZeroExt(new_var, tmp_var);
+  llConv("zext", new_var, tmp_var);
 
   return refVar(new_var);
 }
@@ -267,7 +267,7 @@ int gt(int var1, int var2) {
   else llIcmpVVAsg("sgt", tmp_var, dvar1, dvar2);
 
   int new_var = lVarAdd(NULL, dty);
-  llZeroExt(new_var, tmp_var);
+  llConv("zext", new_var, tmp_var);
 
   return refVar(new_var);
 }
@@ -284,7 +284,7 @@ int ge(int var1, int var2) {
   else llIcmpVVAsg("sge", tmp_var, dvar1, dvar2);
 
   int new_var = lVarAdd(NULL, dty);
-  llZeroExt(new_var, tmp_var);
+  llConv("zext", new_var, tmp_var);
 
   return refVar(new_var);
 }
@@ -299,7 +299,7 @@ int eq(int var1, int var2) {
   llIcmpVVAsg("eq", tmp_var, dvar1, dvar2);
 
   int new_var = lVarAdd(NULL, llDerefTy(ty));
-  llZeroExt(new_var, tmp_var);
+  llConv("zext", new_var, tmp_var);
 
   return refVar(new_var);
 }
@@ -314,17 +314,45 @@ int ne(int var1, int var2) {
   llIcmpVVAsg("ne", tmp_var, dvar1, dvar2);
 
   int new_var = lVarAdd(NULL, llDerefTy(ty));
-  llZeroExt(new_var, tmp_var);
+  llConv("zext", new_var, tmp_var);
 
   return refVar(new_var);
 }
 
-void and_() {
-  panic("Unimplemented");
+int and_(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int new_var = lVarAdd(NULL, ty);
+  llAlloca(new_var);
+
+  int id = ifBegin(var1);
+  int dvar2 = derefVar(var2);
+  llStore(new_var, dvar2);
+  ifElse(id);
+  int dvar1 = derefVar(var1);
+  llStore(new_var, dvar1);
+  ifEnd(id);
+
+  return new_var;
 }
 
-void or_() {
-  panic("Unimplemented");
+int or_(int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("Type unmatched");
+
+  int new_var = lVarAdd(NULL, ty);
+  llAlloca(new_var);
+
+  int id = ifBegin(var1);
+  int dvar1 = derefVar(var1);
+  llStore(new_var, dvar1);
+  ifElse(id);
+  int dvar2 = derefVar(var2);
+  llStore(new_var, dvar2);
+  ifEnd(id);
+
+  return new_var;
 }
 
 int asg(int dst, int src) {

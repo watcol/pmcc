@@ -268,10 +268,9 @@ int exprAnd() {
 
   int o;
   while((o = theseOp(group_and, count_and))) {
-    // int var2 = expExprEq();
-    expExprEq();
+    int var2 = expExprEq();
 
-    if(o == OP_AND) and_();
+    if(o == OP_AND) var1 = and_(var1, var2);
   }
 
   return var1;
@@ -293,10 +292,9 @@ int exprOr() {
 
   int o;
   while((o = theseOp(group_or, count_or))) {
-    // int var2 = expExprAnd();
-    expExprAnd();
+    int var2 = expExprAnd();
 
-    if(o == OP_OR) or_();
+    if(o == OP_OR) var1 = or_(var1, var2);
   }
 
   return var1;

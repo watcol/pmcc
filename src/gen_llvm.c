@@ -191,9 +191,10 @@ void llIcmpVVAsg(char* cond, int dst, int src1, int src2) {
   putCh('\n');
 }
 
-void llZeroExt(int dst, int src) {
+void llConv(char* name, int dst, int src) {
   llPutAsg(dst);
-  putStr("zext ");
+  putStr(name);
+  putCh(' ');
   llPutTy(lVarType(src));
   putCh(' ');
   llPutVar(src);
