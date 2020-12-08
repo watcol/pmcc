@@ -89,11 +89,7 @@ int exprSuf() {
   }
 
   while(o) {
-    if (o == OP_INC) {
-      var = inc(var);
-    } else if (o == OP_DEC) {
-      var = dec(var);
-    }
+    var = unaryOp(o, var);
 
     o = theseOp(group_suf, count_suf);
   }
@@ -120,12 +116,7 @@ int exprUnary() {
     }
   }
 
-  if(o == OP_SUB) {
-    var = neg(var);
-  } else if(o == OP_NOT) {
-    var = not_(var);
-  }
-
+  if(o) var = unaryOp(o, var);
   return var;
 }
 
