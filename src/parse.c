@@ -129,28 +129,15 @@ int expExprUnary() {
 }
 
 int exprMul() {
-  int var1 = exprUnary();
-  if(var1 < 0){
+  int var = exprUnary();
+  if(var < 0){
     return -1;
   }
 
   int o;
-  while((o = theseOp(group_mul, count_mul))) {
-    int var2 = expExprUnary();
+  while((o = theseOp(group_mul, count_mul))) var = binOp(o, var, expExprUnary());
 
-    if(o == OP_MUL) {
-      var1 = mul(var1, var2);
-    } else if (o == OP_DIV) {
-      var1 = div(var1, var2);
-    } else if (o == OP_REM) {
-      var1 = rem(var1, var2);
-    } else {
-      panic("Unknown operator");
-    }
-
-  }
-
-  return var1;
+  return var;
 }
 
 int expExprMul() {
@@ -162,25 +149,15 @@ int expExprMul() {
 }
 
 int exprAdd() {
-  int var1 = exprMul();
-  if(var1 < 0) {
+  int var = exprMul();
+  if(var < 0) {
     return -1;
   }
 
   int o;
-  while((o = theseOp(group_add, count_add))) {
-    int var2 = expExprMul();
+  while((o = theseOp(group_add, count_add))) var = binOp(o, var, expExprMul());
 
-    if(o == OP_ADD) {
-      var1 = add(var1, var2);
-    } else if (o == OP_SUB) {
-      var1 = sub(var1, var2);
-    } else {
-      panic("Unknown operator");
-    }
-  }
-
-  return var1;
+  return var;
 }
 
 int expExprAdd() {
@@ -192,27 +169,15 @@ int expExprAdd() {
 }
 
 int exprCmp() {
-  int var1 = exprAdd();
-  if(var1 < 0) {
+  int var = exprAdd();
+  if(var < 0) {
     return -1;
   }
 
   int o;
-  while((o = theseOp(group_cmp, count_cmp))) {
-    int var2 = expExprAdd();
+  while((o = theseOp(group_cmp, count_cmp))) var = binOp(o, var, expExprAdd());
 
-    if(o == OP_LT) {
-      var1 = lt(var1, var2);
-    } else if(o == OP_LE) {
-      var1 = le(var1, var2);
-    } else if(o == OP_GT) {
-      var1 = gt(var1, var2);
-    } else if(o == OP_GE) {
-      var1 = ge(var1, var2);
-    }
-  }
-
-  return var1;
+  return var;
 }
 
 int expExprCmp() {
@@ -224,23 +189,15 @@ int expExprCmp() {
 }
 
 int exprEq() {
-  int var1 = exprCmp();
-  if(var1 < 0) {
+  int var = exprCmp();
+  if(var < 0) {
     return -1;
   }
 
   int o;
-  while((o = theseOp(group_eq, count_eq))) {
-    int var2 = expExprCmp();
+  while((o = theseOp(group_eq, count_eq))) var = binOp(o, var, expExprCmp());
 
-    if(o == OP_EQ) {
-      var1 = eq(var1, var2);
-    } else if(o == OP_NE) {
-      var1 = ne(var1, var2);
-    }
-  }
-
-  return var1;
+  return var;
 }
 
 int expExprEq() {
@@ -252,19 +209,15 @@ int expExprEq() {
 }
 
 int exprAnd() {
-  int var1 = exprEq();
-  if(var1 < 0) {
+  int var = exprEq();
+  if(var < 0) {
     return -1;
   }
 
   int o;
-  while((o = theseOp(group_and, count_and))) {
-    int var2 = expExprEq();
+  while((o = theseOp(group_and, count_and))) var = binOp(o, var, expExprEq());
 
-    if(o == OP_AND) var1 = and_(var1, var2);
-  }
-
-  return var1;
+  return var;
 }
 
 int expExprAnd() {
@@ -276,19 +229,15 @@ int expExprAnd() {
 }
 
 int exprOr() {
-  int var1 = exprAnd();
-  if(var1 < 0) {
+  int var = exprAnd();
+  if(var < 0) {
     return -1;
   }
 
   int o;
-  while((o = theseOp(group_or, count_or))) {
-    int var2 = expExprAnd();
+  while((o = theseOp(group_or, count_or))) var = binOp(o, var, expExprAnd());
 
-    if(o == OP_OR) var1 = or_(var1, var2);
-  }
-
-  return var1;
+  return var;
 }
 
 int expExprOr() {
@@ -312,22 +261,7 @@ int exprAsg() {
   int o = theseOp(group_asg, count_asg);
   if(o) {
     unmark(m);
-    int src = expExprAsg();
-
-    if(o == OP_ADDASG) src = add(var, src);
-    else if(o == OP_SUBASG) {
-      src = sub(var, src);
-    } else if(o == OP_MULASG) {
-      src = mul(var, src);
-    } else if(o == OP_DIVASG) {
-      src = div(var, src);
-    } else if(o == OP_REMASG) {
-      src = rem(var, src);
-    } else if(o != OP_ASG) {
-      panic("Unknown operator");
-    }
-
-    var = asg(var, src);
+    var = binOp(o, var, expExprAsg());
   } else {
     jump(m);
     return exprOr();

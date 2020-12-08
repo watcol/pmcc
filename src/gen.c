@@ -142,213 +142,89 @@ int unaryOp(int op, int var) {
   return refVar(new_var);
 }
 
-int mul(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
+int arithOp(int op, int ty, int var1, int var2) {
   int dvar1 = derefVar(var1);
   int dvar2 = derefVar(var2);
-  int new_var = lTmpVar(llDerefTy(ty));
+  int new_var = lTmpVar(ty);
 
-  llInstVVAsg("mul", new_var, dvar1, dvar2);
+  if(op == OP_ADD) llInstVVAsg("add", new_var, dvar1, dvar2);
+  else if(op == OP_SUB) llInstVVAsg("sub", new_var, dvar1, dvar2);
+  else if(op == OP_MUL) llInstVVAsg("mul", new_var, dvar1, dvar2);
+  else if(op == OP_DIV){
+    if(llIsUnsigned(ty)) llInstVVAsg("udiv", new_var, dvar1, dvar2);
+    else llInstVVAsg("sdiv", new_var, dvar1, dvar2);
+  } else if(op == OP_REM) {
+    if(llIsUnsigned(ty)) llInstVVAsg("urem", new_var, dvar1, dvar2);
+    else llInstVVAsg("srem", new_var, dvar1, dvar2);
+  }
 
   return refVar(new_var);
 }
 
-int div(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int new_var = lTmpVar(llDerefTy(ty));
-
-  llInstVVAsg("sdiv", new_var, dvar1, dvar2);
-
-  return refVar(new_var);
-}
-
-int rem(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int new_var = lTmpVar(llDerefTy(ty));
-
-  llInstVVAsg("srem", new_var, dvar1, dvar2);
-
-  return refVar(new_var);
-}
-
-int add(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int new_var = lTmpVar(llDerefTy(ty));
-
-  llInstVVAsg("add", new_var, dvar1, dvar2);
-
-  return refVar(new_var);
-}
-
-int sub(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int new_var = lTmpVar(llDerefTy(ty));
-
-  llInstVVAsg("sub", new_var, dvar1, dvar2);
-
-  return refVar(new_var);
-}
-
-int lt(int var1, int var2) {
-  int ty = lVarType(var1);
-  int dty = llDerefTy(ty);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
+int cmpOp(int op, int ty, int var1, int var2) {
   int dvar1 = derefVar(var1);
   int dvar2 = derefVar(var2);
   int tmp_var = lTmpVar(TY_I1);
-  if(llIsUnsigned(dty)) llIcmpVVAsg("ult", tmp_var, dvar1, dvar2);
-  else llIcmpVVAsg("slt", tmp_var, dvar1, dvar2);
 
-  int new_var = lTmpVar(dty);
-  llConv("zext", new_var, tmp_var);
-
-  return refVar(new_var);
-}
-
-int le(int var1, int var2) {
-  int ty = lVarType(var1);
-  int dty = llDerefTy(ty);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int tmp_var = lTmpVar(TY_I1);
-  if(llIsUnsigned(dty)) llIcmpVVAsg("ule", tmp_var, dvar1, dvar2);
-  else llIcmpVVAsg("sle", tmp_var, dvar1, dvar2);
-
-  int new_var = lTmpVar(dty);
-  llConv("zext", new_var, tmp_var);
-
-  return refVar(new_var);
-}
-
-int gt(int var1, int var2) {
-  int ty = lVarType(var1);
-  int dty = llDerefTy(ty);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int tmp_var = lTmpVar(TY_I1);
-  if(llIsUnsigned(dty)) llIcmpVVAsg("ugt", tmp_var, dvar1, dvar2);
-  else llIcmpVVAsg("sgt", tmp_var, dvar1, dvar2);
-
-  int new_var = lTmpVar(dty);
-  llConv("zext", new_var, tmp_var);
-
-  return refVar(new_var);
-}
-
-int ge(int var1, int var2) {
-  int ty = lVarType(var1);
-  int dty = llDerefTy(ty);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int tmp_var = lTmpVar(TY_I1);
-  if(llIsUnsigned(dty)) llIcmpVVAsg("uge", tmp_var, dvar1, dvar2);
-  else llIcmpVVAsg("sge", tmp_var, dvar1, dvar2);
-
-  int new_var = lTmpVar(dty);
-  llConv("zext", new_var, tmp_var);
-
-  return refVar(new_var);
-}
-
-int eq(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int tmp_var = lTmpVar(TY_I1);
-  llIcmpVVAsg("eq", tmp_var, dvar1, dvar2);
-
-  int new_var = lTmpVar(llDerefTy(ty));
-  llConv("zext", new_var, tmp_var);
-
-  return refVar(new_var);
-}
-
-int ne(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
-
-  int dvar1 = derefVar(var1);
-  int dvar2 = derefVar(var2);
-  int tmp_var = lTmpVar(TY_I1);
-  llIcmpVVAsg("ne", tmp_var, dvar1, dvar2);
-
-  int new_var = lTmpVar(llDerefTy(ty));
-  llConv("zext", new_var, tmp_var);
-
-  return refVar(new_var);
-}
-
-int and_(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
+  if(op == OP_LT) {
+    if(llIsUnsigned(ty)) llIcmpVVAsg("ult", tmp_var, dvar1, dvar2);
+    else llIcmpVVAsg("slt", tmp_var, dvar1, dvar2);
+  } else if(op == OP_LE) {
+    if(llIsUnsigned(ty)) llIcmpVVAsg("ule", tmp_var, dvar1, dvar2);
+    else llIcmpVVAsg("sle", tmp_var, dvar1, dvar2);
+  } else if(op == OP_GT) {
+    if(llIsUnsigned(ty)) llIcmpVVAsg("ugt", tmp_var, dvar1, dvar2);
+    else llIcmpVVAsg("sgt", tmp_var, dvar1, dvar2);
+  } else if(op == OP_GE) {
+    if(llIsUnsigned(ty)) llIcmpVVAsg("uge", tmp_var, dvar1, dvar2);
+    else llIcmpVVAsg("sge", tmp_var, dvar1, dvar2);
+  } else if(op == OP_EQ) llIcmpVVAsg("eq", tmp_var, dvar1, dvar2);
+  else if(op == OP_NE) llIcmpVVAsg("ne", tmp_var, dvar1, dvar2);
 
   int new_var = lTmpVar(ty);
+  llConv("zext", new_var, tmp_var);
+  return refVar(new_var);
+}
+
+int andOr(int op, int ty, int var1, int var2) {
+  int dvar1 = derefVar(var1);
+  int dvar2 = derefVar(var2);
+  int new_var = lTmpVar(llRefTy(ty));
   llAlloca(new_var);
 
   int id = ifBegin(var1);
-  int dvar2 = derefVar(var2);
-  llStore(new_var, dvar2);
+  if(op == OP_AND) llStore(new_var, dvar2);
+  else llStore(new_var, dvar1);
   ifElse(id);
-  int dvar1 = derefVar(var1);
-  llStore(new_var, dvar1);
+  if(op == OP_AND) llStore(new_var, dvar1);
+  else llStore(new_var, dvar2);
   ifEnd(id);
 
   return new_var;
 }
 
-int or_(int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("Type unmatched");
+int asgOp(int op, int ty, int var1, int var2) {
+  if(op != OP_ASG) var2 = arithOp(op - 17, ty, var1, var2);
 
-  int new_var = lTmpVar(ty);
-  llAlloca(new_var);
-
-  int id = ifBegin(var1);
-  int dvar1 = derefVar(var1);
-  llStore(new_var, dvar1);
-  ifElse(id);
   int dvar2 = derefVar(var2);
-  llStore(new_var, dvar2);
-  ifEnd(id);
-
-  return new_var;
+  llStore(var1, dvar2);
+  return var1;
 }
 
-int asg(int dst, int src) {
-  int ty = lVarType(dst);
-  if(ty != lVarType(src)) panic("Type unmatched");
+int binOp(int op, int var1, int var2) {
+  int ty = lVarType(var1);
+  if(ty != lVarType(var2)) panic("type unmatched.");
+  ty = llDerefTy(ty);
 
-  int dsrc = derefVar(src);
-  llStore(dst, dsrc);
+  int new_var = -1;
 
-  return dst;
+  if(op >= OP_ADD && op <= OP_REM) new_var = arithOp(op, ty, var1, var2);
+  else if(op >= OP_LT && op <= OP_NE) new_var = cmpOp(op, ty, var1, var2);
+  else if(op == OP_AND || op == OP_OR) new_var = andOr(op, ty, var1, var2);
+  else if(op >= OP_ASG || op <= OP_REMASG) new_var = asgOp(op, ty, var1, var2);
+  else panic("Invalid binary operator.");
+
+  return new_var;
 }
 
 void ret(int var) {
