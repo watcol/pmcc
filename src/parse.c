@@ -40,9 +40,7 @@ int lVal() {
 
 int expLVal() {
   int l = lVal();
-  if(l < 0) {
-    panicParse("lVal");
-  }
+  if(l < 0) panicParse("lVal");
 
   return l;
 }
@@ -56,19 +54,14 @@ int exprFactor() {
     return var;
   } else {
     int i = lexNum();
-    if(i != -1) {
-      return constNum(TY_I32, i);
-    } else {
-      return lVal();
-    }
+    if(i != -1) return constNum(TY_I32, i);
+    else return lVal();
   }
 }
 
 int expExprFactor() {
   int res = exprFactor();
-  if(res < 0) {
-    panicParse("exprFactor");
-  }
+  if(res < 0) panicParse("exprFactor");
   return res;
 }
 
@@ -99,9 +92,7 @@ int exprSuf() {
 
 int expExprSuf() {
   int res = exprSuf();
-  if(res < 0) {
-    panicParse("exprSuf");
-  }
+  if(res < 0) panicParse("exprSuf");
   return res;
 }
 
@@ -109,11 +100,8 @@ int exprUnary() {
   int o = theseOp(group_unary, count_unary);
   int var = exprSuf();
   if(var < 0) {
-    if(o) {
-      panicParse("exprUnary");
-    } else {
-      return -1;
-    }
+    if(o) panicParse("exprUnary");
+    else return -1;
   }
 
   if(o) var = unaryOp(o, var);
@@ -122,17 +110,13 @@ int exprUnary() {
 
 int expExprUnary() {
   int res = exprUnary();
-  if(res < 0) {
-    panicParse("exprUnary");
-  }
+  if(res < 0) panicParse("exprUnary");
   return res;
 }
 
 int exprMul() {
   int var = exprUnary();
-  if(var < 0){
-    return -1;
-  }
+  if(var < 0) return -1;
 
   int o;
   while((o = theseOp(group_mul, count_mul))) var = binOp(o, var, expExprUnary());
@@ -142,17 +126,13 @@ int exprMul() {
 
 int expExprMul() {
   int res = exprMul();
-  if(res < 0) {
-    panicParse("exprMul");
-  }
+  if(res < 0) panicParse("exprMul");
   return res;
 }
 
 int exprAdd() {
   int var = exprMul();
-  if(var < 0) {
-    return -1;
-  }
+  if(var < 0) return -1;
 
   int o;
   while((o = theseOp(group_add, count_add))) var = binOp(o, var, expExprMul());
@@ -162,17 +142,13 @@ int exprAdd() {
 
 int expExprAdd() {
   int res = exprAdd();
-  if(res < 0) {
-    panicParse("exprAdd");
-  }
+  if(res < 0) panicParse("exprAdd");
   return res;
 }
 
 int exprCmp() {
   int var = exprAdd();
-  if(var < 0) {
-    return -1;
-  }
+  if(var < 0) return -1;
 
   int o;
   while((o = theseOp(group_cmp, count_cmp))) var = binOp(o, var, expExprAdd());
@@ -182,17 +158,13 @@ int exprCmp() {
 
 int expExprCmp() {
   int res = exprCmp();
-  if(res < 0) {
-    panicParse("exprCmp");
-  }
+  if(res < 0) panicParse("exprCmp");
   return res;
 }
 
 int exprEq() {
   int var = exprCmp();
-  if(var < 0) {
-    return -1;
-  }
+  if(var < 0) return -1;
 
   int o;
   while((o = theseOp(group_eq, count_eq))) var = binOp(o, var, expExprCmp());
@@ -202,17 +174,13 @@ int exprEq() {
 
 int expExprEq() {
   int res = exprEq();
-  if(res < 0) {
-    panicParse("exprEq");
-  }
+  if(res < 0) panicParse("exprEq");
   return res;
 }
 
 int exprAnd() {
   int var = exprEq();
-  if(var < 0) {
-    return -1;
-  }
+  if(var < 0) return -1;
 
   int o;
   while((o = theseOp(group_and, count_and))) var = binOp(o, var, expExprEq());
@@ -222,17 +190,13 @@ int exprAnd() {
 
 int expExprAnd() {
   int res = exprAnd();
-  if(res < 0) {
-    panicParse("exprAnd");
-  }
+  if(res < 0) panicParse("exprAnd");
   return res;
 }
 
 int exprOr() {
   int var = exprAnd();
-  if(var < 0) {
-    return -1;
-  }
+  if(var < 0) return -1;
 
   int o;
   while((o = theseOp(group_or, count_or))) var = binOp(o, var, expExprAnd());
@@ -242,9 +206,7 @@ int exprOr() {
 
 int expExprOr() {
   int res = exprOr();
-  if(res < 0) {
-    panicParse("exprOr");
-  }
+  if(res < 0) panicParse("exprOr");
   return res;
 }
 
@@ -272,9 +234,7 @@ int exprAsg() {
 
 int expExprAsg() {
   int res = exprAsg();
-  if(res < 0) {
-    panicParse("exprAsg");
-  }
+  if(res < 0) panicParse("exprAsg");
   return res;
 }
 
@@ -284,9 +244,7 @@ int expr() {
 
 int expExpr() {
   int res = expr();
-  if(res < 0) {
-    panicParse("expr");
-  }
+  if(res < 0) panicParse("expr");
   return res;
 }
 

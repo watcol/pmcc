@@ -9,9 +9,7 @@ int isSpace(char c) {
 
 int isDigit(char c) { return c >= '0' && c <= '9'; }
 
-int isAlpha(char c) {
-  return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
-}
+int isAlpha(char c) { return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'); }
 
 int isAlphaNum(char c) { return isDigit(c) || isAlpha(c); }
 
@@ -42,9 +40,10 @@ int strCmp(char *buf1, char *buf2, int len) {
 int strToI(char *buf, char **ret) {
   int i = 0;
 
-  if(!isDigit(*buf)) return -1;
+  if (!isDigit(*buf))
+    return -1;
 
-  while(isDigit(*buf)) {
+  while (isDigit(*buf)) {
     i *= 10;
     i += *buf - '0';
     buf++;
@@ -109,7 +108,7 @@ void ePutStrLn(char *s) {
   ePutCh('\n');
 }
 
-void panic(char* msg) {
+void panic(char *msg) {
   ePutStrLn(msg);
   sysExit(1);
 }
