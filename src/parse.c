@@ -1,5 +1,7 @@
 #include"teal.h"
 
+#define MAX_ARGS 10
+
 int group_suf[2] = {OP_INC, OP_DEC};
 int count_suf = 2;
 
@@ -50,7 +52,7 @@ int exprFactor() {
       int len = lexIdent();
       if(!len) return -1;
       if(thisCh('(')) {
-        int args[6];
+        int args[MAX_ARGS];
         int c = 0;
         args[c] = expr();
         if(args[c] >= 0) c++;
