@@ -51,11 +51,11 @@ void llPutBb(int id, int bb) {
   putNum(id);
 }
 
-void llFuncBegin(char* name, int ret, int* args, int argc) {
+void llFuncBegin(char* name, int len, int ret, int* args, int argc) {
   putStr("define ");
   llPutTy(ret);
   putStr(" @");
-  putStr(name);
+  write(name, len);
   putCh('(');
 
   int c = 0;

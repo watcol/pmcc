@@ -309,7 +309,7 @@ void program() {
 }
 
 void parse() {
-  funcBegin("main", TY_I32, NULL, 0);
+  funcBegin("main", 4, TY_I32, NULL, NULL, NULL, 0);
   program();
   funcEnd();
 

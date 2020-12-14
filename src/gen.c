@@ -31,14 +31,16 @@ void initCode() {
   cleanVar();
 }
 
-void funcBegin(char* name, int ret, int* args, int argc) {
+void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc) {
   ret_ty = ret;
-  llFuncBegin(name, ret, args, argc);
+  llFuncBegin(name, len, ret, arg_tys, argc);
 
   lvars_offset = argc;
   int c = 0;
   while(c < argc) {
-    lvars_ty[c] = args[c];
+    lvars[c] = args[c];
+    lvars_len[c] = arg_lens[c];
+    lvars_ty[c] = arg_tys[c];
     c++;
   }
 
