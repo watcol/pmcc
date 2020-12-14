@@ -30,6 +30,7 @@ void initLexer();
 int mark();
 void jump(int c);
 void unmark(int c);
+char* getCursor();
 void skipSpace();
 char lexCh();
 char thisCh(char c);

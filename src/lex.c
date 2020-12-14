@@ -20,6 +20,10 @@ void initLexer() {
   tmp = 0;
 }
 
+char* getCursor() {
+  return cur;
+}
+
 int mark() {
   int c = 0;
   while(marker[c] != NULL && c != MAX_MARKER) {
@@ -132,19 +136,14 @@ int expNum() {
 
 int lexIdent() {
   skipSpace();
-  if(isAlpha(*cur)) {
-    int len = identLen(cur);
-    int var = defVar(cur, len, TY_I32);
-    cur+=len;
-    return var;
-  } else {
-    return -1;
-  }
+  int len = identLen(cur);
+  cur+=len;
+  return len;
 }
 
 int expIdent() {
   int i = lexIdent();
-  if(i < 0) {
+  if(!i) {
     panicLex();
   }
   return i;

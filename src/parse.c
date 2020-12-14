@@ -44,7 +44,17 @@ int exprFactor() {
   } else {
     int i = lexNum();
     if(i != -1) return constNum(TY_I32, i);
-    else return lexIdent();
+    else {
+      char* buf = getCursor();
+      int len = lexIdent();
+      if(!len) return -1;
+      if(thisCh('(')) {
+        expThisCh(')');
+        panic("Unimplemented");
+        return -1;
+      }
+      return defVar(buf, len, TY_I32);
+    }
   }
 }
 
