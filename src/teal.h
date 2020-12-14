@@ -72,7 +72,7 @@ int defVar(char *buf, int len, int ty);
 int constNum(int ty, int val);
 int unaryOp(int op, int var);
 int binOp(int op, int var1, int var2);
-int funcCall(char* buf, int len);
+int funcCall(char* buf, int len, int* args, int argc);
 void ret(int var);
 int ifBegin(int var);
 void ifElse(int id);
@@ -116,7 +116,7 @@ void llAlloca(int var);
 void llStoreVal(int var, int val);
 void llStore(int dst, int src);
 void llLoad(int dst, int src);
-void llFuncCall(char* buf, int len, int dst);
+void llFuncCall(char* buf, int len, int dst, int* args, int argc);
 void llBr(int id, int bb);
 void llBrCond(int cond, int id, int bb1, int bb2);
 

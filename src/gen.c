@@ -227,9 +227,14 @@ int binOp(int op, int var1, int var2) {
   return new_var;
 }
 
-int funcCall(char* buf, int len) {
+int funcCall(char* buf, int len, int* args, int argc) {
+  int c = 0;
+  while(c < argc) {
+    args[c] = derefVar(args[c]);
+    c++;
+  }
   int dst = lTmpVar(TY_I32);
-  llFuncCall(buf, len, dst);
+  llFuncCall(buf, len, dst, args, argc);
   return refVar(dst);
 }
 

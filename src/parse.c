@@ -34,6 +34,7 @@ void panicParse(char* at) {
   sysExit(1);
 }
 
+int expr();
 int expExpr();
 
 int exprFactor() {
@@ -49,8 +50,16 @@ int exprFactor() {
       int len = lexIdent();
       if(!len) return -1;
       if(thisCh('(')) {
+        int args[6];
+        int c = 0;
+        args[c] = expr();
+        if(args[c] >= 0) c++;
+        while(thisCh(',')) {
+          args[c] = expExpr();
+          c++;
+        }
         expThisCh(')');
-        return funcCall(buf, len);
+        return funcCall(buf, len, args, c);
       }
       return defVar(buf, len, TY_I32);
     }
