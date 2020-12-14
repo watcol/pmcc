@@ -50,8 +50,7 @@ int exprFactor() {
       if(!len) return -1;
       if(thisCh('(')) {
         expThisCh(')');
-        panic("Unimplemented");
-        return -1;
+        return funcCall(buf, len);
       }
       return defVar(buf, len, TY_I32);
     }

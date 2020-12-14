@@ -227,6 +227,12 @@ int binOp(int op, int var1, int var2) {
   return new_var;
 }
 
+int funcCall(char* buf, int len) {
+  int dst = lTmpVar(TY_I32);
+  llFuncCall(buf, len, dst);
+  return refVar(dst);
+}
+
 void ret(int var) {
   llInstV("ret", derefVar(var));
   // Skip the implicit basic block.

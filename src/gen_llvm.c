@@ -75,6 +75,7 @@ void llFuncEnd() {
   putStrLn("}\n");
 }
 
+
 void llBb(int id, int bb) {
   putCh('\n');
   llPutBb(id, bb);
@@ -260,6 +261,15 @@ void llLoad(int dst, int src) {
   putStr(", ");
   llPutAlign(ty);
   putCh('\n');
+}
+
+void llFuncCall(char* buf, int len, int dst) {
+  llPutAsg(dst);
+  putStr("call ");
+  llPutTy(lVarType(dst));
+  putStr(" @");
+  write(buf, len);
+  putStrLn("()");
 }
 
 void llBr(int id, int bb) {
