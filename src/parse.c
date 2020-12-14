@@ -34,17 +34,6 @@ void panicParse(char* at) {
   sysExit(1);
 }
 
-int lVal() {
-  return lexIdent();
-}
-
-int expLVal() {
-  int l = lVal();
-  if(l < 0) panicParse("lVal");
-
-  return l;
-}
-
 int expExpr();
 
 int exprFactor() {
@@ -55,7 +44,7 @@ int exprFactor() {
   } else {
     int i = lexNum();
     if(i != -1) return constNum(TY_I32, i);
-    else return lVal();
+    else return lexIdent();
   }
 }
 
@@ -66,26 +55,10 @@ int expExprFactor() {
 }
 
 int exprSuf() {
-  int m = mark();
-  int var = lVal();
-  if(var < 0) {
-    unmark(m);
-    return exprFactor();
-  }
+  int var = exprFactor();
 
-  int o = theseOp(group_suf, count_suf);
-  if(o) {
-    unmark(m);
-  } else {
-    jump(m);
-    return exprFactor();
-  }
-
-  while(o) {
-    var = unaryOp(o, var);
-
-    o = theseOp(group_suf, count_suf);
-  }
+  int o;
+  while((o = theseOp(group_suf, count_suf))) var = unaryOp(o, var);
 
   return var;
 }
@@ -213,21 +186,10 @@ int expExprOr() {
 int expExprAsg();
 
 int exprAsg() {
-  int m = mark();
-  int var = lVal();
-  if(var < 0) {
-    unmark(m);
-    return exprOr();
-  }
+  int var = exprOr();
 
   int o = theseOp(group_asg, count_asg);
-  if(o) {
-    unmark(m);
-    var = binOp(o, var, expExprAsg());
-  } else {
-    jump(m);
-    return exprOr();
-  }
+  if(o) var = binOp(o, var, expExprAsg());
 
   return var;
 }
