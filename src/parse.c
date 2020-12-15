@@ -328,6 +328,11 @@ int defFunc() {
   }
   expThisCh(')');
 
+  if(thisCh(';')) {
+    funcDecl(name, len, TY_I32, arg_tys, c);
+    return 1;
+  }
+
   funcBegin(name, len, TY_I32, args, arg_lens, arg_tys, c);
   expStmt();
   funcEnd();

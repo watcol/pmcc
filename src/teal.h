@@ -63,6 +63,7 @@ void parse();
 #define BB_WHILE_END 6
 
 void initCode();
+void funcDecl(char *name, int len, int ret, int *args, int argc);
 void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc);
 void funcEnd();
 int lVarFind(char *cur, int len);
@@ -102,6 +103,7 @@ int llIsRef(int ty);
 int llIsUnsigned(int ty);
 int llRefTy(int ty);
 int llDerefTy(int ty);
+void llFuncDecl(char *name, int len, int ret, int *args, int argc);
 void llFuncBegin(char *name, int len, int ret, int *args, int argc);
 void llFuncEnd();
 void llBb(int id, int bb);

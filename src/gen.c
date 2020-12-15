@@ -31,6 +31,10 @@ void initCode() {
   cleanVar();
 }
 
+void funcDecl(char* name, int len, int ret, int* args, int argc) {
+  llFuncDecl(name, len, ret, args, argc);
+}
+
 void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc) {
   ret_ty = ret;
   llFuncBegin(name, len, ret, arg_tys, argc);

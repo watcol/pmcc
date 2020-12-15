@@ -51,6 +51,24 @@ void llPutBb(int id, int bb) {
   putNum(id);
 }
 
+void llFuncDecl(char* name, int len, int ret, int* args, int argc) {
+  putStr("declare ");
+  llPutTy(ret);
+  putStr(" @");
+  write(name, len);
+  putCh('(');
+
+  int c = 0;
+  while(c < argc) {
+    llPutTy(args[c]);
+
+    if(c != argc-1) putStr(", ");
+    c++;
+  }
+
+  putStrLn(")\n");
+}
+
 void llFuncBegin(char* name, int len, int ret, int* args, int argc) {
   putStr("define ");
   llPutTy(ret);
