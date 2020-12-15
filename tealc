@@ -2,36 +2,41 @@
 set -e
 
 main() {
-  local status=0
-  cpp $2 | grep -v "^#" > tmp.c
-  case "$1" in
-    "ir" | "ll" )
-      _ir tmp.c $3
+  cpp $1 | grep -v "^#" > tmp.c
+
+  # JIT
+  if [ "$2" = "" ]; then
+    _ir tmp.c tmp.ll
+    set +e
+    lli tmp.ll
+    local status=$?
+    set -e
+    rm tmp.ll
+    exit $status
+  fi
+
+  case "${2##*.}" in
+    "ll" )
+      _ir tmp.c $2
       break;;
     "bc" )
       _ir tmp.c tmp.ll
-      _bc tmp.ll $3
+      _bc tmp.ll $2
       break;;
-    "asm" )
+    "s" | "asm" )
       _ir tmp.c tmp.ll
-      _asm tmp.ll $3
+      _asm tmp.ll $2
       break;;
-    "obj" )
+    "o" | "obj" )
       _ir tmp.c tmp.ll
       _asm tmp.ll tmp.s
-      _obj tmp.s $3
+      _obj tmp.s $2
       break;;
-    "jit" )
-      _ir tmp.c tmp.ll
-      set +e
-      lli tmp.ll
-      status=$?
-      set -e
-      rm tmp.ll
+    * )
+      echo "Unknown extention."
+      exit 1
       break;;
     esac
-
-    exit $status
 }
 
 _ir() {
