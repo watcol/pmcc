@@ -21,6 +21,7 @@ void initLexer() {
 }
 
 char* getCursor() {
+  skipSpace();
   return cur;
 }
 
