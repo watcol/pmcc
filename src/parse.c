@@ -306,14 +306,40 @@ void expStmt() {
   }
 }
 
+int defFunc() {
+  char* name = getCursor();
+  int len = lexIdent();
+  if(!len) return 0;
+  expThisCh('(');
+
+  char* args[MAX_ARGS];
+  int arg_lens[MAX_ARGS];
+  int arg_tys[MAX_ARGS];
+  int c = 0;
+  args[c] = getCursor();
+  arg_lens[c] = lexIdent();
+  arg_tys[c] = TY_I32;
+  if(arg_lens[c]) c++;
+  while(thisCh(',')) {
+    args[c] = getCursor();
+    arg_lens[c] = expIdent();
+    arg_tys[c] = TY_I32;
+    c++;
+  }
+  expThisCh(')');
+
+  funcBegin(name, len, TY_I32, args, arg_lens, arg_tys, c);
+  expStmt();
+  funcEnd();
+  return 1;
+}
+
 void program() {
-  stmt();
+  while(defFunc()) {};
 }
 
 void parse() {
-  funcBegin("main", 4, TY_I32, NULL, NULL, NULL, 0);
   program();
-  funcEnd();
 
   if(!atEof()) {
     ePutStrLn("WARN: Unread characters are remain.");

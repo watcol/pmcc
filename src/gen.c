@@ -35,17 +35,16 @@ void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* ar
   ret_ty = ret;
   llFuncBegin(name, len, ret, arg_tys, argc);
 
-  lvars_offset = argc;
+  // Skip the implicit basic block.
+  lvars_offset = argc + 1;
   int c = 0;
   while(c < argc) {
-    lvars[c] = args[c];
-    lvars_len[c] = arg_lens[c];
     lvars_ty[c] = arg_tys[c];
+    int id = lVarAdd(args[c], arg_lens[c], llRefTy(arg_tys[c]));
+    llAlloca(id);
+    llStore(id, c);
     c++;
   }
-
-  // Skip the implicit basic block.
-  lvars_offset++;
 }
 
 void funcEnd() {
