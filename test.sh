@@ -3,15 +3,9 @@ set -u
 
 # ./test.sh <input file> <expected status code>
 main() {
-  # Compile code
-  ./teal < $1 > tmp.ll
-
   # Set return code to $status
-  lli tmp.ll
+  ./tealc $1
   local status="$?"
-
-  # Clean up
-  rm tmp.ll
 
   # Check the status
   if [ "$status" = "$2" ]; then
