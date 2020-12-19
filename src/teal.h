@@ -29,7 +29,6 @@
 void initLexer();
 char* getCursor();
 void skipSpace();
-char lexCh();
 char thisCh(char c);
 char expThisCh(char c);
 int thisStr(char *str);

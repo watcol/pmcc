@@ -8,7 +8,6 @@ int tmp;
 void initLexer() {
   readStdin(buf, MAX_BUFFER);
   cur = buf;
-
   tmp = 0;
 }
 
@@ -42,21 +41,14 @@ void panicLex() {
   sysExit(1);
 }
 
-char lexCh() {
-  skipSpace();
-  char c = *cur;
-  cur++;
-  tmp = 1;
-  return c;
-}
-
 char thisCh(char c) {
-  if(lexCh() == c) {
+  skipSpace();
+  if(*cur == c) {
+    cur++;
     return c;
-  } else {
-    cur-=tmp;
-    return 0;
   }
+
+  return '\0';
 }
 
 char expThisCh(char c) {
