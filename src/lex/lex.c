@@ -1,21 +1,13 @@
 #include"lex.h"
 #define MAX_BUFFER 50000
-#define MAX_MARKER 100
 
 char buf[MAX_BUFFER + 1];
 char* cur;
-char* marker[MAX_MARKER];
 int tmp;
 
 void initLexer() {
   readStdin(buf, MAX_BUFFER);
   cur = buf;
-
-  int c = 0;
-  while(c < MAX_MARKER) {
-    marker[c] = NULL;
-    c++;
-  }
 
   tmp = 0;
 }
@@ -23,33 +15,6 @@ void initLexer() {
 char* getCursor() {
   skipSpace();
   return cur;
-}
-
-int mark() {
-  int c = 0;
-  while(marker[c] != NULL && c != MAX_MARKER) {
-    c++;
-  }
-
-  if(c == MAX_MARKER) {
-    panic("Too many markers.");
-  }
-
-  marker[c] = cur;
-  return c;
-}
-
-void jump(int c) {
-  if(marker[c] == NULL) {
-    panic("Use of unavailable marker.");
-  }
-
-  cur = marker[c];
-  marker[c] = NULL;
-}
-
-void unmark(int c) {
-  marker[c] = NULL;
 }
 
 int comment() {

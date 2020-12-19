@@ -1,7 +1,7 @@
 #ifndef _TEAL_H_
 #define _TEAL_H_
 
-// lex.c
+// lex
 #define OP_UNKNOWN 0
 #define OP_ADD 1
 #define OP_SUB 2
@@ -27,9 +27,6 @@
 #define OP_REMASG 22
 
 void initLexer();
-int mark();
-void jump(int c);
-void unmark(int c);
 char* getCursor();
 void skipSpace();
 char lexCh();
