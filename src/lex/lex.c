@@ -1,4 +1,4 @@
-#include"teal.h"
+#include"lex.h"
 #define MAX_BUFFER 50000
 #define MAX_MARKER 100
 

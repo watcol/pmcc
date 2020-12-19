@@ -6,7 +6,10 @@ teal: main.o lex.o parse.a gen.a util.o sys.o
 main.o: src/main.c
 	$(COMPILE.c) $^
 
-lex.o: src/lex.c
+lex.a: lex.o
+	ar r $@ $^
+
+lex.o: src/lex/lex.c
 	$(COMPILE.c) $^
 
 parse.a: parse.o expr.o stmt.o func.o
