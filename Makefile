@@ -1,6 +1,6 @@
 CC = tcc
 
-teal: main.o lex.o parse.a gen_llvm.o gen.o util.o sys.o
+teal: main.o lex.o parse.a gen.a util.o sys.o
 	ld -o $@ $^
 
 main.o: src/main.c
@@ -9,25 +9,28 @@ main.o: src/main.c
 lex.o: src/lex.c
 	$(COMPILE.c) $^
 
-parse.a: parse.o parse_expr.o parse_stmt.o parse_func.o
+parse.a: parse.o expr.o stmt.o func.o
 	ar r $@ $^
 
 parse.o: src/parse/parse.c
 	$(COMPILE.c) $^
 
-parse_expr.o: src/parse/expr.c
+expr.o: src/parse/expr.c
 	$(COMPILE.c) $^
 
-parse_stmt.o: src/parse/stmt.c
+stmt.o: src/parse/stmt.c
 	$(COMPILE.c) $^
 
-parse_func.o: src/parse/func.c
+func.o: src/parse/func.c
 	$(COMPILE.c) $^
 
-gen.o: src/gen.c
+gen.a: gen.o llvm.o
+	ar r $@ $^
+
+gen.o: src/gen/gen.c
 	$(COMPILE.c) $^
 
-gen_llvm.o: src/gen_llvm.c
+llvm.o: src/gen/llvm.c
 	$(COMPILE.c) $^
 
 util.o: src/util.c
@@ -47,4 +50,5 @@ fmt: src/main.c src/teal.h src/util.c
 
 clean:
 	$(RM) *.o
+	$(RM) *.a
 	$(RM) teal

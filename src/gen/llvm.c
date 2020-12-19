@@ -1,4 +1,4 @@
-#include"teal.h"
+#include"gen.h"
 
 char* types[14] = {
   "unknown", "void",

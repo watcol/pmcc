@@ -1,4 +1,4 @@
-#include"teal.h"
+#include"gen.h"
 #define MAX_VARS 100
 
 int ret_ty;

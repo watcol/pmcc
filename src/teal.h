@@ -53,7 +53,22 @@ int expTheseOp(int *os, int c);
 // parse
 void parse();
 
-// gen.c
+// gen
+#define TY_UNKNOWN 0
+#define TY_VOID 1
+#define TY_I1 2
+#define TY_U8 3
+#define TY_I32 4
+#define TY_I1_REF 5
+#define TY_U8_REF 6
+#define TY_I32_REF 7
+#define TY_I1_REF_REF 8
+#define TY_U8_REF_REF 9
+#define TY_I32_REF_REF 10
+#define TY_I1_REF_REF_REF 11
+#define TY_U8_REF_REF_REF 12
+#define TY_I32_REF_REF_REF 13
+
 #define BB_UNKNOWN 0
 #define BB_IF_BEGIN 1
 #define BB_IF_ELSE 2
@@ -81,46 +96,6 @@ void ifEnd(int id);
 int whileBegin();
 void whileEval(int id, int var);
 void whileEnd(int id);
-
-// gen_llvm.c
-#define TY_UNKNOWN 0
-#define TY_VOID 1
-#define TY_I1 2
-#define TY_U8 3
-#define TY_I32 4
-#define TY_I1_REF 5
-#define TY_U8_REF 6
-#define TY_I32_REF 7
-#define TY_I1_REF_REF 8
-#define TY_U8_REF_REF 9
-#define TY_I32_REF_REF 10
-#define TY_I1_REF_REF_REF 11
-#define TY_U8_REF_REF_REF 12
-#define TY_I32_REF_REF_REF 13
-
-void llPutTy(int ty);
-int llIsRef(int ty);
-int llIsUnsigned(int ty);
-int llRefTy(int ty);
-int llDerefTy(int ty);
-void llFuncDecl(char *name, int len, int ret, int *args, int argc);
-void llFuncBegin(char *name, int len, int ret, int *args, int argc);
-void llFuncEnd();
-void llBb(int id, int bb);
-void llInstV(char *name, int var);
-void llInstN(char *name, int ty, int val);
-void llInstNVAsg(char *name, int dst, int src1, int src2);
-void llIcmpNVAsg(char *cond, int dst, int src1, int src2);
-void llInstVVAsg(char *name, int dst, int src1, int src2);
-void llIcmpVVAsg(char *name, int dst, int src1, int src2);
-void llConv(char *name, int dst, int src);
-void llAlloca(int var);
-void llStoreVal(int var, int val);
-void llStore(int dst, int src);
-void llLoad(int dst, int src);
-void llFuncCall(char* buf, int len, int dst, int* args, int argc);
-void llBr(int id, int bb);
-void llBrCond(int cond, int id, int bb1, int bb2);
 
 // util.c
 #define NULL 0
