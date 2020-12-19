@@ -6,6 +6,7 @@
 void initLexer();
 void panicLex();
 char* getCursor();
+void consume(int len);
 char thisCh(char c);
 char expThisCh(char c);
 int thisStr(char *str);
