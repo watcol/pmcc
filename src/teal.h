@@ -118,8 +118,8 @@ void ePutNum();
 
 // sys.s
 void sysExit(int code);
-int read(void *buf, int count);
-void write(void *buf, int count);
-void eWrite(void *buf, int count);
+int read(char *buf, int count);
+void write(char *buf, int count);
+void eWrite(char *buf, int count);
 
 #endif
