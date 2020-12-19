@@ -7,11 +7,11 @@ int exprFactor() {
     return var;
   } else {
     int i = lexNum();
-    if(i != -1) return constNum(TY_I32, i);
+    if(i >= 0) return constNum(TY_I32, i);
     else {
       char* buf = getCursor();
       int len = lexIdent();
-      if(!len) return -1;
+      if(!len) return -2;
       if(thisCh('(')) {
         int args[MAX_ARGS];
         int c = 0;
@@ -31,7 +31,7 @@ int exprFactor() {
 
 int expExprFactor() {
   int res = exprFactor();
-  if(res < 0) panicParse("exprFactor");
+  if(res < -1) panicParse("exprFactor");
   return res;
 }
 
@@ -49,7 +49,7 @@ int exprSuf() {
 
 int expExprSuf() {
   int res = exprSuf();
-  if(res < 0) panicParse("exprSuf");
+  if(res < -1) panicParse("exprSuf");
   return res;
 }
 
@@ -59,9 +59,9 @@ int exprUnary() {
 
   int o = theseOp(ops, opc);
   int var = exprSuf();
-  if(var < 0) {
+  if(var < -1) {
     if(o) panicParse("exprUnary");
-    else return -1;
+    else return -2;
   }
 
   if(o) var = unaryOp(o, var);
@@ -70,7 +70,7 @@ int exprUnary() {
 
 int expExprUnary() {
   int res = exprUnary();
-  if(res < 0) panicParse("exprUnary");
+  if(res < -1) panicParse("exprUnary");
   return res;
 }
 
@@ -79,7 +79,7 @@ int exprMul() {
   int opc = 3;
 
   int var = exprUnary();
-  if(var < 0) return -1;
+  if(var < -1) return -2;
 
   int o;
   while((o = theseOp(ops, opc))) var = binOp(o, var, expExprUnary());
@@ -89,7 +89,7 @@ int exprMul() {
 
 int expExprMul() {
   int res = exprMul();
-  if(res < 0) panicParse("exprMul");
+  if(res < -1) panicParse("exprMul");
   return res;
 }
 
@@ -98,7 +98,7 @@ int exprAdd() {
   int opc = 2;
 
   int var = exprMul();
-  if(var < 0) return -1;
+  if(var < -1) return -2;
 
   int o;
   while((o = theseOp(ops, opc))) var = binOp(o, var, expExprMul());
@@ -108,7 +108,7 @@ int exprAdd() {
 
 int expExprAdd() {
   int res = exprAdd();
-  if(res < 0) panicParse("exprAdd");
+  if(res < -1) panicParse("exprAdd");
   return res;
 }
 
@@ -117,7 +117,7 @@ int exprCmp() {
   int opc = 4;
 
   int var = exprAdd();
-  if(var < 0) return -1;
+  if(var < -1) return -2;
 
   int o;
   while((o = theseOp(ops, opc))) var = binOp(o, var, expExprAdd());
@@ -127,7 +127,7 @@ int exprCmp() {
 
 int expExprCmp() {
   int res = exprCmp();
-  if(res < 0) panicParse("exprCmp");
+  if(res < -1) panicParse("exprCmp");
   return res;
 }
 
@@ -136,7 +136,7 @@ int exprEq() {
   int opc = 2;
 
   int var = exprCmp();
-  if(var < 0) return -1;
+  if(var < -1) return -2;
 
   int o;
   while((o = theseOp(ops, opc))) var = binOp(o, var, expExprCmp());
@@ -146,14 +146,14 @@ int exprEq() {
 
 int expExprEq() {
   int res = exprEq();
-  if(res < 0) panicParse("exprEq");
+  if(res < -1) panicParse("exprEq");
   return res;
 }
 
 int exprAnd() {
 
   int var = exprEq();
-  if(var < 0) return -1;
+  if(var < -1) return -2;
 
   int o;
   while((o = thisOp(OP_AND))) var = binOp(o, var, expExprEq());
@@ -163,13 +163,13 @@ int exprAnd() {
 
 int expExprAnd() {
   int res = exprAnd();
-  if(res < 0) panicParse("exprAnd");
+  if(res < -1) panicParse("exprAnd");
   return res;
 }
 
 int exprOr() {
   int var = exprAnd();
-  if(var < 0) return -1;
+  if(var < -1) return -2;
 
   int o;
   while((o = thisOp(OP_OR))) var = binOp(o, var, expExprAnd());
@@ -179,7 +179,7 @@ int exprOr() {
 
 int expExprOr() {
   int res = exprOr();
-  if(res < 0) panicParse("exprOr");
+  if(res < -1) panicParse("exprOr");
   return res;
 }
 
@@ -199,7 +199,7 @@ int exprAsg() {
 
 int expExprAsg() {
   int res = exprAsg();
-  if(res < 0) panicParse("exprAsg");
+  if(res < -1) panicParse("exprAsg");
   return res;
 }
 
@@ -209,7 +209,6 @@ int expr() {
 
 int expExpr() {
   int res = expr();
-  if(res < 0) panicParse("expr");
+  if(res < -1) panicParse("expr");
   return res;
 }
-

@@ -281,7 +281,24 @@ void llLoad(int dst, int src) {
   putCh('\n');
 }
 
-void llFuncCall(char* buf, int len, int dst, int* args, int argc) {
+void llFuncCall(char* buf, int len, int ret, int* args, int argc) {
+  putStr("  call ");
+  llPutTy(ret);
+  putStr(" @");
+  write(buf, len);
+  putCh('(');
+  int c = 0;
+  while(c < argc) {
+    llPutTy(lVarType(args[c]));
+    putCh(' ');
+    llPutVar(args[c]);
+    c++;
+    if(c != argc) putStr(", ");
+  }
+  putStrLn(")");
+}
+
+void llFuncCallAsg(char* buf, int len, int dst, int* args, int argc) {
   llPutAsg(dst);
   putStr("call ");
   llPutTy(lVarType(dst));

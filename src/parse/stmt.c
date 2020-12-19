@@ -1,7 +1,7 @@
 #include"parse.h"
 
 int stmtSingle() {
-  if(expr() < 0) return 0;
+  if(expr() < -1) return 0;
 
   expThisCh(';');
   return 1;
@@ -18,7 +18,13 @@ int stmtMulti() {
 int stmtRet() {
   if(!thisStr("return")) return 0;
 
-  int var = expExpr();
+  int var;
+  if(retTy() == TY_VOID) {
+    var = VAR_VOID;
+  } else {
+    var = expExpr();
+  }
+
   expThisCh(';');
   ret(var);
   return 1;

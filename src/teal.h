@@ -70,7 +70,10 @@ void parse();
 #define BB_WHILE_BEGIN 5
 #define BB_WHILE_END 6
 
+#define VAR_VOID (-1)
+
 void initCode();
+int retTy();
 void funcDecl(char *name, int len, int ret, int *args, int argc);
 void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc);
 void funcEnd();

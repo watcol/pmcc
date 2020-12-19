@@ -13,6 +13,7 @@
 #define BB_WHILE_END 6
 
 void initCode();
+int retTy();
 void funcDecl(char *name, int len, int ret, int *args, int argc);
 void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc);
 void funcEnd();
@@ -68,7 +69,8 @@ void llAlloca(int var);
 void llStoreVal(int var, int val);
 void llStore(int dst, int src);
 void llLoad(int dst, int src);
-void llFuncCall(char* buf, int len, int dst, int* args, int argc);
+void llFuncCall(char* buf, int len, int ret, int* args, int argc);
+void llFuncCallAsg(char* buf, int len, int dst, int* args, int argc);
 void llBr(int id, int bb);
 void llBrCond(int cond, int id, int bb1, int bb2);
 

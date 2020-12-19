@@ -1,19 +1,20 @@
 #include"gen.h"
 #define MAX_VARS 100
-
-int ret_ty;
+#define MAX_FUNCS 80
 
 int lvars_offset;
 char* lvars[MAX_VARS];
 int lvars_len[MAX_VARS];
 int lvars_ty[MAX_VARS];
 
+int funcs_offset;
+char* funcs_name[MAX_FUNCS];
+int funcs_len[MAX_FUNCS];
+int funcs_ret[MAX_FUNCS];
+
 int bbs_offset;
 
-
 void cleanVar() {
-  ret_ty = TY_UNKNOWN;
-
   lvars_offset = 0;
 
   int c = 0;
@@ -29,14 +30,47 @@ void cleanVar() {
 
 void initCode() {
   cleanVar();
+
+  funcs_offset = 0;
+  int c = 0;
+  while(c < MAX_FUNCS) {
+    funcs_name[c] = NULL;
+    funcs_len[c] = 0;
+    funcs_ret[c] = TY_UNKNOWN;
+    c++;
+  }
+}
+
+int retTy() {
+  return funcs_ret[funcs_offset-1];
+}
+
+void funcAdd(char* name, int len, int ret) {
+  funcs_name[funcs_offset] = name;
+  funcs_len[funcs_offset] = len;
+  funcs_ret[funcs_offset] = ret;
+  funcs_offset++;
+}
+
+int funcFind(char* cur, int len) {
+  int c = 0;
+  while(!(strCmp(funcs_name[c], cur, len) && len == funcs_len[c]) && c < funcs_offset) c++;
+
+  if(c == funcs_offset) {
+    panic("Function not found.");
+    return -1;
+  }
+
+  return c;
 }
 
 void funcDecl(char* name, int len, int ret, int* args, int argc) {
+  funcAdd(name, len, ret);
   llFuncDecl(name, len, ret, args, argc);
 }
 
 void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc) {
-  ret_ty = ret;
+  funcAdd(name, len, ret);
   llFuncBegin(name, len, ret, arg_tys, argc);
 
   // Skip the implicit basic block.
@@ -53,7 +87,9 @@ void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* ar
 
 void funcEnd() {
   // dummy ret
-  llInstN("ret", ret_ty, 1);
+  int ret_ty = retTy();
+  if(ret_ty == TY_VOID) putStrLn("  ret void");
+  else llInstN("ret", ret_ty, 1);
   cleanVar();
   llFuncEnd();
 }
@@ -238,13 +274,24 @@ int funcCall(char* buf, int len, int* args, int argc) {
     args[c] = derefVar(args[c]);
     c++;
   }
-  int dst = lTmpVar(TY_I32);
-  llFuncCall(buf, len, dst, args, argc);
-  return refVar(dst);
+  int dst = -1;
+  int ret_ty = funcs_ret[funcFind(buf, len)];
+  if(ret_ty == TY_VOID) {
+    llFuncCall(buf, len, ret_ty, args, argc);
+  } else {
+    dst = lTmpVar(ret_ty);
+    llFuncCallAsg(buf, len, dst, args, argc);
+    dst = refVar(dst);
+  }
+  return dst;
 }
 
 void ret(int var) {
-  llInstV("ret", derefVar(var));
+  if(var==VAR_VOID) putStrLn("  ret void");
+  else {
+    if(llDerefTy(lVarType(var)) != retTy()) panic("Type unmatched.");
+    llInstV("ret", derefVar(var));
+  }
   // Skip the implicit basic block.
   lvars_offset++;
 }
