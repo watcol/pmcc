@@ -50,22 +50,8 @@ int theseOp(int *os, int c);
 int expThisOp(int o);
 int expTheseOp(int *os, int c);
 
-// parse.c
-#define MAX_ARGS 10
-
+// parse
 void parse();
-void panicParse();
-
-// parse_expr.c
-int expr();
-int expExpr();
-
-// parse_stmt.c
-int stmt();
-void expStmt();
-
-// parse_func.c
-int func();
 
 // gen.c
 #define BB_UNKNOWN 0

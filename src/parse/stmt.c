@@ -1,4 +1,4 @@
-#include"teal.h"
+#include"parse.h"
 
 int stmtSingle() {
   if(expr() < 0) return 0;

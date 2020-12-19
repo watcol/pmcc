@@ -1,6 +1,6 @@
 CC = tcc
 
-teal: main.o lex.o parse.o parse_expr.o parse_stmt.o parse_func.o gen_llvm.o gen.o util.o sys.o
+teal: main.o lex.o parse.a gen_llvm.o gen.o util.o sys.o
 	ld -o $@ $^
 
 main.o: src/main.c
@@ -9,16 +9,19 @@ main.o: src/main.c
 lex.o: src/lex.c
 	$(COMPILE.c) $^
 
-parse.o: src/parse.c
+parse.a: parse.o parse_expr.o parse_stmt.o parse_func.o
+	ar r $@ $^
+
+parse.o: src/parse/parse.c
 	$(COMPILE.c) $^
 
-parse_expr.o: src/parse_expr.c
+parse_expr.o: src/parse/expr.c
 	$(COMPILE.c) $^
 
-parse_stmt.o: src/parse_stmt.c
+parse_stmt.o: src/parse/stmt.c
 	$(COMPILE.c) $^
 
-parse_func.o: src/parse_func.c
+parse_func.o: src/parse/func.c
 	$(COMPILE.c) $^
 
 gen.o: src/gen.c

@@ -1,4 +1,4 @@
-#include"teal.h"
+#include"parse.h"
 
 void panicParse(char* at) {
   ePutStr("Parse failed (at \"");

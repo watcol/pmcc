@@ -1,4 +1,4 @@
-#include"teal.h"
+#include"parse.h"
 
 int func() {
   char* name = getCursor();
