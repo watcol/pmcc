@@ -20,4 +20,8 @@ void expStmt();
 // func.c
 int func();
 
+// type.c
+int type();
+int expType();
+
 #endif

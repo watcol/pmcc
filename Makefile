@@ -30,7 +30,7 @@ op.o: src/lex/op.c
 str.o: src/lex/str.c
 	$(COMPILE.c) $^
 
-parse.a: parse.o expr.o stmt.o func.o
+parse.a: parse.o expr.o stmt.o func.o type.o
 	ar r $@ $^
 
 parse.o: src/parse/parse.c
@@ -43,6 +43,9 @@ stmt.o: src/parse/stmt.c
 	$(COMPILE.c) $^
 
 func.o: src/parse/func.c
+	$(COMPILE.c) $^
+
+type.o: src/parse/type.c
 	$(COMPILE.c) $^
 
 gen.a: gen.o llvm.o

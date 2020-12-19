@@ -90,6 +90,8 @@ int whileBegin();
 void whileEval(int id, int var);
 void whileEnd(int id);
 
+int llRefTy(int ty);
+
 // util.c
 #define NULL 0
 
