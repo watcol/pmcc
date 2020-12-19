@@ -3,12 +3,20 @@
 
 char buf[MAX_BUFFER + 1];
 char* cur;
-int tmp;
+
+char* ops[23] = {
+  "unknown",
+  "+", "-", "*", "/", "%",
+  "<", "<=", ">", ">=",
+  "==", "!=", "!",
+  "&&", "||",
+  "++", "--",
+  "=", "+=", "-=", "*=", "/=", "%="
+};
 
 void initLexer() {
   readStdin(buf, MAX_BUFFER);
   cur = buf;
-  tmp = 0;
 }
 
 char* getCursor() {
@@ -118,153 +126,9 @@ void expEof() {
   }
 }
 
-int lexOp() {
-  skipSpace();
-  tmp = 0;
-
-  if(*cur == '+') {
-    cur++;
-    tmp++;
-    if(*cur == '+') {
-      cur++;
-      tmp++;
-      return OP_INC;
-    } else if (*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_ADDASG;
-    } else {
-      return OP_ADD;
-    }
-  } else if (*cur == '-') {
-    cur++;
-    tmp++;
-    if(*cur == '-') {
-      cur++;
-      tmp++;
-      return OP_DEC;
-    } else if (*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_SUBASG;
-    } else {
-      return OP_SUB;
-    }
-  } else if (*cur == '*') {
-    cur++;
-    tmp++;
-    if(*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_MULASG;
-    } else {
-      return OP_MUL;
-    }
-  } else if (*cur == '/') {
-    cur++;
-    tmp++;
-    if(*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_DIVASG;
-    } else {
-      return OP_DIV;
-    }
-  } else if (*cur == '%') {
-    cur++;
-    tmp++;
-    if(*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_REMASG;
-    } else {
-      return OP_REM;
-    }
-  } else if (*cur == '=') {
-    cur++;
-    tmp++;
-    if (*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_EQ;
-    } else {
-      return OP_ASG;
-    }
-  } else if(*cur == '!') {
-    cur++;
-    tmp++;
-    if(*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_NE;
-    } else {
-      return OP_NOT;
-    }
-  } else if(*cur == '<') {
-    cur++;
-    tmp++;
-    if (*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_LE;
-    } else {
-      return OP_LT;
-    }
-  } else if(*cur == '>') {
-    cur++;
-    tmp++;
-    if (*cur == '=') {
-      cur++;
-      tmp++;
-      return OP_GE;
-    } else {
-      return OP_GT;
-    }
-  } else if(*cur == '&') {
-    cur++;
-    tmp++;
-    if (*cur == '&') {
-      cur++;
-      tmp++;
-      return OP_AND;
-    } else {
-      cur--;
-      tmp--;
-      return OP_UNKNOWN;
-    }
-  } else if(*cur == '|') {
-    cur++;
-    tmp++;
-    if (*cur == '|') {
-      cur++;
-      tmp++;
-      return OP_OR;
-    } else {
-      cur--;
-      tmp--;
-      return OP_UNKNOWN;
-    }
-  } else {
-    return OP_UNKNOWN;
-  }
-}
-
-int expOp() {
-  int o = lexOp();
-  if(!o) {
-    panicLex();
-  }
-
-  return o;
-}
-
 int thisOp(int o) {
-  if(lexOp() != o) {
-    cur-=tmp;
-    return 0;
-  } else {
-    return o;
-  }
+  if(o <= 0 || o > 22) panicLex();
+  return thisStr(ops[o]);
 }
 
 int theseOp(int* os, int c) {

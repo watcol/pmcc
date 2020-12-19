@@ -39,8 +39,6 @@ int lexIdent();
 int expIdent();
 int atEof();
 void expEof();
-int lexOp();
-int expOp();
 int thisOp(int o);
 int theseOp(int *os, int c);
 int expThisOp(int o);
