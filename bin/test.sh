@@ -3,8 +3,8 @@ set -u
 
 main() {
   local dir=`pwd`
-  _tester arith.tl 42
-  _tester cmp.tl 1
+  _tester arith.c 42
+  _tester cmp.c 1
   _tester var.tl 42
   _tester flow.tl 2
 }
