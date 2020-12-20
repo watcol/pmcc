@@ -1,3 +1,4 @@
-teal
-*.o
-*.a
+/bin
+!/bin/Makefile
+!/bin/tealc
+!/bin/teal.sh
