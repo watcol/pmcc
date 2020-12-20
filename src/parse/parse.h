@@ -6,7 +6,7 @@
 // parse.c
 #define MAX_ARGS 10
 
-void parse();
+// void parse();
 void panicParse();
 
 // expr.c
