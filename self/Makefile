@@ -5,13 +5,13 @@ all:
 	make teal
 
 orig:
-	cd ../bin && make all
+	cd ../bin && make
 	cp ../bin/teal orig
 
 teal: main.o parse.a lex.a gen.a util.o sys.o
 	ld -o $@ $^
 
-main.o: orig ../src/main.c
+main.o: ../src/main.c orig
 	./origc $@ $^
 
 lex.a: lex.o ch.o eof.o ident.o num.o op.o str.o
