@@ -25,6 +25,8 @@
 #define OP_MULASG 20
 #define OP_DIVASG 21
 #define OP_REMASG 22
+#define OP_DEREF 23
+#define OP_REF 24
 
 void initLexer();
 char* getCursor();

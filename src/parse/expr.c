@@ -54,8 +54,8 @@ int expExprSuf() {
 }
 
 int exprUnary() {
-  int ops[3] = {OP_ADD, OP_SUB, OP_NOT};
-  int opc = 3;
+  int ops[5] = {OP_ADD, OP_SUB, OP_NOT, OP_DEREF, OP_REF};
+  int opc = 5;
 
   int o = theseOp(ops, opc);
   int var = exprSuf();
