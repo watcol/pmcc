@@ -126,23 +126,24 @@ void llPutAsg(int var) {
   putStr(" = ");
 }
 
-void llInstV(char* name, int var) {
-  putStr("  ");
-  putStr(name);
-  putCh(' ');
-  llPutTy(lVarType(var));
-  putCh(' ');
-  llPutVar(var);
+void llRetV(int var) {
+  int ty = lVarType(var);
+  putStr("  ret ");
+  llPutTy(ty);
+  if(ty != TY_VOID) {
+    putCh(' ');
+    llPutVar(var);
+  }
   putCh('\n');
 }
 
-void llInstN(char* name, int ty, int val) {
-  putStr("  ");
-  putStr(name);
-  putCh(' ');
+void llRetN(int ty, int val) {
+  putStr("  ret ");
   llPutTy(ty);
-  putCh(' ');
-  putNum(val);
+  if(ty != TY_VOID) {
+    putCh(' ');
+    putNum(val);
+  }
   putCh('\n');
 }
 

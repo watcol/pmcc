@@ -87,9 +87,7 @@ void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* ar
 
 void funcEnd() {
   // dummy ret
-  int ret_ty = retTy();
-  if(ret_ty == TY_VOID) putStrLn("  ret void");
-  else llInstN("ret", ret_ty, 1);
+  llRetN(retTy(), 1);
   cleanVar();
   llFuncEnd();
 }
@@ -121,6 +119,7 @@ int lTmpVar(int ty) {
 }
 
 int lVarType(int id) {
+  if(id == VAR_VOID) return TY_VOID;
   return lvars_ty[id];
 }
 
@@ -285,10 +284,10 @@ int funcCall(char* buf, int len, int* args, int argc) {
 }
 
 void ret(int var) {
-  if(var==VAR_VOID) putStrLn("  ret void");
+  if(var==VAR_VOID) llRetV(var);
   else {
     if(llDerefTy(lVarType(var)) != retTy()) panic("Type unmatched.");
-    llInstV("ret", derefVar(var));
+    llRetV(derefVar(var));
   }
   // Skip the implicit basic block.
   lvars_offset++;
