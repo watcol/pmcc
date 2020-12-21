@@ -46,6 +46,8 @@ int expThisOp(int o);
 int expTheseOp(int *os, int c);
 
 // parse
+#define MAX_ARGS 10
+
 void parse();
 
 // gen

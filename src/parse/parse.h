@@ -3,9 +3,6 @@
 
 #include"../teal.h"
 
-// parse.c
-#define MAX_ARGS 10
-
 // void parse();
 void panicParse();
 

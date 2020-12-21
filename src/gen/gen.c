@@ -11,6 +11,7 @@ int funcs_offset;
 char* funcs_name[MAX_FUNCS];
 int funcs_len[MAX_FUNCS];
 int funcs_ret[MAX_FUNCS];
+int funcs_args[MAX_FUNCS][MAX_ARGS];
 
 int bbs_offset;
 
@@ -37,6 +38,11 @@ void initCode() {
     funcs_name[c] = NULL;
     funcs_len[c] = 0;
     funcs_ret[c] = TY_UNKNOWN;
+    int d = 0;
+    while(d < MAX_ARGS) {
+      funcs_args[c][d] = TY_UNKNOWN;
+      d++;
+    }
     c++;
   }
 }
@@ -45,10 +51,15 @@ int retTy() {
   return funcs_ret[funcs_offset-1];
 }
 
-void funcAdd(char* name, int len, int ret) {
+void funcAdd(char* name, int len, int ret, int* args, int argc) {
   funcs_name[funcs_offset] = name;
   funcs_len[funcs_offset] = len;
   funcs_ret[funcs_offset] = ret;
+  int c = 0;
+  while(c < argc) {
+    funcs_args[funcs_offset][c] = args[c];
+    c++;
+  }
   funcs_offset++;
 }
 
@@ -65,12 +76,12 @@ int funcFind(char* cur, int len) {
 }
 
 void funcDecl(char* name, int len, int ret, int* args, int argc) {
-  funcAdd(name, len, ret);
+  funcAdd(name, len, ret, args, argc);
   llFuncDecl(name, len, ret, args, argc);
 }
 
 void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc) {
-  funcAdd(name, len, ret);
+  funcAdd(name, len, ret, arg_tys, argc);
   llFuncBegin(name, len, ret, arg_tys, argc);
 
   // Skip the implicit basic block.
@@ -149,6 +160,15 @@ int defVar(char* buf, int len, int ty) {
   llAlloca(var);
 
   return var;
+}
+
+int castVar(int var, int ty) {
+  if(llDerefTy(lVarType(var)) == ty) return var;
+
+  int dvar = derefVar(var);
+  int new_var = lTmpVar(ty);
+  llConv(new_var, dvar);
+  return refVar(new_var);
 }
 
 int unaryOp(int op, int var) {
@@ -250,9 +270,8 @@ int asgOp(int op, int ty, int var1, int var2) {
 }
 
 int binOp(int op, int var1, int var2) {
-  int ty = lVarType(var1);
-  if(ty != lVarType(var2)) panic("type unmatched.");
-  ty = llDerefTy(ty);
+  int ty = llDerefTy(lVarType(var1));
+  var2 = castVar(var2, ty);
 
   int new_var = -1;
 
@@ -267,12 +286,14 @@ int binOp(int op, int var1, int var2) {
 
 int funcCall(char* buf, int len, int* args, int argc) {
   int c = 0;
+  int id = funcFind(buf, len);
   while(c < argc) {
+    args[c] = castVar(args[c], funcs_args[id][c]);
     args[c] = derefVar(args[c]);
     c++;
   }
   int dst = -1;
-  int ret_ty = funcs_ret[funcFind(buf, len)];
+  int ret_ty = funcs_ret[id];
   if(ret_ty == TY_VOID) {
     llFuncCall(buf, len, ret_ty, args, argc);
   } else {
@@ -286,7 +307,7 @@ int funcCall(char* buf, int len, int* args, int argc) {
 void ret(int var) {
   if(var==VAR_VOID) llRetV(var);
   else {
-    if(llDerefTy(lVarType(var)) != retTy()) panic("Type unmatched.");
+    var = castVar(var, retTy());
     llRetV(derefVar(var));
   }
   // Skip the implicit basic block.
