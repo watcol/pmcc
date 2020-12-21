@@ -222,8 +222,11 @@ void llConv(int dst, int src) {
   llPutAsg(dst);
 
   if(llIsRef(dst_ty)) {
-    if(llIsRef(src_ty)) panic("Can't cast pointer to pointer.");
-    putStr("inttoptr");
+    if(llIsRef(src_ty)) {
+      putStr("bitcast");
+    } else {
+      putStr("inttoptr");
+    }
   } else if(llIsRef(src_ty)) {
     putStr("ptrtoint");
   } else if(dst_ty < src_ty) {
