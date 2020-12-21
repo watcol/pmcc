@@ -17,13 +17,13 @@ lex.o: ../src/lex/lex.c
 	$(COMPILE.c) $^
 
 basic.o: ../src/lex/basic.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 eof.o: ../src/lex/eof.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 ident.o: ../src/lex/ident.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 num.o: ../src/lex/num.c
 	$(COMPILE.c) $^
@@ -32,7 +32,7 @@ op.o: ../src/lex/op.c
 	$(COMPILE.c) $^
 
 str.o: ../src/lex/str.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 parse.a: parse.o expr.o stmt.o func.o type.o
 	ar r $@ $^

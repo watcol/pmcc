@@ -78,6 +78,7 @@ void parse();
 #define VAR_VOID (-1)
 
 void initCode();
+void finCode();
 int retTy();
 void funcDecl(char *name, int len, int ret, int *args, int argc);
 void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc);

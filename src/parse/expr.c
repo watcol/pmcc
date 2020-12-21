@@ -57,6 +57,8 @@ int expExprSuf() {
   return res;
 }
 
+int expExprUnary();
+
 int exprUnary() {
   int ops[5] = {OP_ADD, OP_SUB, OP_NOT, OP_DEREF, OP_REF};
   int opc = 5;
@@ -64,7 +66,7 @@ int exprUnary() {
   int o = theseOp(ops, opc);
   int var = exprSuf();
   if(var < -1) {
-    if(o) panicParse("exprUnary");
+    if(o) var = expExprUnary();
     else return -2;
   }
 
