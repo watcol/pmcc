@@ -5,6 +5,10 @@ int exprFactor() {
     int var = expExpr();
     expThisCh(')');
     return var;
+  } else if(thisCh('\'')) {
+    char c = expCh();
+    expThisCh('\'');
+    return constNum(TY_U8, c);
   } else {
     int i = lexNum();
     if(i >= 0) return constNum(TY_I32, i);

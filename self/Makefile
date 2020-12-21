@@ -10,7 +10,7 @@ teal: main.o parse.a lex.a gen.a util.o sys.o
 main.o: ../src/main.c
 	./origc $@ $^
 
-lex.a: lex.o basic.o eof.o ident.o num.o op.o
+lex.a: lex.o basic.o eof.o ident.o num.o op.o str.o
 	ar r $@ $^
 
 lex.o: ../src/lex/lex.c
@@ -29,6 +29,9 @@ num.o: ../src/lex/num.c
 	$(COMPILE.c) $^
 
 op.o: ../src/lex/op.c
+	$(COMPILE.c) $^
+
+str.o: ../src/lex/str.c
 	$(COMPILE.c) $^
 
 parse.a: parse.o expr.o stmt.o func.o type.o

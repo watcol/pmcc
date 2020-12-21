@@ -44,6 +44,7 @@ int thisOp(int o);
 int theseOp(int *os, int c);
 int expThisOp(int o);
 int expTheseOp(int *os, int c);
+char expCh();
 
 // parse
 #define MAX_ARGS 10

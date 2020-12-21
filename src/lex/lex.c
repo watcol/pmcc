@@ -39,6 +39,12 @@ char* getCursor() {
   return cur;
 }
 
+char getChInner() {
+  char c = *cur;
+  consume(1);
+  return c;
+}
+
 void consume(int len) {
   cur+=len;
 }

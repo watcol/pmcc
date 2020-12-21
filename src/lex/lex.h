@@ -5,6 +5,7 @@
 
 // lex.c
 void panicLex();
+char getChInner();
 void consume(int len);
 
 #endif
