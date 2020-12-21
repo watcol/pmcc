@@ -1,11 +1,11 @@
 #include"gen.h"
 
-char* types[14] = {
+char* types[18] = {
   "unknown", "void",
-  "i1",   "i8",   "i32",
-  "i1*",  "i8*",  "i32*",
-  "i1**", "i8**", "i32**",
-  "i1***", "i8***", "i32***"
+  "i1",   "i8",   "i32", "i64",
+  "i1*",  "i8*",  "i32*", "i64*",
+  "i1**", "i8**", "i32**", "i64**",
+  "i1***", "i8***", "i32***", "i64***"
 };
 
 char* bbs[7] = {
@@ -23,7 +23,7 @@ void llPutTy(int ty) {
 }
 
 int llIsRef(int ty) {
-  return ty >= TY_I1_REF && ty <= TY_I32_REF_REF_REF;
+  return ty >= TY_I1_REF && ty <= TY_I64_REF_REF_REF;
 }
 
 int llIsUnsigned(int ty) {
@@ -34,14 +34,14 @@ int llRefTy(int ty) {
   if(ty <= TY_VOID) panic("Unknown type.");
   if(ty >= TY_I1_REF_REF_REF) panic("Can't refer the reference of reference of reference.");
 
-  return ty + 3;
+  return ty + 4;
 }
 
 int llDerefTy(int ty) {
   if(ty <= TY_VOID) panic("Unknwon type.");
-  if(ty <= TY_I32) panic("Can't derefer the entity type.");
+  if(ty <= TY_I64) panic("Can't derefer the entity type.");
 
-  return ty - 3;
+  return ty - 4;
 }
 
 void llPutBb(int id, int bb) {
@@ -109,7 +109,8 @@ int llAlign(int ty) {
   if(ty == TY_I1) return 1;
   else if(ty == TY_U8) return 1;
   else if(ty == TY_I32) return 4;
-  else if(ty >= TY_I1_REF && ty <= TY_I32_REF_REF_REF) return 8;
+  else if(ty == TY_I64) return 8;
+  else if(ty >= TY_I1_REF && ty <= TY_I64_REF_REF_REF) return 8;
 
   panic("Unknown type.");
   return 0;
