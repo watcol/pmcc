@@ -155,28 +155,20 @@ int defVar(char* buf, int len, int ty) {
 int unaryOp(int op, int var) {
   if(op == OP_ADD) return var;
 
+  if(op == OP_DEREF) return derefVar(var);
+  if(op == OP_REF) return refVar(var);
+
   int ty = lVarType(var);
   int dvar = derefVar(var);
-  int new_var = -1;
+  int new_var = lTmpVar(llDerefTy(ty));
 
-  if(op == OP_INC) {
-    new_var = lTmpVar(llDerefTy(ty));
-    llInstNVAsg("add", new_var, 1, dvar);
-  } else if(op == OP_DEC){
-    new_var = lTmpVar(llDerefTy(ty));
-    llInstNVAsg("add", new_var, -1, dvar);
-  } else if(op == OP_SUB) {
-    new_var = lTmpVar(llDerefTy(ty));
-    llInstNVAsg("sub", new_var, 0, dvar);
-  } else if(op == OP_NOT) {
-    new_var = lTmpVar(llDerefTy(ty));
+  if(op == OP_INC) llInstNVAsg("add", new_var, 1, dvar);
+  else if(op == OP_DEC) llInstNVAsg("add", new_var, -1, dvar);
+  else if(op == OP_SUB) llInstNVAsg("sub", new_var, 0, dvar);
+  else if(op == OP_NOT) {
     int tmp_var = lTmpVar(TY_I1);
     llIcmpNVAsg("eq", tmp_var, 0, dvar);
     llConv("zext", new_var, tmp_var);
-  } else if(op == OP_DEREF) {
-    new_var = derefVar(dvar);
-  } else if(op == OP_REF) {
-    new_var = refVar(dvar);
   } else {
     panic("Invalid Unary operator.");
   }
