@@ -1,6 +1,6 @@
 int main() {
-  foo = 5;
-  bar = 8;
+  int foo = 5;
+  int bar = 8;
   foo++;
   bar--;
   return foo * bar;

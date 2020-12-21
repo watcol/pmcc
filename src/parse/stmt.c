@@ -15,6 +15,22 @@ int stmtMulti() {
   return 1;
 }
 
+int stmtDecl() {
+  int ty = type();
+  if(!ty) return 0;
+
+  char* buf = getCursor();
+  int len = expIdent();
+  int var = defVar(buf, len, ty);
+  if(thisCh('=')) {
+    int val = expExpr();
+    binOp(OP_ASG, var, val);
+  }
+
+  expThisCh(';');
+  return 1;
+}
+
 int stmtRet() {
   if(!thisStr("return")) return 0;
 
@@ -65,7 +81,7 @@ int stmtWhile() {
 }
 
 int stmt() {
-  if(!stmtMulti() && !stmtRet() && !stmtIf() && !stmtWhile()) {
+  if(!stmtMulti() && !stmtDecl() && !stmtRet() && !stmtIf() && !stmtWhile()) {
     return stmtSingle();
   }
 

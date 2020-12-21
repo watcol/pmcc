@@ -24,7 +24,7 @@ int exprFactor() {
         expThisCh(')');
         return funcCall(buf, len, args, c);
       }
-      return defVar(buf, len, TY_I32);
+      return lVarFind(buf, len);
     }
   }
 }

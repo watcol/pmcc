@@ -146,13 +146,8 @@ int derefVar(int var) {
 }
 
 int defVar(char* buf, int len, int ty) {
-  int var = lVarFind(buf, len);
-  if(var == -1) {
-    var = lVarAdd(buf, len, llRefTy(ty));
-    llAlloca(var);
-  }
-
-  if(lVarType(var) != llRefTy(ty)) panic("Type unmatched");
+  int var = lVarAdd(buf, len, llRefTy(ty));
+  llAlloca(var);
 
   return var;
 }
