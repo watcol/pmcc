@@ -168,7 +168,7 @@ int unaryOp(int op, int var) {
   else if(op == OP_NOT) {
     int tmp_var = lTmpVar(TY_I1);
     llIcmpNVAsg("eq", tmp_var, 0, dvar);
-    llConv("zext", new_var, tmp_var);
+    llConv(new_var, tmp_var);
   } else {
     panic("Invalid Unary operator.");
   }
@@ -221,7 +221,7 @@ int cmpOp(int op, int ty, int var1, int var2) {
   else if(op == OP_NE) llIcmpVVAsg("ne", tmp_var, dvar1, dvar2);
 
   int new_var = lTmpVar(ty);
-  llConv("zext", new_var, tmp_var);
+  llConv(new_var, tmp_var);
   return refVar(new_var);
 }
 

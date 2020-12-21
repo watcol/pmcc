@@ -19,7 +19,7 @@ void llInstNVAsg(char *name, int dst, int src1, int src2);
 void llIcmpNVAsg(char *cond, int dst, int src1, int src2);
 void llInstVVAsg(char *name, int dst, int src1, int src2);
 void llIcmpVVAsg(char *name, int dst, int src1, int src2);
-void llConv(char *name, int dst, int src);
+void llConv(int dst, int src);
 void llAlloca(int var);
 void llStoreVal(int var, int val);
 void llStore(int dst, int src);

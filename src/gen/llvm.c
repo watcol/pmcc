@@ -27,7 +27,7 @@ int llIsRef(int ty) {
 }
 
 int llIsUnsigned(int ty) {
-  return ty == TY_U8 || llIsRef(ty);
+  return ty == TY_I1 || ty == TY_U8 || llIsRef(ty);
 }
 
 int llRefTy(int ty) {
@@ -210,9 +210,28 @@ void llIcmpVVAsg(char* cond, int dst, int src1, int src2) {
   putCh('\n');
 }
 
-void llConv(char* name, int dst, int src) {
+void llConv(int dst, int src) {
+  int dst_ty = lVarType(dst);
+  int src_ty = lVarType(src);
+  if (dst_ty <= TY_VOID) panic("Can't convert to void.");
+  if (src_ty <= TY_VOID) panic("Can't convert from void.");
+  if (dst_ty == src_ty) return;
+
   llPutAsg(dst);
-  putStr(name);
+
+  if(llIsRef(dst_ty)) {
+    if(llIsRef(src_ty)) panic("Can't cast pointer to pointer.");
+    putStr("inttoptr");
+  } else if(llIsRef(src_ty)) {
+    putStr("ptrtoint");
+  } else if(dst_ty < src_ty) {
+    putStr("trunc");
+  } else if(llIsUnsigned(src_ty)) {
+    putStr("zext");
+  } else {
+    putStr("sext");
+  }
+
   putCh(' ');
   llPutTy(lVarType(src));
   putCh(' ');
