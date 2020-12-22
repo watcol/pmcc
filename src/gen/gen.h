@@ -3,6 +3,21 @@
 
 #include"../teal.h"
 
+// vars.c
+void cleanVar();
+void addArgs(char** args, int* args_len, int* args_ty, int argc);
+int derefVar(int var);
+int refVar(int var);
+int castVar(int var, int ty);
+int lTmpVar(int ty);
+
+// funcs.c
+void cleanFunc();
+void declFuncs();
+
+// flow.c
+void cleanBb();
+
 // llvm.c
 void llPutTy(int ty);
 int llIsRef(int ty);

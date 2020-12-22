@@ -85,7 +85,7 @@ void initCode();
 void finCode();
 int retTy();
 void funcDecl(char *name, int len, int ret, int *args, int argc);
-void funcBegin(char* name, int len, int ret, char** args, int* arg_lens, int* arg_tys, int argc);
+void funcBegin(char* name, int len, int ret, char** args, int* args_len, int* args_ty, int argc);
 void funcEnd();
 int lVarFind(char *cur, int len);
 int lVarAdd(char *buf, int len, int ty);
