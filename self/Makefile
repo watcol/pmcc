@@ -81,6 +81,7 @@ sys.o: ../src/sys.s
 
 test: teal
 	./test.sh
+	diff orig teal
 
 clean:
 	$(RM) *.o
