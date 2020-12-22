@@ -26,7 +26,7 @@ ident.o: ../src/lex/ident.c
 	./origc $@ $^
 
 num.o: ../src/lex/num.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 op.o: ../src/lex/op.c
 	$(COMPILE.c) $^
@@ -56,7 +56,7 @@ gen.a: gen.o flow.o funcs.o ops.o llvm.o vars.o
 	ar r $@ $^
 
 gen.o: ../src/gen/gen.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 flow.o: ../src/gen/flow.c
 	$(COMPILE.c) $^

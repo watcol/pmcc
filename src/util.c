@@ -40,8 +40,10 @@ int strCmp(char *buf1, char *buf2, int len) {
 int strToI(char *buf, char **ret) {
   int i = 0;
 
-  if (!isDigit(*buf))
+  if (!isDigit(*buf)) {
+    *ret = buf;
     return -1;
+  }
 
   while (isDigit(*buf)) {
     i *= 10;

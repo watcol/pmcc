@@ -1,6 +1,6 @@
 #include"gen.h"
 
-#define MAX_FUNCS 80
+#define MAX_FUNCS 100
 
 #define FUNC_UNDEF 0
 #define FUNC_DECL 1
