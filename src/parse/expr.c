@@ -162,7 +162,7 @@ int exprAnd() {
   if(var < -1) return -2;
 
   int o;
-  while((o = thisOp(OP_AND))) var = binOp(o, var, expExprEq());
+  while((o = thisOp(OP_AND))) var = binOp(OP_AND, var, expExprEq());
 
   return var;
 }
@@ -178,7 +178,7 @@ int exprOr() {
   if(var < -1) return -2;
 
   int o;
-  while((o = thisOp(OP_OR))) var = binOp(o, var, expExprAnd());
+  while((o = thisOp(OP_OR))) var = binOp(OP_OR, var, expExprAnd());
 
   return var;
 }

@@ -87,4 +87,4 @@ clean:
 	$(RM) *.a
 	$(RM) teal
 
-.PHONY: all orig test clean
+.PHONY: all test clean

@@ -1,5 +1,6 @@
 /bin
 /self
+/selfself
 !/bin/Makefile
 !/bin/tealc
 !/bin/teal.sh
@@ -8,3 +9,8 @@
 !/self/teal.sh
 !/self/orig
 !/self/origc
+!/selfself/Makefile
+!/selfself/tealc
+!/selfself/teal.sh
+!/selfself/orig
+!/selfself/origc
