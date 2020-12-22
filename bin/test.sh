@@ -4,7 +4,7 @@ set -u
 main() {
   local dir=`pwd`
   _tester arith.c 42
-  _tester cmp.c 1
+  _tester logic.c 1
   _tester var.c 42
   _tester flow.c 2
   _tester fibo.c 55
