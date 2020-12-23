@@ -45,6 +45,7 @@ int theseOp(int *os, int c);
 int expThisOp(int o);
 int expTheseOp(int *os, int c);
 char expCh();
+char getStr1();
 
 // parse
 #define MAX_ARGS 10
@@ -92,6 +93,7 @@ int lVarAdd(char *buf, int len, int ty);
 int lVarType(int id);
 int defVar(char *buf, int len, int ty);
 int defArray(char* buf, int len, int ty, int c);
+int tmpStr(char* str);
 int constNum(int ty, int val);
 int unaryOp(int op, int var);
 int binOp(int op, int var1, int var2);

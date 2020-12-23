@@ -1,4 +1,5 @@
 #include"parse.h"
+#define MAX_STR 50
 
 int exprFactor() {
   if(thisCh('(')) {
@@ -9,6 +10,17 @@ int exprFactor() {
     char c = expCh();
     expThisCh('\'');
     return constNum(TY_U8, c);
+  } else if(thisCh('"')) {
+    char tmp[MAX_STR];
+    char ch;
+    int c = 0;
+    while((ch = getStr1()) >= 0) {
+      tmp[c] = ch;
+      c++;
+    }
+
+    tmp[c] = '\0';
+    return tmpStr(tmp);
   } else {
     int i = lexNum();
     if(i >= 0) return constNum(TY_I32, i);

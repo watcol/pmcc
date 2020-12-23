@@ -99,6 +99,25 @@ int defArray(char* buf, int len, int ty, int c) {
   return var;
 }
 
+int tmpStr(char* str) {
+  int len = length(str);
+  int var = defArray(NULL, 0, TY_U8, len+1);
+  int c = 0;
+  while(c <= len) {
+    int ptr = derefVar(var);
+    int new_ptr = lTmpVar(TY_I64);
+    llConv(new_ptr, ptr);
+    int tmp_var = lTmpVar(TY_I64);
+    llInstNVAsg("add", tmp_var, c, new_ptr);
+    int new_tmp = lTmpVar(TY_U8_REF);
+    llConv(new_tmp, tmp_var);
+    llStoreVal(new_tmp, str[c]);
+    c++;
+  }
+
+  return var;
+}
+
 int castVar(int var, int ty) {
   if(llDerefTy(lVarType(var)) == ty) return var;
 

@@ -1,4 +1,5 @@
 #include"lex.h"
+#define MAX_STR 20
 
 int getCh(int str) {
   char c = getChInner();
@@ -30,4 +31,8 @@ char expCh() {
   int c = getCh(0);
   if(c < 0) panicLex();
   return c;
+}
+
+char getStr1() {
+  return getCh(1);
 }
