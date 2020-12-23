@@ -15,8 +15,9 @@ int isAlphaNum(char c) { return isDigit(c) || isAlpha(c); }
 
 int length(char *buf) {
   int len = 0;
-  while (*(buf++)) {
+  while (*buf) {
     len++;
+    buf++;
   }
 
   return len;
@@ -57,8 +58,9 @@ int strToI(char *buf, char **ret) {
 
 int digitLen(char *buf) {
   int len = 0;
-  while (isDigit(*(buf++))) {
+  while (isDigit(*buf)) {
     len++;
+    buf++;
   }
   return len;
 }
@@ -81,12 +83,14 @@ int identLen(char *buf) {
 int ended() { return read(NULL, 1) == 0; }
 
 void putCh(char c) {
-  char buf[] = {c};
+  char buf[1];
+  buf[0] = c;
   write(buf, 1);
 }
 
 void ePutCh(char c) {
-  char buf[] = {c};
+  char buf[1];
+  buf[0] = c;
   eWrite(buf, 1);
 }
 
@@ -117,7 +121,8 @@ void panic(char *msg) {
 
 void putNum(int n) {
   char buf[MAX_INT + 1];
-  int c = MAX_INT;
+  buf[MAX_INT] = '\0';
+  int c = MAX_INT - 1;
 
   if (n < 0) {
     putCh('-');
@@ -129,7 +134,7 @@ void putNum(int n) {
     c--;
   }
 
-  while (n != 0) {
+  while (n > 0) {
     buf[c] = '0' + (n % 10);
     n /= 10;
     c--;
@@ -140,7 +145,8 @@ void putNum(int n) {
 
 void ePutNum(int n) {
   char buf[MAX_INT + 1];
-  int c = MAX_INT;
+  buf[MAX_INT] = '\0';
+  int c = MAX_INT - 1;
 
   if (n < 0) {
     ePutCh('-');
@@ -152,7 +158,7 @@ void ePutNum(int n) {
     c--;
   }
 
-  while (n != 0) {
+  while (n > 0) {
     buf[c] = '0' + (n % 10);
     n /= 10;
     c--;

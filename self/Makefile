@@ -74,7 +74,7 @@ vars.o: ../src/gen/vars.c
 	$(COMPILE.c) $^
 
 util.o: ../src/util.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 sys.o: ../src/sys.s
 	as -o $@ $^

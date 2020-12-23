@@ -23,6 +23,7 @@ int stmtDecl() {
   int len = expIdent();
   if(thisCh('[')) {
     int c = expNum();
+    if(thisCh('+')) c += expNum();
     expThisCh(']');
     defArray(buf, len, ty, c);
   } else {

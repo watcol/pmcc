@@ -11,9 +11,28 @@ char* ops[25] = {
   "*", "&"
 };
 
+int thisOpInner(int o) {
+  int danger = (o >= OP_ADD && o <= OP_REM)
+             || o == OP_LT
+             || o == OP_GT
+             || o == OP_DEREF;
+
+  if(danger) {
+    if(!thisStr(ops[o])) return 0;
+    if(thisCh('=')) {
+      consume(-2);
+      return 0;
+    }
+
+    return 1;
+  } else {
+    return thisStr(ops[o]);
+  }
+}
+
 int thisOp(int o) {
   if(o <= 0 || o > 24) panicLex();
-  return thisStr(ops[o]);
+  return thisOpInner(o);
 }
 
 int theseOp(int* os, int c) {

@@ -131,8 +131,8 @@ void ePutStr(char *s);
 void putStrLn(char *s);
 void ePutStrLn(char *s);
 void panic(char *msg);
-void putNum();
-void ePutNum();
+void putNum(int n);
+void ePutNum(int n);
 
 // sys.s
 void sysExit(int code);
