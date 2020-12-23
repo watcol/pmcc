@@ -15,6 +15,10 @@ int exprFactor() {
     char ch;
     int c = 0;
     while((ch = getStr1()) >= 0) {
+      if(c == MAX_STR) {
+        panic("Too long string.");
+        return -2;
+      }
       tmp[c] = ch;
       c++;
     }

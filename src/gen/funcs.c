@@ -75,6 +75,11 @@ int funcAdd(char* name, int len, int ret, int* args, int argc) {
     return id;
   }
 
+  if(funcs_offset == MAX_FUNCS) {
+    panic("Too many functions.");
+    return -1;
+  }
+
   funcs_name[funcs_offset] = name;
   funcs_len[funcs_offset] = len;
   funcs_ret[funcs_offset] = ret;
