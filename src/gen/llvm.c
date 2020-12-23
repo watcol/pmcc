@@ -256,6 +256,31 @@ void llAlloca(int var) {
   putCh('\n');
 }
 
+void llAllocaArray(int var, int ty, int c) {
+  llPutAsg(var);
+  putStr("alloca [");
+  putNum(c);
+  putStr(" x ");
+  llPutTy(ty);
+  putStr("], ");
+  llPutAlign(ty);
+  putCh('\n');
+}
+
+void llArrayToPtr(int dst, int src, int c) {
+  int ty = llDerefTy(lVarType(dst));
+  llPutAsg(dst);
+  putStr("bitcast [");
+  putNum(c);
+  putStr(" x ");
+  llPutTy(ty);
+  putStr("]* ");
+  llPutVar(src);
+  putStr(" to ");
+  llPutTy(llRefTy(ty));
+  putCh('\n');
+}
+
 void llStoreVal(int var, int val) {
   int ty = llDerefTy(lVarType(var));
 

@@ -21,10 +21,16 @@ int stmtDecl() {
 
   char* buf = getCursor();
   int len = expIdent();
-  int var = defVar(buf, len, ty);
-  if(thisCh('=')) {
-    int val = expExpr();
-    binOp(OP_ASG, var, val);
+  if(thisCh('[')) {
+    int c = expNum();
+    expThisCh(']');
+    defArray(buf, len, ty, c);
+  } else {
+    int var = defVar(buf, len, ty);
+    if(thisCh('=')) {
+      int val = expExpr();
+      binOp(OP_ASG, var, val);
+    }
   }
 
   expThisCh(';');

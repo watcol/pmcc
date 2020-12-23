@@ -91,6 +91,7 @@ int lVarFind(char *cur, int len);
 int lVarAdd(char *buf, int len, int ty);
 int lVarType(int id);
 int defVar(char *buf, int len, int ty);
+int defArray(char* buf, int len, int ty, int c);
 int constNum(int ty, int val);
 int unaryOp(int op, int var);
 int binOp(int op, int var1, int var2);

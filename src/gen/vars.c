@@ -89,6 +89,16 @@ int defVar(char* buf, int len, int ty) {
   return var;
 }
 
+int defArray(char* buf, int len, int ty, int c) {
+  int tmp_var1 = lTmpVar(TY_UNKNOWN);
+  llAllocaArray(tmp_var1, ty, c);
+  int tmp_var2 = lTmpVar(llRefTy(ty));
+  llArrayToPtr(tmp_var2, tmp_var1, c);
+  int var = defVar(buf, len, llRefTy(ty));
+  llStore(var, tmp_var2);
+  return var;
+}
+
 int castVar(int var, int ty) {
   if(llDerefTy(lVarType(var)) == ty) return var;
 

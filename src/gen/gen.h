@@ -36,6 +36,8 @@ void llInstVVAsg(char *name, int dst, int src1, int src2);
 void llIcmpVVAsg(char *name, int dst, int src1, int src2);
 void llConv(int dst, int src);
 void llAlloca(int var);
+void llAllocaArray(int var, int ty, int c);
+void llArrayToPtr(int dst, int src, int c);
 void llStoreVal(int var, int val);
 void llStore(int dst, int src);
 void llLoad(int dst, int src);
