@@ -28,6 +28,7 @@ void llFuncDecl(char *name, int len, int ret, int *args, int argc);
 void llFuncBegin(char *name, int len, int ret, int *args, int argc);
 void llFuncEnd();
 void llBb(int id, int bb);
+int llAlign(int ty);
 void llRetV(int var);
 void llRetN(int ty, int val);
 void llInstNVAsg(char *name, int dst, int src1, int src2);

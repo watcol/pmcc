@@ -95,6 +95,7 @@ int defArray(char* buf, int len, int ty, int c);
 int constNum(int ty, int val);
 int unaryOp(int op, int var);
 int binOp(int op, int var1, int var2);
+int arrayElem(int var, int id);
 int funcCall(char* buf, int len, int* args, int argc);
 void ret(int var);
 int ifBegin(int var);

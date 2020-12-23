@@ -39,11 +39,29 @@ int expExprFactor() {
   return res;
 }
 
+int exprElem() {
+  int var = exprFactor();
+
+  while(thisCh('[')) {
+    int id = expExpr();
+    expThisCh(']');
+    var = arrayElem(var, id);
+  }
+
+  return var;
+}
+
+int expExprElem() {
+  int res = exprElem();
+  if(res < -1) panicParse("exprElem");
+  return res;
+}
+
 int exprSuf() {
   int ops[2] = {OP_INC, OP_DEC};
   int opc = 2;
 
-  int var = exprFactor();
+  int var = exprElem();
 
   int o;
   while((o = theseOp(ops, opc))) var = unaryOp(o, var);
@@ -161,8 +179,7 @@ int exprAnd() {
   int var = exprEq();
   if(var < -1) return -2;
 
-  int o;
-  while((o = thisOp(OP_AND))) var = binOp(OP_AND, var, expExprEq());
+  while(thisOp(OP_AND)) var = binOp(OP_AND, var, expExprEq());
 
   return var;
 }
@@ -177,8 +194,7 @@ int exprOr() {
   int var = exprAnd();
   if(var < -1) return -2;
 
-  int o;
-  while((o = thisOp(OP_OR))) var = binOp(OP_OR, var, expExprAnd());
+  while(thisOp(OP_OR)) var = binOp(OP_OR, var, expExprAnd());
 
   return var;
 }
