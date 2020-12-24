@@ -8,6 +8,7 @@ main() {
   _tester var.c 42
   _tester flow.c 2
   _tester fibo.c 55
+  _tester array.c 42
 }
 
 # ./tester <tealc> <input file> <expected status code>
