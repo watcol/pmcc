@@ -24,7 +24,18 @@ int stmtDecl() {
     int c = expNum();
     if(thisCh('+')) c += expNum();
     expThisCh(']');
-    defArray(buf, len, ty, c);
+    int array = defArray(buf, len, ty, c);
+    if(thisCh('=')) {
+      expThisCh('{');
+      int d = 0;
+      while(d < c) {
+        int elem = expExpr();
+        binOp(OP_ASG, arrayElem(array, constNum(TY_I64, d)), elem);
+        d++;
+        if(d != c) expThisCh(',');
+      }
+      expThisCh('}');
+    }
   } else {
     int var = defVar(buf, len, ty);
     if(thisCh('=')) {
