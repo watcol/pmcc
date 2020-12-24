@@ -38,6 +38,8 @@ int lexNum();
 int expNum();
 int lexIdent();
 int expIdent();
+int thisIdent(char* str);
+void expThisIdent(char* str);
 int atEof();
 void expEof();
 int thisOp(int o);

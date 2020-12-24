@@ -65,7 +65,7 @@ funcs.o: ../src/gen/funcs.c
 	$(COMPILE.c) $^
 
 ops.o: ../src/gen/ops.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 llvm.o: ../src/gen/llvm.c
 	$(COMPILE.c) $^

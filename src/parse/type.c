@@ -3,11 +3,11 @@
 int type() {
   int ty = TY_UNKNOWN;
 
-  if(thisStr("void")) ty = TY_VOID;
-  else if (thisStr("bool")) ty = TY_I1;
-  else if (thisStr("char")) ty = TY_U8;
-  else if (thisStr("int")) ty = TY_I32;
-  else if (thisStr("long")) ty = TY_I64;
+  if(thisIdent("void")) ty = TY_VOID;
+  else if (thisIdent("bool")) ty = TY_I1;
+  else if (thisIdent("char")) ty = TY_U8;
+  else if (thisIdent("int")) ty = TY_I32;
+  else if (thisIdent("long")) ty = TY_I64;
   else return ty;
 
   while(thisCh('*')) ty = llRefTy(ty);

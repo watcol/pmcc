@@ -39,7 +39,7 @@ int stmtDecl() {
 }
 
 int stmtRet() {
-  if(!thisStr("return")) return 0;
+  if(!thisIdent("return")) return 0;
 
   int var;
   if(retTy() == TY_VOID) {
@@ -54,7 +54,7 @@ int stmtRet() {
 }
 
 int stmtIf() {
-  if(!thisStr("if")) return 0;
+  if(!thisIdent("if")) return 0;
 
   expThisCh('(');
   int var = expExpr();
@@ -64,7 +64,7 @@ int stmtIf() {
   expStmt();
 
   ifElse(id);
-  if(thisStr("else")) expStmt();
+  if(thisIdent("else")) expStmt();
 
   ifEnd(id);
 
@@ -72,7 +72,7 @@ int stmtIf() {
 }
 
 int stmtWhile() {
-  if(!thisStr("while")) return 0;
+  if(!thisIdent("while")) return 0;
 
   int id = whileBegin();
 
