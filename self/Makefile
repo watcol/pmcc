@@ -50,7 +50,7 @@ func.o: ../src/parse/func.c
 	$(COMPILE.c) $^
 
 type.o: ../src/parse/type.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 gen.a: gen.o flow.o funcs.o ops.o llvm.o vars.o
 	ar r $@ $^
