@@ -87,11 +87,12 @@ int stmtWhile() {
 }
 
 int stmt() {
-  if(!stmtMulti() && !stmtDecl() && !stmtRet() && !stmtIf() && !stmtWhile()) {
-    return stmtSingle();
-  }
-
-  return 1;
+  if(stmtMulti()) return 1;
+  if(stmtDecl()) return 1;
+  if(stmtRet()) return 1;
+  if(stmtIf()) return 1;
+  if(stmtWhile()) return 1;
+  return stmtSingle();
 }
 
 
