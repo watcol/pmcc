@@ -168,11 +168,7 @@ int andOr(int op, int ty, int var1, int var2) {
 int asgOp(int op, int var1, int var2) {
   if(op != OP_ASG) var2 = arithOp(op - 17, var1, var2);
 
-  if(lVarType(var2) != lVarType(var1)) {
-    panic("Can't store the different type.");
-    return -2;
-  }
-
+  var2 = castVar(var2, llDerefTy(lVarType(var1)));
   int dvar2 = derefVar(var2);
   llStore(var1, dvar2);
   return var1;

@@ -19,8 +19,10 @@ int getCh(int str) {
     panicLex();
     return -1;
   } else if(c == '\'' && !str) {
+    consume(-1);
     return -1;
   } else if(c == '\"' && str) {
+    consume(-1);
     return -1;
   } else {
     return c;
@@ -33,6 +35,6 @@ char expCh() {
   return c;
 }
 
-char getStr1() {
+int getStr1() {
   return getCh(1);
 }

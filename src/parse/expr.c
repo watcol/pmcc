@@ -7,23 +7,24 @@ int exprFactor() {
     expThisCh(')');
     return var;
   } else if(thisCh('\'')) {
-    char c = expCh();
+    char ch = expCh();
     expThisCh('\'');
-    return constNum(TY_U8, c);
-  } else if(thisCh('"')) {
+    return constNum(TY_U8, ch);
+  } else if(thisCh('\"')) {
     char tmp[MAX_STR];
-    char ch;
+    int str1;
     int c = 0;
-    while((ch = getStr1()) >= 0) {
+    while((str1 = getStr1()) >= 0) {
       if(c == MAX_STR) {
         panic("Too long string.");
         return -2;
       }
-      tmp[c] = ch;
+      tmp[c] = str1;
       c++;
     }
 
     tmp[c] = '\0';
+    expThisCh('\"');
     return tmpStr(tmp);
   } else {
     int i = lexNum();
@@ -34,15 +35,15 @@ int exprFactor() {
       if(!len) return -2;
       if(thisCh('(')) {
         int args[MAX_ARGS];
-        int c = 0;
-        args[c] = expr();
-        if(args[c] >= 0) c++;
+        int d = 0;
+        args[d] = expr();
+        if(args[d] >= 0) d++;
         while(thisCh(',')) {
-          args[c] = expExpr();
-          c++;
+          args[d] = expExpr();
+          d++;
         }
         expThisCh(')');
-        return funcCall(buf, len, args, c);
+        return funcCall(buf, len, args, d);
       }
       return lVarFind(buf, len);
     }
