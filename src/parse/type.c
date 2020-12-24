@@ -17,6 +17,6 @@ int type() {
 
 int expType() {
   int res = type();
-  if(!res) panicParse();
+  if(!res) panicParse("type");
   return res;
 }

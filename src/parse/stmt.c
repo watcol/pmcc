@@ -10,8 +10,7 @@ int stmtSingle() {
 int stmtMulti() {
   if(!thisCh('{')) return 0;
 
-  while(stmt()) {}
-  expThisCh('}');
+  while(!thisCh('}')) expStmt();
   return 1;
 }
 

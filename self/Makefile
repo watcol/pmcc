@@ -38,7 +38,7 @@ parse.a: parse.o expr.o stmt.o func.o type.o
 	ar r $@ $^
 
 parse.o: ../src/parse/parse.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 expr.o: ../src/parse/expr.c
 	$(COMPILE.c) $^

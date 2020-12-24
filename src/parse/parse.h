@@ -4,7 +4,7 @@
 #include"../teal.h"
 
 // void parse();
-void panicParse();
+void panicParse(char* at);
 
 // expr.c
 int expr();

@@ -8,7 +8,7 @@ void panicParse(char* at) {
 }
 
 void program() {
-  while(func()) {};
+  while(func()) {}
 }
 
 void parse() {
