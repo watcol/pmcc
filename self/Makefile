@@ -47,7 +47,7 @@ stmt.o: ../src/parse/stmt.c
 	$(COMPILE.c) $^
 
 func.o: ../src/parse/func.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 type.o: ../src/parse/type.c
 	./origc $@ $^
