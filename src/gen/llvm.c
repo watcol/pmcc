@@ -156,21 +156,6 @@ void llDefGArray(char* buf, int len, int ty, int c) {
   putStrLn("\n");
 }
 
-void llDefGArray2(char* buf, int len, int ty, int c1, int c2) {
-  putCh('@');
-  write(buf, len);
-  putStr(" = global [");
-  putNum(c1);
-  putStr(" x ");
-  putCh('[');
-  putNum(c2);
-  putStr(" x ");
-  llPutTy(ty);
-  putStr("]] zeroinitializer, ");
-  llPutAlign(ty);
-  putStrLn("\n");
-}
-
 void llRetV(int var) {
   int ty = lVarType(var);
   putStr("  ret ");
@@ -319,6 +304,21 @@ void llAllocaArray(int var, int ty, int c) {
   llPutTy(ty);
   putStr("], ");
   llPutAlign(ty);
+  putCh('\n');
+}
+
+void llArrayElem(int dst, int src, int id) {
+  llPutAsg(dst);
+  putStr("getelementptr ");
+  llPutTy(llDerefTy(lVarType(dst)));
+  putStr(", ");
+  llPutTy(lVarType(src));
+  putCh(' ');
+  llPutVar(src);
+  putStr(", ");
+  llPutTy(lVarType(id));
+  putCh(' ');
+  llPutVar(id);
   putCh('\n');
 }
 

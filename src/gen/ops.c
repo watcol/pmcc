@@ -203,13 +203,13 @@ int binOp(int op, int var1, int var2) {
 }
 
 int arrayElem(int var, int id) {
-  int ty = llDerefTy(llDerefTy(lVarType(var)));
+  var = derefVar(var);
+  int ty = lVarType(var);
   id = castVar(id, TY_I64);
-  int did = derefVar(id);
-  int tmp_var = lTmpVar(TY_I64);
-  llInstNVAsg("mul", tmp_var, llAlign(ty), did);
-  var = binOp(OP_ADD, var, refVar(tmp_var));
-  return derefVar(var);
+  id = derefVar(id);
+  int res = lTmpVar(ty);
+  llArrayElem(res, var, id);
+  return res;
 }
 
 void ret(int var) {
