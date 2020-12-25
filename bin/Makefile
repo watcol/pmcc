@@ -52,7 +52,7 @@ func.o: ../src/parse/func.c
 type.o: ../src/parse/type.c
 	$(COMPILE.c) $^
 
-gen.a: gen.o flow.o funcs.o ops.o llvm.o vars.o
+gen.a: gen.o flow.o funcs.o gvars.o ops.o llvm.o vars.o
 	ar r $@ $^
 
 gen.o: ../src/gen/gen.c
@@ -62,6 +62,9 @@ flow.o: ../src/gen/flow.c
 	$(COMPILE.c) $^
 
 funcs.o: ../src/gen/funcs.c
+	$(COMPILE.c) $^
+
+gvars.o: ../src/gen/gvars.c
 	$(COMPILE.c) $^
 
 ops.o: ../src/gen/ops.c

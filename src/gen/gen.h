@@ -11,6 +11,9 @@ int refVar(int var);
 int castVar(int var, int ty);
 int lTmpVar(int ty);
 
+// gvars.c
+void cleanGVar();
+
 // funcs.c
 void cleanFunc();
 void declFuncs();
@@ -29,6 +32,7 @@ void llFuncBegin(char *name, int len, int ret, int *args, int argc);
 void llFuncEnd();
 void llBb(int id, int bb);
 int llAlign(int ty);
+void llDefGVar(char* buf, int len, int ty, int val);
 void llRetV(int var);
 void llRetN(int ty, int val);
 void llInstNVAsg(char *name, int dst, int src1, int src2);

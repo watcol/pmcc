@@ -2,6 +2,7 @@
 
 void initCode() {
   cleanVar();
+  cleanGVar();
   cleanBb();
   cleanFunc();
 }

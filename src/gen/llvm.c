@@ -93,7 +93,6 @@ void llFuncEnd() {
   putStrLn("}\n");
 }
 
-
 void llBb(int id, int bb) {
   putCh('\n');
   llPutBb(id, bb);
@@ -125,6 +124,18 @@ void llPutAsg(int var) {
   putStr("  ");
   llPutVar(var);
   putStr(" = ");
+}
+
+void llDefGVar(char* buf, int len, int ty, int val) {
+  putCh('@');
+  write(buf, len);
+  putStr(" = global ");
+  llPutTy(ty);
+  putCh(' ');
+  putNum(val);
+  putStr(", ");
+  llPutAlign(ty);
+  putStrLn("\n");
 }
 
 void llRetV(int var) {

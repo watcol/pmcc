@@ -5,6 +5,10 @@ int func() {
   if(!ty) return 0;
   char* name = getCursor();
   int len = expIdent();
+  if(thisCh(';')) {
+    defGVar(name, len, ty);
+    return 1;
+  }
   expThisCh('(');
 
   char* args[MAX_ARGS];

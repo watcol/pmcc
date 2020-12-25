@@ -97,6 +97,7 @@ int defVar(char *buf, int len, int ty);
 int defArray(char* buf, int len, int ty, int c);
 int tmpStr(char* str);
 int constNum(int ty, int val);
+int defGVar(char* buf, int len, int ty);
 int unaryOp(int op, int var);
 int binOp(int op, int var1, int var2);
 int arrayElem(int var, int id);
