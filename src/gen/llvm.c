@@ -166,6 +166,17 @@ void llRetV(int var) {
   putCh('\n');
 }
 
+void llRet(int ty) {
+  putStr("  ret ");
+  llPutTy(ty);
+  if(llIsRef(ty)) {
+    putStr(" null");
+  } else if(ty != TY_VOID){
+    putStr(" 0");
+  }
+
+  putCh('\n');
+}
 void llRetN(int ty, int val) {
   putStr("  ret ");
   llPutTy(ty);

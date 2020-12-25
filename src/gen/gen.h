@@ -35,7 +35,7 @@ int llAlign(int ty);
 void llDefGVar(char* buf, int len, int ty);
 void llDefGArray(char* buf, int len, int ty, int c);
 void llRetV(int var);
-void llRetN(int ty, int val);
+void llRet(int ty);
 void llInstNVAsg(char *name, int dst, int src1, int src2);
 void llIcmpNVAsg(char *cond, int dst, int src1, int src2);
 void llInstVVAsg(char *name, int dst, int src1, int src2);

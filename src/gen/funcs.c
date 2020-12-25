@@ -109,7 +109,7 @@ void funcBegin(char* name, int len, int ret, char** args, int* args_len, int* ar
 
 void funcEnd() {
   // dummy ret
-  llRetN(retTy(), 1);
+  llRet(retTy());
   cur_func = 0;
   cleanVar();
   cleanBb();

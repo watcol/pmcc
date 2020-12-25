@@ -14,7 +14,7 @@ lex.a: lex.o basic.o eof.o ident.o num.o op.o str.o
 	ar r $@ $^
 
 lex.o: ../src/lex/lex.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 basic.o: ../src/lex/basic.c
 	./origc $@ $^
