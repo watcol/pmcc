@@ -29,7 +29,7 @@ num.o: ../src/lex/num.c
 	./origc $@ $^
 
 op.o: ../src/lex/op.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 str.o: ../src/lex/str.c
 	./origc $@ $^
