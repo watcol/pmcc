@@ -11,6 +11,7 @@ int func() {
   } else if(thisCh('[')) {
     int num1 = expNum();
     if(thisCh('+')) num1 += expNum();
+    if(thisCh('*')) num1 *= expNum();
     expThisCh(']');
     expThisCh(';');
     defGArray(name, len, ty, num1);

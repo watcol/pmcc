@@ -11,7 +11,7 @@ int funcs_offset;
 char* funcs_name[MAX_FUNCS];
 int funcs_len[MAX_FUNCS];
 int funcs_ret[MAX_FUNCS];
-int funcs_args[MAX_FUNCS][MAX_ARGS];
+int funcs_args[MAX_FUNCS * MAX_ARGS];
 int funcs_argc[MAX_FUNCS];
 int funcs_decl[MAX_FUNCS];
 
@@ -26,7 +26,7 @@ void cleanFunc() {
     funcs_ret[c] = TY_UNKNOWN;
     int d = 0;
     while(d < MAX_ARGS) {
-      funcs_args[c][d] = TY_UNKNOWN;
+      funcs_args[c * MAX_ARGS + d] = TY_UNKNOWN;
       d++;
     }
     funcs_argc[c] = 0;
@@ -65,7 +65,7 @@ int funcAdd(char* name, int len, int ret, int* args, int argc) {
 
     int c = 0;
     while(c < argc) {
-      if(args[c] != funcs_args[id][c]) {
+      if(args[c] != funcs_args[id * MAX_ARGS + c]) {
         panic("Conflict function definition.");
         return -1;
       }
@@ -85,7 +85,7 @@ int funcAdd(char* name, int len, int ret, int* args, int argc) {
   funcs_ret[funcs_offset] = ret;
   int c = 0;
   while(c < argc) {
-    funcs_args[funcs_offset][c] = args[c];
+    funcs_args[funcs_offset * MAX_ARGS + c] = args[c];
     c++;
   }
   funcs_argc[funcs_offset] = argc;
@@ -120,7 +120,13 @@ void declFuncs() {
   int c = 0;
   while(c < funcs_offset) {
     if(funcs_decl[c] == FUNC_DECL) {
-      llFuncDecl(funcs_name[c], funcs_len[c], funcs_ret[c], funcs_args[c], funcs_argc[c]);
+      int args[MAX_ARGS];
+      int d = 0;
+      while(d < MAX_ARGS) {
+        args[d] = funcs_args[c * MAX_ARGS + d];
+        d++;
+      }
+      llFuncDecl(funcs_name[c], funcs_len[c], funcs_ret[c], args, funcs_argc[c]);
     }
     c++;
   }
@@ -136,7 +142,7 @@ int funcCall(char* buf, int len, int* args, int argc) {
 
   int c = 0;
   while(c < argc) {
-    args[c] = castVar(args[c], funcs_args[id][c]);
+    args[c] = castVar(args[c], funcs_args[id * MAX_ARGS + c]);
     args[c] = derefVar(args[c]);
     c++;
   }
