@@ -127,14 +127,30 @@ void llPutAsg(int var) {
   putStr(" = ");
 }
 
-void llDefGVar(char* buf, int len, int ty, int val) {
+void llDefGVar(char* buf, int len, int ty) {
   putCh('@');
   write(buf, len);
   putStr(" = global ");
   llPutTy(ty);
   putCh(' ');
-  putNum(val);
+  if(llIsRef(ty)) {
+    putStr("null");
+  } else {
+    putCh('0');
+  }
   putStr(", ");
+  llPutAlign(ty);
+  putStrLn("\n");
+}
+
+void llDefGArray(char* buf, int len, int ty, int c) {
+  putCh('@');
+  write(buf, len);
+  putStr(" = global [");
+  putNum(c);
+  putStr(" x ");
+  llPutTy(ty);
+  putStr("] zeroinitializer, ");
   llPutAlign(ty);
   putStrLn("\n");
 }
@@ -288,6 +304,20 @@ void llArrayToPtr(int dst, int src, int c) {
   llPutTy(ty);
   putStr("]* ");
   llPutVar(src);
+  putStr(" to ");
+  llPutTy(llRefTy(ty));
+  putCh('\n');
+}
+
+void llGArrayToPtr(int dst, char* buf, int len, int c) {
+  int ty = llDerefTy(lVarType(dst));
+  llPutAsg(dst);
+  putStr("bitcast [");
+  putNum(c);
+  putStr(" x ");
+  llPutTy(ty);
+  putStr("]* @");
+  write(buf, len);
   putStr(" to ");
   llPutTy(llRefTy(ty));
   putCh('\n');

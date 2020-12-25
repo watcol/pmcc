@@ -8,6 +8,13 @@ int func() {
   if(thisCh(';')) {
     defGVar(name, len, ty);
     return 1;
+  } else if(thisCh('[')) {
+    int num = expNum();
+    if(thisCh('+')) num += expNum();
+    expThisCh(']');
+    expThisCh(';');
+    defGArray(name, len, ty, num);
+    return 1;
   }
   expThisCh('(');
 
