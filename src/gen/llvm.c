@@ -2,12 +2,13 @@
 
 
 void llPutTy(int ty) {
-  char* types[18] = {
+  char* types[22] = {
     "unknown", "void",
-    "i1",   "i8",   "i32", "i64",
-    "i1*",  "i8*",  "i32*", "i64*",
-    "i1**", "i8**", "i32**", "i64**",
-    "i1***", "i8***", "i32***", "i64***"
+    "i1",     "i8",     "i32",     "i64",
+    "i1*",    "i8*",    "i32*",    "i64*",
+    "i1**",   "i8**",   "i32**",   "i64**",
+    "i1***",  "i8***",  "i32***",  "i64***",
+    "i1****", "i8****", "i32****", "i64****"
   };
 
   if(ty == TY_UNKNOWN) {
@@ -18,7 +19,7 @@ void llPutTy(int ty) {
 }
 
 int llIsRef(int ty) {
-  return ty >= TY_I1_REF && ty <= TY_I64_REF_REF_REF;
+  return ty >= TY_I1_REF && ty <= TY_I64_REF_REF_REF_REF;
 }
 
 int llIsUnsigned(int ty) {
@@ -27,7 +28,7 @@ int llIsUnsigned(int ty) {
 
 int llRefTy(int ty) {
   if(ty <= TY_VOID) panic("Unknown type.");
-  if(ty >= TY_I1_REF_REF_REF) panic("Can't refer the reference of reference of reference.");
+  if(ty >= TY_I1_REF_REF_REF_REF) panic("Can't refer the 4th reference.");
 
   return ty + 4;
 }
@@ -110,7 +111,7 @@ int llAlign(int ty) {
   else if(ty == TY_U8) return 1;
   else if(ty == TY_I32) return 4;
   else if(ty == TY_I64) return 8;
-  else if(ty >= TY_I1_REF && ty <= TY_I64_REF_REF_REF) return 8;
+  else if(ty >= TY_I1_REF && ty <= TY_I64_REF_REF_REF_REF) return 8;
 
   panic("Unknown type.");
   return 0;

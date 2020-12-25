@@ -73,6 +73,10 @@ void parse();
 #define TY_U8_REF_REF_REF 15
 #define TY_I32_REF_REF_REF 16
 #define TY_I64_REF_REF_REF 17
+#define TY_I1_REF_REF_REF_REF 18
+#define TY_U8_REF_REF_REF_REF 19
+#define TY_I32_REF_REF_REF_REF 20
+#define TY_I64_REF_REF_REF_REF 21
 
 #define BB_UNKNOWN 0
 #define BB_IF_BEGIN 1

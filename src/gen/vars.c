@@ -1,5 +1,5 @@
 #include"gen.h"
-#define MAX_VARS 1000
+#define MAX_VARS 1200
 
 int lvars_offset;
 char* lvars[MAX_VARS];
