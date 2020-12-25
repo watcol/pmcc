@@ -83,10 +83,10 @@ int funcAdd(char* name, int len, int ret, int* args, int argc) {
   funcs_name[funcs_offset] = name;
   funcs_len[funcs_offset] = len;
   funcs_ret[funcs_offset] = ret;
-  int c = 0;
-  while(c < argc) {
-    funcs_args[funcs_offset * MAX_ARGS + c] = args[c];
-    c++;
+  int d = 0;
+  while(d < argc) {
+    funcs_args[funcs_offset * MAX_ARGS + d] = args[d];
+    d++;
   }
   funcs_argc[funcs_offset] = argc;
   funcs_offset++;

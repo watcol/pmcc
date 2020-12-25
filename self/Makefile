@@ -62,7 +62,7 @@ flow.o: ../src/gen/flow.c
 	./origc $@ $^
 
 funcs.o: ../src/gen/funcs.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 gvars.o: ../src/gen/gvars.c
 	./origc $@ $^
