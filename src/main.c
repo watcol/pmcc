@@ -1,4 +1,4 @@
-#include "teal.h"
+#include "pmcc.h"
 
 int main() {
   initLexer();

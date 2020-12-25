@@ -2,9 +2,9 @@ CC = tcc
 
 all:
 	make clean
-	make teal
+	make main
 
-teal: main.o parse.a lex.a gen.a util.o sys.o
+main: main.o parse.a lex.a gen.a util.o sys.o
 	ld -o $@ $^
 
 main.o: ../src/main.c
@@ -82,12 +82,12 @@ util.o: ../src/util.c
 sys.o: ../src/sys.s
 	as -o $@ $^
 
-test: teal
+test: main
 	./test.sh
 
 clean:
 	$(RM) *.o
 	$(RM) *.a
-	$(RM) teal
+	$(RM) main
 
 .PHONY: all test clean

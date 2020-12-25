@@ -11,10 +11,10 @@ main() {
   _tester array.c 42
 }
 
-# ./tester <tealc> <input file> <expected status code>
+# ./tester <input file> <expected status code>
 _tester() {
   # Set return code to $status
-  ./tealc ../examples/$1
+  ./pmcc ../examples/$1
   local status="$?"
 
   # Check the status

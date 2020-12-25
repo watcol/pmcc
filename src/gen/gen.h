@@ -1,7 +1,7 @@
 #ifndef _GEN_H_
 #define _GEN_H_
 
-#include"../teal.h"
+#include"../pmcc.h"
 
 // vars.c
 void cleanVar();

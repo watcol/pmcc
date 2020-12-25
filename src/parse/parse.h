@@ -1,7 +1,7 @@
 #ifndef _PARSE_H_
 #define _PARSE_H_
 
-#include"../teal.h"
+#include"../pmcc.h"
 
 // void parse();
 void panicParse(char* at);
