@@ -308,6 +308,22 @@ void llStoreVal(int var, int val) {
   putCh('\n');
 }
 
+void llStoreG(int var, char* name, int len) {
+  int ty = llDerefTy(lVarType(var));
+
+  putStr("  store ");
+  llPutTy(ty);
+  putStr(" @");
+  write(name, len);
+  putStr(", ");
+  llPutTy(llRefTy(ty));
+  putCh(' ');
+  llPutVar(var);
+  putStr(", ");
+  llPutAlign(ty);
+  putCh('\n');
+}
+
 void llStore(int dst, int src) {
   int ty = lVarType(src);
   if(llRefTy(ty) != lVarType(dst)) panic("Type unmatched.");

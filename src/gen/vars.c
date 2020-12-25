@@ -22,7 +22,7 @@ int lVarFind(char* cur, int len) {
   int c = 0;
   while(!(strCmp(lvars[c], cur, len) && len == lvars_len[c]) && c < lvars_offset) c++;
 
-  if(c == lvars_offset) return -1;
+  if(c == lvars_offset) return -2;
 
   return c;
 }

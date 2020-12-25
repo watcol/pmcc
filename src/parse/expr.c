@@ -45,7 +45,11 @@ int exprFactor() {
         expThisCh(')');
         return funcCall(buf, len, args, d);
       }
-      return lVarFind(buf, len);
+
+      int lvar = lVarFind(buf, len);
+      if(lvar >= -1) return lvar;
+
+      return gVarFind(buf, len);
     }
   }
 }

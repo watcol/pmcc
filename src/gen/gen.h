@@ -44,6 +44,7 @@ void llAlloca(int var);
 void llAllocaArray(int var, int ty, int c);
 void llArrayToPtr(int dst, int src, int c);
 void llStoreVal(int var, int val);
+void llStoreG(int var, char* name, int len);
 void llStore(int dst, int src);
 void llLoad(int dst, int src);
 void llFuncCall(char* buf, int len, int ret, int* args, int argc);
