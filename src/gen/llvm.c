@@ -1,20 +1,15 @@
 #include"gen.h"
 
-char* types[18] = {
-  "unknown", "void",
-  "i1",   "i8",   "i32", "i64",
-  "i1*",  "i8*",  "i32*", "i64*",
-  "i1**", "i8**", "i32**", "i64**",
-  "i1***", "i8***", "i32***", "i64***"
-};
-
-char* bbs[7] = {
-  "unknown",
-  "if.begin", "if.else", "if.end",
-  "while.eval", "while.begin", "while.end"
-};
 
 void llPutTy(int ty) {
+  char* types[18] = {
+    "unknown", "void",
+    "i1",   "i8",   "i32", "i64",
+    "i1*",  "i8*",  "i32*", "i64*",
+    "i1**", "i8**", "i32**", "i64**",
+    "i1***", "i8***", "i32***", "i64***"
+  };
+
   if(ty == TY_UNKNOWN) {
     panic("Unknown type.");
   }
@@ -45,6 +40,12 @@ int llDerefTy(int ty) {
 }
 
 void llPutBb(int id, int bb) {
+  char* bbs[7] = {
+    "unknown",
+    "if.begin", "if.else", "if.end",
+    "while.eval", "while.begin", "while.end"
+  };
+
   if(bb <= BB_UNKNOWN || bb > BB_WHILE_END) panic("Unknown BasicBlock.");
   putStr(bbs[bb]);
   putCh('-');
