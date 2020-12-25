@@ -74,7 +74,7 @@ llvm.o: ../src/gen/llvm.c
 	./origc $@ $^
 
 vars.o: ../src/gen/vars.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 util.o: ../src/util.c
 	./origc $@ $^
