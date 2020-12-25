@@ -155,6 +155,21 @@ void llDefGArray(char* buf, int len, int ty, int c) {
   putStrLn("\n");
 }
 
+void llDefGArray2(char* buf, int len, int ty, int c1, int c2) {
+  putCh('@');
+  write(buf, len);
+  putStr(" = global [");
+  putNum(c1);
+  putStr(" x ");
+  putCh('[');
+  putNum(c2);
+  putStr(" x ");
+  llPutTy(ty);
+  putStr("]] zeroinitializer, ");
+  llPutAlign(ty);
+  putStrLn("\n");
+}
+
 void llRetV(int var) {
   int ty = lVarType(var);
   putStr("  ret ");

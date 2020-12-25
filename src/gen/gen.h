@@ -34,6 +34,7 @@ void llBb(int id, int bb);
 int llAlign(int ty);
 void llDefGVar(char* buf, int len, int ty);
 void llDefGArray(char* buf, int len, int ty, int c);
+void llDefGArray2(char* buf, int len, int ty, int c1, int c2);
 void llRetV(int var);
 void llRet(int ty);
 void llInstNVAsg(char *name, int dst, int src1, int src2);

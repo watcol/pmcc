@@ -99,6 +99,7 @@ int tmpStr(char* str);
 int constNum(int ty, int val);
 int defGVar(char* buf, int len, int ty);
 int defGArray(char* buf, int len, int ty, int num);
+int defGArray2(char* buf, int len, int ty, int num1, int num2);
 int gVarFind(char* buf, int len);
 int unaryOp(int op, int var);
 int binOp(int op, int var1, int var2);

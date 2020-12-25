@@ -9,11 +9,20 @@ int func() {
     defGVar(name, len, ty);
     return 1;
   } else if(thisCh('[')) {
-    int num = expNum();
-    if(thisCh('+')) num += expNum();
+    int num1 = expNum();
+    if(thisCh('+')) num1 += expNum();
     expThisCh(']');
+    if(thisCh('[')) {
+      int num2 = expNum();
+      if(thisCh('+')) num2 += expNum();
+      expThisCh(']');
+      expThisCh(';');
+      defGArray2(name, len, ty, num1, num2);
+      return 1;
+    }
+
     expThisCh(';');
-    defGArray(name, len, ty, num);
+    defGArray(name, len, ty, num1);
     return 1;
   }
   expThisCh('(');
