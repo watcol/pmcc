@@ -71,7 +71,7 @@ ops.o: ../src/gen/ops.c
 	./origc $@ $^
 
 llvm.o: ../src/gen/llvm.c
-	$(COMPILE.c) $^
+	./origc $@ $^
 
 vars.o: ../src/gen/vars.c
 	$(COMPILE.c) $^

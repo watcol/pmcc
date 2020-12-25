@@ -1,5 +1,5 @@
 #include"parse.h"
-#define MAX_STR 50
+#define MAX_STR 60
 
 int exprFactor() {
   if(thisCh('(')) {
